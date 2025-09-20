@@ -48,21 +48,25 @@ Founder, CTO and Lead Programmer
 Mind if I have some of your tasty beverage to wash this down?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Aug, 2018 - Present
+Aug, 2018 – Present
+-------------------
 
-?? Hi, I’m John Bampton
+Hi, I’m **John Bampton**
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-? I’m interested in Management Consulting and Team Building
+- 🌟 I’m interested in *Management Consulting* and *Team Building*
+- 📚 I’m currently learning **RubyFu** with Street Smarts
+- 🤝 I’m looking to collaborate on:
+  
+  - DonyaOS
+  - One
+  - Roques Beach
+  - Slurp Code
 
-? I’m currently learning RubyFu with Street Smarts
+- 💬 I hang out all the time on Discord
+- 👥 We have over **350+ GitHub Organization members**
+- 📍 Brisbane, Australia 🇦🇺
 
-? I’m looking to collaborate on DonyaOS, One, Roques Beach and Slurp Code
-
-? I hang out all the time on Discord
-
-We have over 350+ GitHub Organization members
-
-🇦🇺 Brisbane, Australia
 
 Volunteer Manager at not-for-profit Corporation
 -----------------------------------------------
