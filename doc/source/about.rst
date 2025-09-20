@@ -277,10 +277,10 @@ Almost 6 months casual / part time work whilst I was a student at University.
 🇦🇺 Brisbane, Australia
 
 Mailer Sorter
---------------
+-------------
 
 Australia Post
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^
 
 Unsure of dates and years
 
@@ -289,7 +289,7 @@ Small casual job early in the moring sorting mail during my time as a University
 🇦🇺 Brisbane, Australia
 
 Liquor Store Assistant
---------------
+----------------------
 
 The Gap Tavern
 ^^^^^^^^^^^^^^^^^^^^^^
