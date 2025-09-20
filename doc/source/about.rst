@@ -178,6 +178,16 @@ Working as a consultant from home programming.
 Programmer
 ----------
 
+Department of Communities Queensland State Government
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Onsite work part time doing web tasks.
+
+🇦🇺 Brisbane, Australia
+
+Programmer
+----------
+
 Brisbane City Council
 ^^^^^^^^^^^^^^^^^^^^^
 
