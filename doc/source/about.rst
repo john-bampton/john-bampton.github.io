@@ -49,7 +49,6 @@ Mind if I have some of your tasty beverage to wash this down?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Aug, 2018 – Present
--------------------
 
 Hi, I’m **John Bampton**
 ~~~~~~~~~~~~~~~~~~~~~~~~
