@@ -10,9 +10,10 @@ Brisbane Social Chess Inc
 
 Sep, 2025 - Present
 
-I am the team leader on both GitHub and Discord and I provide comprehensive training in best practice project management and software development including training in Git version control. My unofficial title is "Scrum Master".
+I am the team leader on both `GitHub <https://github.com/>`__ and `Discord <https://discord.com/>`__ and I provide comprehensive training in best practice project management and software development including training in `Git <https://git-scm.com/>`__ version control.
+My unofficial title is "Scrum Master".
 
-A Scrum Master is a servant-leader and coach for an agile team, facilitating the Scrum framework to help the team become self-sufficient, improve its processes, and remove impediments to progress.
+A `Scrum Master <https://www.atlassian.com/agile/scrum/scrum-master>`__ is a servant-leader and coach for an agile team, facilitating the `Scrum framework <https://en.wikipedia.org/wiki/Scrum_(software_development)>`__ to help the team become self-sufficient, improve its processes, and remove impediments to progress.
 
 🇦🇺 Brisbane, Australia
 
@@ -24,9 +25,14 @@ The Apache Software Foundation
 
 Aug, 2023 - Present
 
-I joined The Apache Software Foundation as an official Apache Committer on the 1st of August 2023 on the Apache CloudStack Project. Since then I have also joined both the Apache Sedona and Apache OpenOffice projects as official committer.
+I joined The Apache Software Foundation as an official `Apache Committer <https://projects.apache.org/committee.html?cloudstack>`__ on the 1st of August 2023 on the `Apache CloudStack <https://cloudstack.apache.org/>`__ Project.
 
-The Apache® Software Foundation (ASF) provides software for the public good, guided by community over code. Like the enduring oak tree, our projects thrive through the contributions of thousands worldwide.
+Joining The ASF as an official Apache Committer was a fantastic moment in my life after more than 3 years of contributions to many different ASF projects.
+
+In October 2024 I joined the `Apache Sedona <https://sedona.apache.org/>`__ project as an `Apache Committer <https://projects.apache.org/committee.html?sedona>`__ and with renewed confidence and energy I pushed on and soon after
+around January 7th, 2025 I also joined the `Apache OpenOffice <https://www.openoffice.org/>`__ project as an `Apache Committer <https://projects.apache.org/committee.html?openoffice>`__.
+
+The `Apache® Software Foundation (ASF) <https://apache.org/>`__ provides software for the public good, guided by community over code. Like the enduring oak tree, our projects thrive through the contributions of thousands worldwide.
 
 🇦🇺 Brisbane, Australia
 
@@ -56,11 +62,11 @@ Hi, I’m **John Bampton**
 - 🌟 I’m interested in *Management Consulting* and *Team Building*
 - 📚 I’m currently learning **RubyFu** with Street Smarts
 - 🤝 I’m looking to collaborate on:
-  
-  - DonyaOS
-  - One
-  - Roques Beach
-  - Slurp Code
+
+  - `64 Shades <https://github.com/64-shades/>`__
+  - `DonyaOS <https://github.com/DonyaOS>`__
+  - `Mind if I have some of your tasty beverage to wash this down? <https://github.com/slurpcode/>`__
+  - `One Programming Language <https://github.com/One-Language/>`__
 
 - 💬 I hang out all the time on Discord
 - 👥 We have over **350+ GitHub Organization members**
@@ -101,7 +107,7 @@ Upwork
 
 Feb, 2009 - Jan, 2024
 
-Worked on Upwork for about 15 years as a freelancer on a casual basis.  I also had a client account and hired about 200 people.  In the later stages I also ran an Upwork agency with a team of 10+ members.
+Worked on `Upwork <https://en.wikipedia.org/wiki/Upwork>`__ for about 15 years as a freelancer on a casual basis.  I also had a client account and hired about 200 people.  In the later stages I also ran an Upwork agency with a team of 10+ members.
 
 🇦🇺 Brisbane, Australia
 
@@ -125,7 +131,9 @@ RASENT Solutions LLC
 
 Sep, 2013 - Dec, 2016
 
-Working on the California Energy Commission's Title 24 Report Generator project. At the end all work was on GitHub. We started with Apache Subversion.
+Working on the `California Energy Commission's <https://www.energy.ca.gov/>`__ Title 24 Report Generator project.
+We started with services like DropBox, Google apps and spreadsheets and then moved onto using Apache Subversion.
+At the end all work was on GitHub.
 
 🇦🇺 Brisbane, Australia
 
