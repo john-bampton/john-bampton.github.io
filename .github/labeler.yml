@@ -7,10 +7,6 @@ documentation:
 rst:
   - 'doc/source/**/*.rst'
 
-# HTML build artifacts
-html:
-  - 'doc/build/html/**'
-
 # Config files
 config:
   - '.github/**'
