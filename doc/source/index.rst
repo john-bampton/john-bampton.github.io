@@ -21,4 +21,5 @@ documentation for details.
    about
    from-zero-to-hero
    likes
+   friends
    tools
