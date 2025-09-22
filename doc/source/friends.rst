@@ -3,7 +3,6 @@ My Friends
 
 * `Ali`_
 * `Umut`_
-* `Majalian`_
 
 --------
 
@@ -20,10 +19,3 @@ Umut
 ~~~~
 
 Write something about Umut here...
-
---------
-
-Majalian
-~~~~~~~~
-
-Write something about Majalian here...
