@@ -297,8 +297,8 @@ Almost 6 months casual / part time work whilst I was a student at University.
 
 🇦🇺 Brisbane, Australia
 
-Mailer Sorter
--------------
+Mail Sorter
+-----------
 
 Australia Post
 ^^^^^^^^^^^^^^
