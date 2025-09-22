@@ -6,7 +6,8 @@
 John Bampton International Man of Mystery
 =========================================
 
-Dedicated, skilled, and community-oriented individual within the technology and local Brisbane communities
+Dedicated, skilled, and community-oriented individual within the technology and local
+`Brisbane <https://en.wikipedia.org/wiki/Brisbane>`__ communities.
 
 Welcome to my site built using ``reStructuredText`` syntax. See the
 `reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
@@ -17,5 +18,6 @@ documentation for details.
    :caption: Contents:
 
    about
+   brisbane
    from-zero-to-hero
    tools
