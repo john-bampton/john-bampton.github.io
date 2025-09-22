@@ -12,8 +12,6 @@ or "City Center" as I call it is one of my all time favorite events.
   `Queen Street Mall <https://en.wikipedia.org/wiki/Queen_Street_Mall>`__ and sit in the shade for my meal.
 * I really like going to `Wake Up Specialty Coffee <https://wakeupcoffee.com.au/>`__ which is in Uptown level one and
   I always buy a small caramel milkshake. The staff their are fantastic. I never get a milkshake if I did the Coles run.
-* Love going to see the manager **Abdullah** at `Sitar Indian Restaurant Albion <https://www.sitar.com.au/>`__. I once
-  hosted chess meetups there for Brisbane Social Chess and Abdullah and I had many battles.
 * Occasionally I see **Rodney** a `Big Issue <https://thebigissue.org.au/>`__ vendor and buy some magazines from him. He
   is normally sitting on a busy street corner promoting the magazine. The Big Issue is an Australian non-profit and
   charity that provides opportunity to people experiencing homelessness and disadvantage.
@@ -39,3 +37,13 @@ or "City Center" as I call it is one of my all time favorite events.
 * Was given *special treatment* by **Okan** at `2 Brothers Traditional Barber <https://2brothersbarber.com/>`__ in
   Uptown shopping center originally called The Myer Centre. Got both my head and face shaved and all the staff were
   cool. First cut in many years. Located near Lowes menswear on the food court level.
+
+Brisbane Northside
+------------------
+
+* Love going to see the manager **Abdullah** at `Sitar Indian Restaurant Albion <https://www.sitar.com.au/>`__. I once
+  hosted chess meetups there for Brisbane Social Chess and Abdullah and I had many battles.
+* My friend **Sean** is a great bloke and runs the `The Book Warehouse <https://www.thebookwarehouse.com.au>`__ at
+  Albion. Australian Owned & Operating for Over 30 Years. Books for all ages 0 to 99. Great books on all topics to
+  inspire readers from babies to grandparents. Great prices and friendly staff close to public transport including
+  buses along Sandgate Road and Albion train station. Be sure to get there one day soon !!
