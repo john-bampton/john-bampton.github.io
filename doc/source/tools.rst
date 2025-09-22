@@ -14,6 +14,12 @@ Essentials
 
 * `GNU Midnight Commander <https://midnight-commander.org/>`__ is a free cross-platform orthodox file manager. It was started by Miguel de Icaza in 1994 as a clone of the then-popular Norton Commander. GNU Midnight Commander is part of the GNU project and is licensed under the terms of the GNU General Public License.
 
+Spell Checking
+--------------
+
+* `codespell <https://pypi.org/project/codespell/>`__: Fix common misspellings in text files. It’s designed primarily for checking misspelled words in source code (backslash escapes are skipped), but it can be used with other files as well.
+* `typos <https://crates.io/crates/typos>`__: Finds and corrects spelling mistakes among source code. Fast enough to run on monorepos. Low false positives so you can run on PRs
+
 Version Managers
 ----------------
 
