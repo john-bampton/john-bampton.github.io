@@ -1,14 +1,21 @@
 My Friends
 ==========
 
-* `Ali`_
-* `Umut`_
-* `David`_
-* `Okan`_
-* `Lachy`_
-* `Rue`_
-* `Jonah`_
 * `Abdullah`_
+* `Ali`_
+* `David`_
+* `Jonah`_
+* `Lachy`_
+* `Okan`_
+* `Rue`_
+* `Umut`_
+
+--------
+
+Abdullah
+~~~~~~~~
+
+Write something about Abdullah here...
 
 --------
 
@@ -21,38 +28,10 @@ Ali is passionate about technology, mathematics, and empowering others through e
 
 --------
 
-Umut
-~~~~
-
-Write something about Umut here...
-
---------
-
 David
 ~~~~~
 
 Write something about David here...
-
---------
-
-Okan
-~~~~
-
-Write something about Okan here...
-
---------
-
-Lachy
-~~~~~
-
-Write something about Lachy here...
-
---------
-
-Rue
-~~~
-
-Write something about Rue here...
 
 --------
 
@@ -63,7 +42,28 @@ Write something about Jonah here...
 
 --------
 
-Abdullah
-~~~~~~~~
+Lachy
+~~~~~
 
-Write something about Abdullah here...
+Write something about Lachy here...
+
+--------
+
+Okan
+~~~~
+
+Write something about Okan here...
+
+--------
+
+Rue
+~~~
+
+Write something about Rue here...
+
+--------
+
+Umut
+~~~~
+
+Write something about Umut here...
