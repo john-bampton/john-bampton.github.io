@@ -1,3 +1,7 @@
+root:
+- changed-files:
+  - any-glob-to-any-file: '*'
+
 documentation:
   - any:
       - changed-files:
