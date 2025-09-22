@@ -3,6 +3,12 @@ My Friends
 
 * `Ali`_
 * `Umut`_
+* `David`_
+* `Okan`_
+* `Lachy`_
+* `Rue`_
+* `Jonah`_
+* `Abdullah`_
 
 --------
 
@@ -19,3 +25,45 @@ Umut
 ~~~~
 
 Write something about Umut here...
+
+--------
+
+David
+~~~~~
+
+Write something about David here...
+
+--------
+
+Okan
+~~~~
+
+Write something about Okan here...
+
+--------
+
+Lachy
+~~~~~
+
+Write something about Lachy here...
+
+--------
+
+Rue
+~~~
+
+Write something about Rue here...
+
+--------
+
+Jonah
+~~~~~
+
+Write something about Jonah here...
+
+--------
+
+Abdullah
+~~~~~~~~
+
+Write something about Abdullah here...
