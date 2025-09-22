@@ -17,7 +17,8 @@ documentation for details.
    :maxdepth: 2
    :caption: Contents:
 
-   about
    brisbane
+   about
    from-zero-to-hero
+   likes
    tools
