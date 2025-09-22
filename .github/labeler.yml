@@ -1,0 +1,18 @@
+# Docs-related PRs
+documentation:
+  - 'doc/**'
+  - 'requirements-docs.txt'
+
+# Source RST files
+rst:
+  - 'doc/source/**/*.rst'
+
+# HTML build artifacts
+html:
+  - 'doc/build/html/**'
+
+# Config files
+config:
+  - '.github/**'
+  - 'doc/Makefile'
+  - 'doc/make.bat'
