@@ -28,10 +28,11 @@ He has worked on hundreds of projects, contributed to the global developer commu
 Ali is passionate about technology, mathematics, and empowering others through education and open knowledge. 🌍✨
 
 **Social Links**
-- 🐙 [GitHub](https://github.com/BaseMax)
-- 💬 [Telegram](https://t.me/MAX_BASE)
-- 💼 [LinkedIn](https://www.linkedin.com/in/maxbase)
-- 📚 [Stack Overflow](https://stackoverflow.com/users/10096230/max-base)
+
+- 🐙 `GitHub <https://github.com/BaseMax>`_
+- 💬 `Telegram <https://t.me/MAX_BASE>`_
+- 💼 `LinkedIn <https://www.linkedin.com/in/maxbase>`_
+- 📚 `Stack Overflow <https://stackoverflow.com/users/10096230/max-base>`_
 
 --------
 
