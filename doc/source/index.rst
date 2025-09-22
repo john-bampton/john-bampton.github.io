@@ -17,8 +17,8 @@ documentation for details.
    :maxdepth: 2
    :caption: Contents:
 
-   friends
    from-zero-to-hero
+   my-friends
    tools
    top-places-to-visit-in-brisbane.rst
    what-i-like-doing
