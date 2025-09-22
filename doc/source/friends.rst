@@ -8,6 +8,7 @@ My Friends
 * `Lachy`_
 * `Okan`_
 * `Rue`_
+* `Tim`_
 * `Umut`_
 
 --------
@@ -60,6 +61,13 @@ Rue
 ~~~
 
 Write something about Rue here...
+
+--------
+
+Tim
+~~~
+
+Write something about Tim here...
 
 --------
 
