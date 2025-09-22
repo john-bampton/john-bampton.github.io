@@ -1,14 +1,20 @@
-# Docs-related PRs
 documentation:
-  - 'doc/**'
-  - 'requirements-docs.txt'
+  - any:
+      - changed-files:
+          - any-glob-to-any-file:
+              - 'doc/**'
+              - 'requirements-docs.txt'
 
-# Source RST files
 rst:
-  - 'doc/source/**/*.rst'
+  - any:
+      - changed-files:
+          - any-glob-to-any-file:
+              - 'doc/source/**/*.rst'
 
-# Config files
 config:
-  - '.github/**'
-  - 'doc/Makefile'
-  - 'doc/make.bat'
+  - any:
+      - changed-files:
+          - any-glob-to-any-file:
+              - '.github/**'
+              - 'doc/Makefile'
+              - 'doc/make.bat'
