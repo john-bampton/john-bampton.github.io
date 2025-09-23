@@ -19,8 +19,9 @@ documentation for details.
 
    from-zero-to-hero
    my-friends
+   special-moments-in-history
    the-book-warehouse
    tools
-   top-places-to-visit-in-brisbane.rst
+   top-places-to-visit-in-brisbane
    what-i-like-doing
-   career-achievements-and-history.rst
+   career-achievements-and-history
