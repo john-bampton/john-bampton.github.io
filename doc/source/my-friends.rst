@@ -1,22 +1,22 @@
 My Friends
 ==========
 
-* `Abdullah`_ 🌟
+* `Abdullah`_ 🍛🌟
 * `Ali`_ 💻📐
-* `David`_ 🎸
-* `Jonah`_ 📚
-* `Lachy`_ ⚽
-* `Okan`_ 🎨
-* `Rue`_ 🌈
-* `Tim`_ 🚀
-* `Umut`_ 🎶
+* `David`_ 🤜🤛
+* `Jonah`_ 🥾👨‍🎨
+* `Lachy`_ ⌚🏀
+* `Okan`_ 💇🏽🎨
+* `Rue`_ 💿 🧟
+* `Tim`_ ⌚😎
+* `Umut`_ 🎶🇹🇷
 
 --------
 
 Abdullah
 ~~~~~~~~
 
-Write something about Abdullah here... 🌟
+Write something about Abdullah here... 🍛🌟
 
 --------
 
@@ -39,28 +39,33 @@ Ali is passionate about technology, mathematics, and empowering others through e
 David
 ~~~~~
 
-Write something about David here... 🎸
+Sometimes I see a man named **David** sitting at
+`Central train station <https://jp.translink.com.au/plan-your-journey/stops/central-station>`__
+and last time we had a chat about `Byron Bay <https://en.wikipedia.org/wiki/Byron_Bay>`__. Said hello on three
+separate occassions. Last time we both greeted and parted with a *fist bump of life*. 🤜🤛
+
+Written by John Bampton
 
 --------
 
 Jonah
 ~~~~~
 
-Write something about Jonah here... 📚
+Write something about Jonah here... 🥾👨‍🎨
 
 --------
 
 Lachy
 ~~~~~
 
-Write something about Lachy here... ⚽
+Write something about Lachy here... ⌚🏀
 
 --------
 
 Okan
 ~~~~
 
-Write something about Okan here... 🎨
+Write something about Okan here... 💇🏽🎨
 
 --------
 
@@ -75,11 +80,11 @@ vinyl and blurays, mainly Goth Rock and horror films. 💿 🧟
 Tim
 ~~~
 
-Write something about Tim here... 🚀
+Write something about Tim here... ⌚😎
 
 --------
 
 Umut
 ~~~~
 
-Write something about Umut here... 🎶
+Write something about Umut here... 🎶🇹🇷
