@@ -43,7 +43,7 @@ body.dark div.body p {
 }
 
 /* Style for the UL container */
-body.dark div.body ul {
+body div.body ul {
     list-style-type: none; /* Remove any default list markers */
     padding-left: 20px; /* Space for the background image on the list items */
     background: none; /* Make sure the UL itself has no background image */
@@ -51,7 +51,7 @@ body.dark div.body ul {
 }
 
 /* Base style for all list items */
-body.dark div.body ul li {
+body div.body ul li {
     list-style-type: none; /* No bullet points on list items */
     background-repeat: no-repeat;
     background-position: 0 50%; /* Vertically center the image */
@@ -61,33 +61,33 @@ body.dark div.body ul li {
     line-height: 1.5;
 }
 
-body.dark div.body ul li {
+body div.body ul li {
     background-image: url('images/favicon.ico');
 }
 
 /* Unique image for the first list item */
-body.dark div.body ul li:nth-child(1) {
+body div.body ul li:nth-child(1) {
     background-image: url('images/favicon1.ico');
 }
 
 /* Unique image for the second list item */
-body.dark div.body ul li:nth-child(2) {
+body div.body ul li:nth-child(2) {
     background-image: url('images/favicon2.ico');
 }
 
 /* Unique image for the third list item */
-body.dark div.body ul li:nth-child(3) {
+body div.body ul li:nth-child(3) {
     background-image: url('images/favicon3.ico');
 }
 
-body.dark div.body ul li:nth-child(4) {
+body div.body ul li:nth-child(4) {
     background-image: url('images/favicon4.ico');
 }
 
-body.dark div.body ul li:nth-child(5) {
+body div.body ul li:nth-child(5) {
     background-image: url('images/favicon5.ico');
 }
 
-body.dark div.body ul li:nth-child(6) {
+body div.body ul li:nth-child(6) {
     background-image: url('images/favicon6.ico');
 }
