@@ -95,7 +95,26 @@ Swatch
 Brisbane Northside
 ------------------
 
+Sitar Indian Restaurant Albion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 * Love going to see the manager **Abdullah** at `Sitar Indian Restaurant Albion <https://www.sitar.com.au/>`__. I once
   hosted chess meetups there for Brisbane Social Chess and Abdullah and I had many battles.
 
   Address: 331 Sandgate Rd, Albion QLD 4010
+
+Chermside Shopping Center
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* Sometimes I go to `Chermside Shopping Center <https://en.wikipedia.org/wiki/Westfield_Chermside>`__ instead of going to the city center but it is much less often. For me
+  Chermside is further away and takes longer to get to than the city center.
+
+  `Chermside Shopping Centre <https://www.westfield.com.au/chermside>`__
+
+* ``officially Westfield Chermside, is a large regional shopping complex in Chermside,
+  Brisbane, Australia, operating as the second-largest Westfield in the country. It houses major department stores like
+  Myer and David Jones, supermarkets, hundreds of specialty stores, a cinema complex, and a dining and leisure precinct.
+  It is a major transport hub, with an integrated bus station, and is significant to the retail trade of Brisbane's
+  northern suburbs``
+
+  Address: Gympie Rd, Chermside QLD 4032

@@ -14,15 +14,21 @@ Welcome to my site built using ``reStructuredText`` syntax. See the
 documentation for details.
 
 .. toctree::
+   :caption: Open Your Mind:
    :maxdepth: 2
-   :caption: Contents:
 
    from-zero-to-hero
+   tools
+   top-websites
+
+
+.. toctree::
+   :caption: Random:
+   :maxdepth: 2
+
    my-friends
    special-moments-in-history
    the-book-warehouse
-   tools
    top-places-to-visit-in-brisbane
-   top-websites
    what-i-like-doing
    career-achievements-and-history
