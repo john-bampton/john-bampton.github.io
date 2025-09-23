@@ -36,7 +36,9 @@ Dr Martens
 
 * Seeing my friends **Jonah** and **Rue** at the Brisbane `Dr Martens <https://www.drmartens.com.au>`__ shoe store also
   on Albert Street almost directly across from Coles. There is another young lady that works there that is really
-  *sweet* she has helped before and I must get her name next time. ``Dr. Martens (also known as Doc Martens) is a
+  *sweet* she has helped before and I must get her name next time.
+
+  ``Dr. Martens (also known as Doc Martens) is a
   British footwear and clothing brand known for its iconic, durable, and distinctive air-cushioned boots, distinguished
   by yellow stitching and a welted construction. Originally created by a German doctor and his partner for comfortable
   post-war footwear, the brand found its cultural home in the UK's counterculture movements, eventually becoming a globally
@@ -49,7 +51,9 @@ Lowes Menswear
 
 * Shopping at `Lowes Menswear <https://www.lowes.com.au/>`__ in Uptown is such a great experience. The two gentleman
   that work there have been a tremendous help and are extremely polite and friendly. Most often **Stephen** helps me
-  find all the best fitting clothes in the store. ``Lowes Menswear, also currently known as Lowes Manhattan Pty Ltd is a
+  find all the best fitting clothes in the store.
+
+  ``Lowes Menswear, also currently known as Lowes Manhattan Pty Ltd is a
   private, family-owned leading Australian menswear and retail chain established in 1898 by William Lowe. There are now
   over 200 stores nationally because of expansion driven by Hans Mueller who established Lowes Manhattan Pty Ltd in
   1948.``
@@ -62,7 +66,9 @@ QBD Books
 * `QBD Books <https://www.qbd.com.au/>`__ in Uptown is full of great products and they always have discounts and
   specials on some products. I have spoken with at least five staff members and at least 4 on multiple occassions. Most
   often I see **Sean** working there and he provides excellent service. I do also visit Dymocks bookstore but I much
-  prefer QBD. ``QBD Books (originally Queensland Book Depot) is Australia's largest specialty book retailer, offering a
+  prefer QBD.
+
+  ``QBD Books (originally Queensland Book Depot) is Australia's largest specialty book retailer, offering a
   wide range of books in-store and online at discounted prices. Founded in Queensland in the late 1800s, the company is
   Australian-owned and operated, with over 80 stores nationwide. They provide a broad selection of genres, new releases,
   classics, and children's books, along with loyalty rewards and author events``
@@ -75,7 +81,9 @@ Swatch
 * Visiting the Brisbane Queen Street `Swatch <https://www.swatch.com/en-au/>`__ store and talking to my friend **Tim**
   the *amazing* and *wonderful* Assistant Manager. Tim is extremely knowledgable about watches and fashion and he is
   very helpful. Another staff member **Lachy** works there and seems to know his *Basketball* which impressed me. Lachy
-  is also a slick knowledgable sales guy. ``A Swatch watch is a Swiss-made, quartz-powered watch characterized by its
+  is also a slick knowledgable sales guy.
+
+  ``A Swatch watch is a Swiss-made, quartz-powered watch characterized by its
   colorful, artistic designs and affordable, casual, and collectible nature, originally created to revolutionize the
   Swiss watch industry with an innovative, mass-produced plastic design. The brand name "Swatch" is a portmanteau of
   "Swiss" and "watch" or a contraction of "second watch," and the company's success revitalized the Swiss watch
@@ -106,12 +114,13 @@ Sitar Indian Restaurant Albion
 Chermside Shopping Center
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* Sometimes I go to `Chermside Shopping Center <https://en.wikipedia.org/wiki/Westfield_Chermside>`__ instead of going to the city center but it is much less often. For me
-  Chermside is further away and takes longer to get to than the city center.
+* Sometimes I go to `Chermside Shopping Center <https://en.wikipedia.org/wiki/Westfield_Chermside>`__ instead of going
+  to the city center but it is much less often. For me Chermside is further away and takes longer to get to than the
+  city center.
 
   `Chermside Shopping Centre <https://www.westfield.com.au/chermside>`__
 
-* ``officially Westfield Chermside, is a large regional shopping complex in Chermside,
+* ``Officially Westfield Chermside, is a large regional shopping complex in Chermside,
   Brisbane, Australia, operating as the second-largest Westfield in the country. It houses major department stores like
   Myer and David Jones, supermarkets, hundreds of specialty stores, a cinema complex, and a dining and leisure precinct.
   It is a major transport hub, with an integrated bus station, and is significant to the retail trade of Brisbane's

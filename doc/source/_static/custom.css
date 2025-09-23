@@ -10,3 +10,34 @@
 .yellow {
     color: yellow;
 }
+
+/* dark theme */
+body.dark {
+    background-color: #2c2c2c;
+    color: #e0e0e0;
+}
+
+body.dark a {
+    color: #58a6ff;
+}
+
+body.dark a:hover {
+    color: #4a90d9;
+}
+body.dark p.caption {
+    color: #f3e5ab;
+}
+
+/* You may need to add more styles to override other Alabaster elements */
+/* For example: headers, code blocks, navigation menus, etc. */
+body.dark h1, body.dark h2, body.dark h3, body.dark h4, body.dark h5, body.dark h6 {
+    color: #ffffff;
+}
+
+body.dark div.body {
+    background-color: #2c2c2c;
+}
+
+body.dark div.body p {
+    color: #f3e5ab;
+}
