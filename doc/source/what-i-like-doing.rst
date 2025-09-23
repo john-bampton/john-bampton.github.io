@@ -43,7 +43,3 @@ Brisbane Northside
 
 * Love going to see the manager **Abdullah** at `Sitar Indian Restaurant Albion <https://www.sitar.com.au/>`__. I once
   hosted chess meetups there for Brisbane Social Chess and Abdullah and I had many battles.
-* My friend **Sean** is a great bloke and runs the `The Book Warehouse <https://www.thebookwarehouse.com.au>`__ at
-  Albion. Australian Owned & Operating for Over 30 Years. Books for all ages 0 to 99. Great books on all topics to
-  inspire readers from babies to grandparents. Great prices and friendly staff close to public transport including
-  buses along Sandgate Road and Albion train station. Be sure to get there one day soon !!
