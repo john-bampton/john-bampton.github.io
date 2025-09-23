@@ -67,7 +67,8 @@ Write something about Okan here... 🎨
 Rue
 ~~~
 
-Write something about Rue here... 🌈
+Originally from the UK, Rue is trained as a makeup artist for 10 years before managing Dr Martens. Loves collecting
+vinyl and blurays, mainly Goth Rock and horror films. 💿 🧟
 
 --------
 

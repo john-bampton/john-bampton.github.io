@@ -19,6 +19,7 @@ documentation for details.
 
    from-zero-to-hero
    my-friends
+   the-book-warehouse
    tools
    top-places-to-visit-in-brisbane.rst
    what-i-like-doing
