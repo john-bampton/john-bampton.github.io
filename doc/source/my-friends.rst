@@ -35,7 +35,7 @@ Ali is passionate about technology, mathematics, and empowering others through e
 
 **Social Links**
 
-- 🐙 `GitHub <https://github.com/BaseMax>`_
+- 🐙 `GitHub <https://github.com/BaseMax>`__
 - 💬 `Telegram <https://t.me/MAX_BASE>`_
 - 💼 `LinkedIn <https://www.linkedin.com/in/maxbase>`_
 - 📚 `Stack Overflow <https://stackoverflow.com/users/10096230/max-base>`_
@@ -49,7 +49,7 @@ Anuradha
 
 **Links**
 
-- 🐙 `GitHub <https://github.com/anufdo>`_
+- 🐙 `GitHub <https://github.com/anufdo>`__
 - 💼 `Upwork <https://www.upwork.com/freelancers/~012a7a1cb09da35c41>`_
 
 --------

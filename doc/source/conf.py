@@ -18,13 +18,29 @@ extensions = []
 templates_path = ['_templates']
 exclude_patterns = []
 
-
-
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'alabaster'
-
 html_static_path = ['_static']
-
 html_logo = "_static/images/logo.jpeg"
+
+# Alabaster theme requires a list of sidebar templates
+# This tells Sphinx to include your new HTML file in the sidebar
+html_sidebars = {
+    '**': [
+        'about.html',  # Retains the default Alabaster sidebar
+        'navigation.html',
+        'searchbox.html',
+        'theme_switcher_sidebar.html', # Your new custom sidebar
+    ]
+}
+
+# The other options remain the same
+html_css_files = [
+    'custom.css',
+]
+
+html_js_files = [
+    'theme_switcher.js',
+]
