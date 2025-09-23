@@ -3,6 +3,7 @@ My Friends
 
 * `Abdullah`_ 🍛🌟
 * `Ali`_ 💻📐
+* `Anuradha`_ 🎮💻
 * `David`_ 🤜🤛
 * `Jonah`_ 🥾👨‍🎨
 * `Lachy`_ ⌚🏀
@@ -33,6 +34,18 @@ Ali is passionate about technology, mathematics, and empowering others through e
 - 💬 `Telegram <https://t.me/MAX_BASE>`_
 - 💼 `LinkedIn <https://www.linkedin.com/in/maxbase>`_
 - 📚 `Stack Overflow <https://stackoverflow.com/users/10096230/max-base>`_
+
+--------
+
+Anuradha
+~~~~~~~~
+
+**Anuradha Fernando** is a Full Stack Developer specializing in MERN Stack, Node.js, React, TypeScript, and Next.js. Also experienced in POS systems and passionate about building scalable web applications. 💻⚛️
+
+**Links**
+
+- 🐙 `GitHub <https://github.com/anufdo>`_
+- 💼 `Upwork <https://www.upwork.com/freelancers/~012a7a1cb09da35c41>`_
 
 --------
 
