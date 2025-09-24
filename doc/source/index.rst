@@ -26,6 +26,7 @@ documentation for details.
    :caption: Random:
    :maxdepth: 2
 
+   finally-got-my-photo-next-to-jorge
    my-friends
    special-moments-in-history
    the-book-warehouse
