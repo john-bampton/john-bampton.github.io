@@ -1,3 +1,65 @@
+/* Custom properties for colors (default light theme values) */
+:root {
+    --bg-color: #ffffff;
+    --text-color: #2c2c2c;
+    --link-color: #337ab7;
+    --caption-color: #666;
+    --header-color: #000000;
+    --body-bg-color: #ffffff;
+    --body-text-color: #2c2c2c;
+}
+
+/* Light theme (default) */
+body.light, body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+body.light a, a {
+    color: var(--link-color);
+}
+
+body.light a:hover, a:hover {
+    color: #23527c;
+}
+
+body.light p.caption, p.caption {
+    color: var(--caption-color);
+}
+
+body.light h1, body.light h2, body.light h3, body.light h4, body.light h5, body.light h6,
+h1, h2, h3, h4, h5, h6 {
+    color: var(--header-color);
+}
+
+body.light div.body, div.body {
+    background-color: var(--body-bg-color);
+}
+
+body.light div.body p, div.body p {
+    color: var(--body-text-color);
+}
+
+/* Dark theme */
+body.dark {
+    --bg-color: #2c2c2c;
+    --text-color: #e0e0e0;
+    --link-color: #58a6ff;
+    --caption-color: #f3e5ab;
+    --header-color: #ffffff;
+    --body-bg-color: #2c2c2c;
+    --body-text-color: #f3e5ab;
+}
+
+/* Random theme */
+/* The JavaScript sets the color properties directly on the body element. */
+body.random {
+    /* No CSS required here; the JS handles the styles */
+}
+
+/* Other existing CSS for lists and icons */
+/* ... (existing styles for lists and icons are unchanged) */
+
 .green {
     color: green;
 }
