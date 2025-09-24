@@ -30,9 +30,10 @@ html_logo = "_static/images/logo.jpeg"
 html_sidebars = {
     '**': [
         'about.html',  # Retains the default Alabaster sidebar
+        'theme_switcher_sidebar.html',  # Your new custom sidebar
         'navigation.html',
         'searchbox.html',
-        'theme_switcher_sidebar.html', # Your new custom sidebar
+        'icon_grid_sidebar.html'  # Your custom icon grid
     ]
 }
 

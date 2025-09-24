@@ -91,3 +91,39 @@ body div.body ul li:nth-child(5) {
 body div.body ul li:nth-child(6) {
     background-image: url('images/favicon6.ico');
 }
+
+/* Styling for the container that holds the icons */
+.side-icons {
+  padding: 10px;
+  text-align: center;
+}
+
+/* Using CSS Grid for the icon layout */
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); /* 2 columns to fit nicely in a sidebar */
+  gap: 10px; /* Space between icons */
+}
+
+/* Styling for each individual icon link */
+.icon-grid .icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover effect for icons */
+.icon-grid .icon:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+body.dark .icon-grid .icon {
+  background-color: #f3e5ab;
+}
