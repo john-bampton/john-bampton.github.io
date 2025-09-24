@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Define a set of random color palettes
     const randomPalettes = [
         // Palette 1
         {
@@ -37,17 +36,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (themeToggle) {
         const body = document.body;
         const savedTheme = localStorage.getItem('theme');
-        let currentTheme = 'light'; // Default
+        const savedRandomIndex = localStorage.getItem('randomIndex');
+        let currentTheme = 'light';
 
         if (savedTheme) {
             currentTheme = savedTheme;
-            if (currentTheme === 'random') {
-                applyRandomTheme(body, randomPalettes);
+            if (currentTheme === 'random' && savedRandomIndex !== null) {
+                // Use the saved random palette index
+                applyRandomTheme(body, randomPalettes, savedRandomIndex);
             } else {
                 body.classList.add(currentTheme);
             }
         } else {
-            // Fallback to the user's system preference
             if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 currentTheme = 'dark';
                 body.classList.add(currentTheme);
@@ -64,15 +64,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 body.classList.remove('dark');
                 body.classList.add('light');
                 removeRandomTheme(body);
+                localStorage.removeItem('randomIndex');
             } else if (currentTheme === 'light') {
                 currentTheme = 'random';
                 body.classList.remove('light');
-                applyRandomTheme(body, randomPalettes);
+                const newRandomIndex = Math.floor(Math.random() * randomPalettes.length);
+                applyRandomTheme(body, randomPalettes, newRandomIndex);
+                localStorage.setItem('randomIndex', newRandomIndex);
             } else { // It's 'random'
                 currentTheme = 'dark';
                 body.classList.remove('random');
                 body.classList.add('dark');
                 removeRandomTheme(body);
+                localStorage.removeItem('randomIndex');
             }
             localStorage.setItem('theme', currentTheme);
             updateToggleText(themeToggle, currentTheme);
@@ -84,17 +88,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if (theme === 'dark') {
             button.textContent = '☀️';
         } else if (theme === 'light') {
-            button.textContent = '🎨'; // Paint palette for random
+            button.textContent = '🎨';
         } else {
             button.textContent = '🌙';
         }
     }
 
-    // Helper function to apply random theme colors
-    function applyRandomTheme(body, palettes) {
+    // Helper function to apply random theme colors based on index
+    function applyRandomTheme(body, palettes, index) {
         body.classList.add('random');
-        const randomPalette = palettes[Math.floor(Math.random() * palettes.length)];
-        for (const [property, value] of Object.entries(randomPalette)) {
+        const palette = palettes[index];
+        for (const [property, value] of Object.entries(palette)) {
             body.style.setProperty(property, value);
         }
     }
@@ -102,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Helper function to remove random theme styles
     function removeRandomTheme(body) {
         body.classList.remove('random');
-        const randomPalette = randomPalettes[0]; // Use any palette to get property keys
+        const randomPalette = randomPalettes[0];
         for (const property of Object.keys(randomPalette)) {
             body.style.removeProperty(property);
         }
