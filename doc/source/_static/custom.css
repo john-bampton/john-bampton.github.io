@@ -189,3 +189,9 @@ body div.body ul li:nth-child(6) {
 body.dark .icon-grid .icon {
   background-color: #f3e5ab;
 }
+
+.btn-theme-toggle {
+    height: 65px;
+    width: 65px;
+    font-size: 3em;
+}
