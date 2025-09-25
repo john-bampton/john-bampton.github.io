@@ -28,7 +28,9 @@ The Big Issue
 ^^^^^^^^^^^^^
 
 * Occasionally I see **Rodney** a `Big Issue <https://thebigissue.org.au/>`__ vendor and buy some magazines from him. He
-  is normally sitting on a busy street corner promoting the magazine. ``The Big Issue is an Australian non-profit and
+  is normally sitting on a busy street corner promoting the magazine.
+
+  ``The Big Issue is an Australian non-profit and
   charity that provides opportunity to people experiencing homelessness and disadvantage.``
 
 Dr Martens
