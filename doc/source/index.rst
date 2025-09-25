@@ -21,13 +21,14 @@ documentation for details.
    tools
    top-websites
 
-
 .. toctree::
    :caption: Random:
    :maxdepth: 2
 
+   books
    finally-got-my-photo-next-to-jorge
    my-friends
+   pens
    special-moments-in-history
    the-book-warehouse
    top-places-to-visit-in-brisbane
@@ -38,7 +39,7 @@ documentation for details.
    :maxdepth: 2
 
    lego
-   zuru
+   zuru-max
 
 .. toctree::
    :caption: Career:
