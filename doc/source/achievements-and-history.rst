@@ -1,6 +1,5 @@
-==============================
-Career Achievments and History
-==============================
+Achievments and History
+=======================
 
 Volunteer Administrator and Scrum Master at not-for-profit Corporation
 ----------------------------------------------------------------------
@@ -111,27 +110,27 @@ Worked on `Upwork <https://en.wikipedia.org/wiki/Upwork>`__ for about 15 years a
 
 🇦🇺 Brisbane, Australia
 
-GitHub Maintainer working for the California Energy Commission and Fortune 500 Companies
-----------------------------------------------------------------------------------------
+GitHub Maintainer
+-----------------
 
 RASENT Solutions LLC
 ^^^^^^^^^^^^^^^^^^^^
 
 Mar, 2018 - May, 2019
 
-Working as a team leader on GitHub providing expert consulting, team leading and training. Responsible as maintainer for multiple repositories.
+Working for the California Energy Commission and Fortune 500 Companies as a team leader on GitHub providing expert consulting, team leading and training. Responsible as maintainer for multiple repositories.
 
 🇦🇺 Brisbane, Australia
 
-Team Lead Programmer working for the California Energy Commission and Fortune 500 Companies
--------------------------------------------------------------------------------------------
+Team Lead Programmer
+--------------------
 
 RASENT Solutions LLC
 ^^^^^^^^^^^^^^^^^^^^
 
 Sep, 2013 - Dec, 2016
 
-Working on the `California Energy Commission's <https://www.energy.ca.gov/>`__ Title 24 Report Generator project.
+Working for the California Energy Commission and Fortune 500 Companies on the Title 24 Report Generator project.
 We started with services like DropBox, Google apps and spreadsheets and then moved onto using Apache Subversion.
 At the end all work was on GitHub.
 

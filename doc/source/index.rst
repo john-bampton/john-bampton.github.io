@@ -32,4 +32,16 @@ documentation for details.
    the-book-warehouse
    top-places-to-visit-in-brisbane
    what-i-like-doing
-   career-achievements-and-history
+
+.. toctree::
+   :caption: Collections:
+   :maxdepth: 2
+
+   lego
+   zuru
+
+.. toctree::
+   :caption: Career:
+   :maxdepth: 2
+
+   achievements-and-history
