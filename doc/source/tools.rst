@@ -1,5 +1,5 @@
-Tools
-=====
+Tools 🧰
+=========
 
 Editors and IDEs
 ----------------

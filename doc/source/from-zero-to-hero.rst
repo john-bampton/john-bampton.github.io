@@ -1,5 +1,5 @@
-From Zero To Hero
-=================
+From Zero To Hero 🦸🏿‍♀️
+=========================
 
 * `Codecademy Free Git Courses <https://www.codecademy.com/search?query=git>`__
 * `Codewars <https://www.codewars.com/>`__: Achieve mastery through challenge. Improve your development skills by training with your peers on code kata that continuously challenge and push your coding practice.

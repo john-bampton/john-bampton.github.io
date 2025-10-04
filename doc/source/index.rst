@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-John Bampton International Man of Mystery
-=========================================
+International Man of Mystery 🌐 😎 🎩 🩳 🥼 🥾 🏀 🏉 ⚽ 🚴 🚶‍♂️‍➡️ 🏋️‍♂️ 🎲 🎮 🀄 ♠️ 🎴 🃏
+===========================================================================================
 
 Dedicated, skilled, and community-oriented individual within the technology and local
 `Brisbane <https://en.wikipedia.org/wiki/Brisbane>`__ communities.
