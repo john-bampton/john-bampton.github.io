@@ -1,5 +1,5 @@
-John and Jorge
-==============
+John and Jorge 👥
+=================
 
 .. image:: /_static/images/avatars/john.jpeg
 .. image:: /_static/images/avatars/jorge.png

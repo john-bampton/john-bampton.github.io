@@ -1,5 +1,5 @@
-The Book Warehouse
-==================
+The Book Warehouse 📖
+======================
 
 My friend **Sean** is a great bloke and runs the `The Book Warehouse <https://www.thebookwarehouse.com.au>`__ at
 Albion. Australian Owned & Operating for Over 30 Years. **Jacob** is extremely professional and has also helped me on

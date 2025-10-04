@@ -1,5 +1,5 @@
-My Friends
-==========
+My Friends 💃
+=============
 
 .. role:: green
 .. role:: red
