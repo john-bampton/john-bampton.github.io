@@ -58,5 +58,3 @@ documentation for details.
    :maxdepth: 2
 
    achievements-and-history
-
-.. image:: /_static/images/pages/starwars-gaming-mats.jpg
