@@ -204,18 +204,43 @@ body {
     background-color: #fcfcfc !important;     /* Fallback color */
 }
 
-/* 2. Block the image on the main content area */
-/* The main content area in Alabaster is inside the .documentwrapper class */
-.documentwrapper {
-    /* Set the main content area to a solid color (e.g., white) to hide the body background */
-    background-color: white !important;
-
-    /* Make sure the content area is slightly padded so the background can show on the sides */
-    padding: 20px;
-    box-sizing: border-box;
-    min-height: 100vh; /* Optional: Ensure it fills the viewport height */
-}
-body.dark .documentwrapper {
+/*
+body.dark .document {
     background-color: #2c2c2c !important;
     color: #e0e0e0;
+}
+*/
+/* Ensure the document wrapper uses the themed solid background color */
+.documentwrapper {
+    /* Use the variable you defined for the content area background */
+    background-color: var(--body-bg-color) !important;
+    /* Clear any potential background image/gradient */
+    background-image: none !important;
+    /* Ensure it covers the space down to the footer */
+    min-height: 100vh;
+}
+
+/* Ensure the footer also uses a solid background color to cover anything below it */
+.footer {
+    /* Use the variable you defined for the general page background (often the same as body-bg) */
+    background-color: var(--bg-color) !important;
+    /* Clear any potential background image/gradient */
+    background-image: none !important;
+}
+
+/* Fix for the main body wrapper to contain the content correctly */
+div.bodywrapper {
+    /* This rule is sometimes necessary to correct the flow if 'min-height: 100vh' is insufficient */
+    overflow: hidden; /* Contains any floating elements and margins */
+}
+/* Force the entire sidebar to use an opaque background color, covering the image */
+div.sphinxsidebar {
+    background-color: var(--bg-color) !important;
+    /* Clear any potential background image/gradient from the theme */
+    background-image: none !important;
+}
+
+/* You may also want to target the sticky part of the sidebar if you are using 'fixed_sidebar' */
+div.sphinxsidebarwrapper {
+    background-color: var(--bg-color) !important;
 }
