@@ -195,3 +195,27 @@ body.dark .icon-grid .icon {
     width: 65px;
     font-size: 3em;
 }
+
+body {
+    background-image: url('images/backgrounds/the-big-issue.jpg') !important;
+    background-size: cover !important;        /* Makes the image cover the entire body */
+    background-attachment: fixed !important;  /* Keeps the image in place while scrolling */
+    background-repeat: no-repeat !important;
+    background-color: #fcfcfc !important;     /* Fallback color */
+}
+
+/* 2. Block the image on the main content area */
+/* The main content area in Alabaster is inside the .documentwrapper class */
+.documentwrapper {
+    /* Set the main content area to a solid color (e.g., white) to hide the body background */
+    background-color: white !important;
+
+    /* Make sure the content area is slightly padded so the background can show on the sides */
+    padding: 20px;
+    box-sizing: border-box;
+    min-height: 100vh; /* Optional: Ensure it fills the viewport height */
+}
+body.dark .documentwrapper {
+    background-color: #2c2c2c !important;
+    color: #e0e0e0;
+}
