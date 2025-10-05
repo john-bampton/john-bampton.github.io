@@ -33,6 +33,7 @@ html_sidebars = {
         'theme_switcher_sidebar.html',  # Your new custom sidebar
         'navigation.html',
         'searchbox.html',
+        'image-links-container.html',
         'icon_grid_sidebar.html'  # Your custom icon grid
     ]
 }
