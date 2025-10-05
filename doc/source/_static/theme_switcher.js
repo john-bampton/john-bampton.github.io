@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Define a set of random color palettes for the 'random' theme
     const randomPalettes = [
-        // Palette 1
+        // Palette 1: Purple/Dark Violet
         {
             '--bg-color': '#f0e6f2',
             '--text-color': '#4a235a',
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
             '--body-bg-color': '#f0e6f2',
             '--body-text-color': '#4a235a'
         },
-        // Palette 2
+        // Palette 2: Teal/Dark Cyan
         {
             '--bg-color': '#e8f8f5',
             '--text-color': '#117a65',
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
             '--body-bg-color': '#e8f8f5',
             '--body-text-color': '#117a65'
         },
-        // Palette 3
+        // Palette 3: Yellow/Amber
         {
             '--bg-color': '#fef9e7',
             '--text-color': '#b07e0c',
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
             '--body-bg-color': '#fef9e7',
             '--body-text-color': '#b07e0c'
         },
-        // Palette 4
+        // Palette 4: Blue/Indigo
         {
             '--bg-color': '#e3f2fd',
             '--text-color': '#1565c0',
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
             '--body-bg-color': '#e3f2fd',
             '--body-text-color': '#1565c0'
         },
-        // Palette 5
+        // Palette 5: Pink/Rose
         {
             '--bg-color': '#fce4ec',
             '--text-color': '#c2185b',
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
             '--body-bg-color': '#fce4ec',
             '--body-text-color': '#c2185b'
         },
-        // Palette 6
+        // Palette 6: Green/Lime
         {
             '--bg-color': '#f1f8e9',
             '--text-color': '#558b2f',
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
             '--body-bg-color': '#f1f8e9',
             '--body-text-color': '#558b2f'
         },
-        // Palette 7
+        // Palette 7: Cyan/Turquoise
         {
             '--bg-color': '#e0f7fa',
             '--text-color': '#00838f',
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
             '--body-bg-color': '#e0f7fa',
             '--body-text-color': '#00838f'
         },
-        // Palette 8
+        // Palette 8: Orange/Brown
         {
             '--bg-color': '#fff3e0',
             '--text-color': '#ef6c00',
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
             '--body-bg-color': '#fff3e0',
             '--body-text-color': '#ef6c00'
         },
-        // Palette 9
+        // Palette 9: Purple/Blue-Grey
         {
             '--bg-color': '#e8eaf6',
             '--text-color': '#303f9f',
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
             '--body-bg-color': '#e8eaf6',
             '--body-text-color': '#303f9f'
         },
-        // Palette 10
+        // Palette 10: Slate/Grey
         {
             '--bg-color': '#eceff1',
             '--text-color': '#37474f',
@@ -107,6 +107,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
 
+    // --- CONFIGURATION FOR IMAGE LOADING ---
+    const TOTAL_IMAGES = 62; // 0.jpg to 61.jpg (62 total)
+    // NOTE: Update this path if your directory is different!
+    const IMAGE_PATH = '_static/images/backgrounds/';
+    const linksContainer = document.getElementById('image-links-container');
+    // --- END IMAGE CONFIGURATION ---
+
     // Easter egg variables
     let matrixSequence = '';
     const matrixTrigger = 'matrix';
@@ -114,6 +121,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const exitTrigger = 'exit';
     let matrixIntervalId = null;
 
+    // ==========================================================
+    // --- THEME SWITCHING LOGIC (Using body and themeToggle) ---
+    // ==========================================================
     if (themeToggle) {
         const savedTheme = localStorage.getItem('theme');
         const savedRandomIndex = localStorage.getItem('randomIndex');
@@ -165,7 +175,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Add keydown event listener for the Easter eggs
+    // ===========================================
+    // --- EASTER EGG KEYDOWN LISTENER (matrix) ---
+    // ===========================================
     document.addEventListener('keydown', (event) => {
         const key = event.key.toLowerCase();
 
@@ -188,7 +200,77 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Helper Functions ---
+    // ========================================================
+    // --- IMAGE LOADING FUNCTIONS (Using body and linksContainer) ---
+    // ========================================================
+
+    // Function to set the background image by number (e.g., 5 sets 'images/5.jpg')
+    function setBackgroundImage(imageNumber) {
+        // Construct the full path
+        const imageUrl = IMAGE_PATH + imageNumber + '.jpg';
+
+        // 1. Set the background image
+        body.style.backgroundImage = 'url("' + imageUrl + '")';
+        body.style.backgroundSize = 'cover';
+        body.style.backgroundPosition = 'center center';
+        body.style.backgroundAttachment = 'fixed';
+
+        // 2. Add/remove a class to update the 'active' link
+        // Safely check if linksContainer exists before using querySelector
+        if (linksContainer) {
+            const currentActive = linksContainer.querySelector('.active-bg');
+            if (currentActive) {
+                currentActive.classList.remove('active-bg');
+            }
+
+            // Find the new active link by its data attribute and apply the class
+            const newActive = linksContainer.querySelector(`[data-image-num="${imageNumber}"]`);
+            if (newActive) {
+                newActive.classList.add('active-bg');
+            }
+        }
+    }
+
+    // Function to generate the links
+    function generateImageLinks() {
+        // Exit immediately if the container doesn't exist
+        if (!linksContainer) return;
+
+        const fragment = document.createDocumentFragment();
+
+        for (let i = 0; i < TOTAL_IMAGES; i++) {
+            const link = document.createElement('a');
+            link.href = '#';
+            link.textContent = i;
+            link.setAttribute('data-image-num', i);
+
+            // 3. Attach the click handler
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                const num = this.getAttribute('data-image-num');
+                setBackgroundImage(num);
+            });
+
+            fragment.appendChild(link);
+        }
+
+        linksContainer.appendChild(fragment);
+    }
+
+    // --- INITIAL IMAGE LOAD ---
+    // Safely execute the image setup only if the container exists
+    if (linksContainer) {
+        generateImageLinks();
+
+        // Load a random image on first page load
+        const initialRandomImage = Math.floor(Math.random() * TOTAL_IMAGES);
+        setBackgroundImage(initialRandomImage);
+    }
+    // --- END IMAGE LOADING FUNCTIONS ---
+
+    // ===============================
+    // --- GENERAL HELPER FUNCTIONS ---
+    // ===============================
 
     // Helper function to update button text
     function updateToggleText(button, theme) {
@@ -274,22 +356,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
-
-function setRandomBackground() {
-    // 2. Generate a random index based on the array length
-    var randomIndex = Math.floor(Math.random() * 62);
-
-    // 3. Get the randomly selected image URL
-    var selectedImage = `_static/images/backgrounds/${randomIndex}.jpg`;
-
-    // 4. Apply the background image to the <body> element
-    document.body.style.backgroundImage = 'url("' + selectedImage + '")';
-
-    // (Optional) Add CSS properties for better display
-    document.body.style.backgroundRepeat = 'no-repeat';
-    document.body.style.backgroundSize = 'cover'; // Ensure it covers the whole screen
-    document.body.style.backgroundPosition = 'center center';
-}
-
-// Execute the function when the page loads
-window.onload = setRandomBackground;
