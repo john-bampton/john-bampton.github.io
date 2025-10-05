@@ -274,3 +274,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
+// 1. Define an array containing the relative paths to your images.
+// You MUST manually update this array whenever you add or remove images.
+var backgroundImages = [
+    '_static/images/backgrounds/axis-and-allies-unbox.jpg',
+    '_static/images/backgrounds/lounge-room.png',
+    '_static/images/backgrounds/quaternity-unbox.jpg',
+    '_static/images/backgrounds/the-big-issue.jpg'
+];
+
+function setRandomBackground() {
+    // 2. Generate a random index based on the array length
+    var randomIndex = Math.floor(Math.random() * backgroundImages.length);
+
+    // 3. Get the randomly selected image URL
+    var selectedImage = backgroundImages[randomIndex];
+
+    // 4. Apply the background image to the <body> element
+    document.body.style.backgroundImage = 'url("' + selectedImage + '")';
+
+    // (Optional) Add CSS properties for better display
+    document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundSize = 'cover'; // Ensure it covers the whole screen
+    document.body.style.backgroundPosition = 'center center';
+}
+
+// Execute the function when the page loads
+window.onload = setRandomBackground;

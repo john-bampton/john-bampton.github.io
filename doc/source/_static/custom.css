@@ -197,7 +197,6 @@ body.dark .icon-grid .icon {
 }
 
 body {
-    background-image: url('images/backgrounds/the-big-issue.jpg') !important;
     background-size: cover !important;        /* Makes the image cover the entire body */
     background-attachment: fixed !important;  /* Keeps the image in place while scrolling */
     background-repeat: no-repeat !important;
