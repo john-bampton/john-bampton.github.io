@@ -14,6 +14,22 @@ Welcome to my site built using ``reStructuredText`` syntax. See the
 documentation for details.
 
 .. toctree::
+   :caption: About Me:
+   :maxdepth: 2
+
+   finally-got-my-photo-next-to-jorge
+   my-friends
+   playstation-5
+   what-i-like-doing
+
+.. toctree::
+   :caption: Brisbane:
+   :maxdepth: 2
+
+   the-book-warehouse
+   top-places-to-visit
+
+.. toctree::
    :caption: Open Your Mind:
    :maxdepth: 2
 
@@ -25,20 +41,16 @@ documentation for details.
    :caption: Random:
    :maxdepth: 2
 
-   books
-   finally-got-my-photo-next-to-jorge
-   my-friends
-   pens
    special-moments-in-history
-   the-book-warehouse
-   top-places-to-visit-in-brisbane
-   what-i-like-doing
 
 .. toctree::
    :caption: Collections:
    :maxdepth: 2
 
+   books
    lego
+   pens
+   trading-cards
    zuru-max
 
 .. toctree::
@@ -46,3 +58,5 @@ documentation for details.
    :maxdepth: 2
 
    achievements-and-history
+
+.. image:: /_static/images/pages/starwars-gaming-mats.jpg
