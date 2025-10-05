@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function setRandomBackground() {
     // 2. Generate a random index based on the array length
-    var randomIndex = Math.floor(Math.random() * 34);
+    var randomIndex = Math.floor(Math.random() * 62);
 
     // 3. Get the randomly selected image URL
     var selectedImage = `_static/images/backgrounds/${randomIndex}.jpg`;
