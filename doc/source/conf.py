@@ -30,19 +30,17 @@ html_logo = "_static/images/logo.jpeg"
 html_sidebars = {
     '**': [
         'about.html',  # Retains the default Alabaster sidebar
-        'theme_switcher_sidebar.html',  # Your new custom sidebar
         'navigation.html',
         'searchbox.html',
-        'image-links-container.html',
-        'icon_grid_sidebar.html'  # Your custom icon grid
     ]
 }
 
 # The other options remain the same
 html_css_files = [
-    'custom.css',
+    'css/custom.css',
 ]
 
+# 2. Add your custom JavaScript file
 html_js_files = [
-    'theme_switcher.js',
+    'js/custom.js',
 ]
