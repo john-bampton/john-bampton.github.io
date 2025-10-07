@@ -3,7 +3,7 @@
 // =======================================================
 
 const IMAGE_PATH_PREFIX = '_static/images/backgrounds/';
-const MAX_IMAGES = 62; // Images are 0.jpg through 61.jpg (62 total)
+const MAX_IMAGES = 79; // Images are 0.jpg through 61.jpg (62 total)
 
 /**
  * Returns a random integer between 0 (inclusive) and 61 (inclusive).
