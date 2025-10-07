@@ -15,7 +15,6 @@ function getRandomImageIndex() {
 
 /**
  * Helper function to construct the correct image file path.
- * The image file names are 0.jpg, 1.jpg, etc.
  * @param {number} index - The image number (0 to 61).
  * @returns {string} The relative image path (e.g., '_static/images/backgrounds/0.jpg').
  */
@@ -177,7 +176,7 @@ function cycleTheme() {
     let newTheme;
     let newImagePath = currentBackground;
 
-    // FIX: If in Gallery Mode, turning the theme toggle MUST turn Gallery Mode OFF.
+    // Fix: If in Gallery Mode, turning the theme toggle MUST turn Gallery Mode OFF.
     const body = document.body;
     const galleryBtn = document.getElementById('gallery-toggle-btn');
     if (body.classList.contains('background-visible')) {
@@ -283,21 +282,25 @@ function initializeControls() {
 function loadState() {
     const currentTheme = localStorage.getItem('currentTheme') || 'light';
     let initialImagePath = localStorage.getItem('currentBackground');
-    const galleryMode = localStorage.getItem('galleryMode');
+    const galleryMode = localStorage.getItem('galleryMode'); // 'on' or 'off'
 
-    // --- Determine Initial Image Path ---
-    if (currentTheme === 'random' && galleryMode !== 'on') {
-        // If theme is random, grab a random image on load (overwriting saved background)
+    // --- 1. Determine Initial Image Path ---
+    if (currentTheme === 'random') {
+        // FIX IMPLEMENTED: Always randomize the image path if the theme is 'random',
+        // regardless of the gallery mode state. This ensures a new background
+        // and new random colors on every page reload for the 'random' theme.
         initialImagePath = getImageFilename(getRandomImageIndex());
     } else if (!initialImagePath) {
          // Default to the first image (0.jpg) if no background is saved
          initialImagePath = getImageFilename(0);
     }
 
-    // Apply saved theme and image
+    // Apply saved theme and the determined image path.
+    // This handles theme class, color variables, and background image style.
     applyTheme(currentTheme, initialImagePath);
 
-    // --- Apply Gallery Mode ---
+    // --- 2. Apply Gallery Mode ---
+    // This must happen AFTER applyTheme, as it relies on the button being present.
     if (galleryMode === 'on') {
         const body = document.body;
         const galleryBtn = document.getElementById('gallery-toggle-btn');
