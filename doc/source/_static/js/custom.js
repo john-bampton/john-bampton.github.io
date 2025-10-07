@@ -292,7 +292,7 @@ function loadState() {
         initialImagePath = getImageFilename(getRandomImageIndex());
     } else if (!initialImagePath) {
          // Default to the first image (0.jpg) if no background is saved
-         initialImagePath = getImageFilename(0);
+         initialImagePath = getImageFilename(31);
     }
 
     // Apply saved theme and the determined image path.
