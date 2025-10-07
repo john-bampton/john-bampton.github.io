@@ -1,0 +1,518 @@
+/* ======================================================= */
+/* 1. BASE LAYOUT & MIN-HEIGHT STYLING */
+/* ======================================================= */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    min-height: 100vh;
+    /* Fix for scrollbar causing layout shift */
+    scrollbar-gutter: stable;
+    /* Ensure scrollbar-gutter works on desktop layout */
+    overflow-y: scroll;
+}
+
+#main-layout-wrapper {
+    /* Ensures minimum height for background image stretching */
+    min-height: max(100vh, 2480px);
+    /* Ensures the background color is transparent so the image is the only background */
+    background-color: transparent;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    transition: background-image 0.5s ease;
+    /* Default is Block, will be Flex in media queries */
+    display: block !important;
+}
+
+/* New Wrapper to group Content and Controls - Default block flow for Desktop */
+#top-content-row {
+    display: block;
+}
+
+/* ======================================================= */
+/* 2. IMAGE LINK CONTROLS (#image-links-container) */
+/* ======================================================= */
+
+/* The outer placeholder wrapper provided by the HTML */
+#custom-fixed-controls {
+    /* For Desktop, controls are fixed and the outer wrapper can be small */
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 0;
+    width: 0;
+    z-index: 1000;
+    display: block !important;
+}
+
+#image-links-container {
+    /* DEFAULT POSITION: FIXED LEFT (Applies to > 1340px) */
+    position: fixed;
+    top: 20px;
+    left: 0px; /* Flush left position for desktop */
+    right: auto;
+
+    z-index: 1000;
+
+    /* SCROLLING FIX */
+    max-height: 100vh;
+    overflow-y: auto;
+
+    /* Styling */
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.75);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+    /* Layout */
+    display: flex;
+    /* DEFAULT DIRECTION: VERTICAL (Applies to > 1340px) */
+    flex-direction: column;
+    gap: 6px;
+}
+
+#image-links-container a {
+    color: #fff;
+    text-decoration: none;
+
+    /* FINAL UNIFORM WIDTH (110px wide - all buttons are 2 lines max in desktop) */
+    width: 110px !important;
+    white-space: normal !important; /* Allows text wrapping */
+
+    /* UNIFORM PADDING */
+    padding: 6px 6px !important;
+
+    height: auto !important;
+
+    border-radius: 4px;
+    transition: background-color 0.2s, font-weight 0.2s;
+    font-size: 0.9em;
+    text-align: center;
+    border: 1px solid transparent;
+    flex-shrink: 0;
+    display: block;
+}
+
+#image-links-container a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+#image-links-container a.active-bg {
+    background-color: #007bff;
+    font-weight: bold;
+    border-color: #007bff;
+}
+
+/* --- Consolidated Control Styles (Top two buttons) --- */
+#theme-cycle-btn, #gallery-toggle-btn {
+    color: white;
+    font-weight: bold;
+    border: 1px solid transparent;
+    margin-bottom: 4px;
+}
+
+#theme-cycle-btn {
+    background-color: #3498db;
+    border-color: #3498db;
+}
+#theme-cycle-btn:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+}
+
+#gallery-toggle-btn {
+    background-color: #2ecc71;
+    border-color: #2ecc71;
+}
+#gallery-toggle-btn:hover {
+    background-color: #27ae60;
+    border-color: #27ae60;
+}
+
+
+/* ======================================================= */
+/* 3. DESKTOP LAYOUT (>= 1340px) - SIDEBAR FIXED RIGHT */
+/* ======================================================= */
+
+@media (min-width: 1340px) {
+    /* Reset global wrappers */
+    #main-layout-wrapper { display: block !important; }
+    #top-content-row { display: block !important; }
+    #main-content-column { float: none !important; width: auto !important; }
+
+    /* Ensure the logo is visible */
+    .sphinxsidebarwrapper p.logo,
+    .sphinxsidebarwrapper h1.logo {
+        display: block !important;
+    }
+
+    /* 1. Sidebar to the right (FIXED) */
+    .sphinxsidebar {
+        display: block !important;
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        left: auto !important;
+        float: none !important;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        width: 230px !important;
+    }
+
+    /* 2. Main content area adjustment */
+    .bodywrapper {
+        /* Adjusted LEFT MARGIN to 230px for flush left controls (was 250px) */
+        margin-left: 230px !important;
+        /* FIXED RIGHT MARGIN: Space for fixed sidebar (230px) */
+        margin-right: 230px !important;
+        float: none !important;
+        overflow: hidden !important;
+    }
+
+    /* 3. CENTERING THE CONTENT within the available space */
+    .body {
+        max-width: 760px;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        /* Standard desktop padding */
+        padding: 1.5em;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    }
+
+    /* 4. Controls: Fixed Left position */
+    #custom-fixed-controls {
+        position: fixed !important;
+        width: 0 !important;
+        height: 0 !important;
+        display: block !important;
+    }
+    #image-links-container {
+        position: fixed !important;
+        left: 0px !important; /* Ensured flush left position */
+        right: auto !important;
+        width: auto !important;
+        /* Default: Vertical */
+        flex-direction: column !important;
+    }
+}
+
+
+/* ======================================================= */
+/* 3B. TABLET LAYOUT (960px <= width < 1340px) - Two Column */
+/* ======================================================= */
+
+@media (min-width: 960px) and (max-width: 1339px) {
+
+    .sphinxsidebarwrapper p.logo,
+    .sphinxsidebarwrapper h1.logo {
+        display: none !important;
+    }
+
+    /* 1. MAIN WRAPPER: Stacks the top-content-row (1) above the sidebar (2) */
+    #main-layout-wrapper {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+    }
+
+    /* Order 1: The Top Row Container (Content and Controls Side-by-Side) */
+    #top-content-row {
+        display: flex !important;
+        flex-direction: row !important; /* Content and Controls side-by-side */
+        width: 100% !important;
+        order: 1 !important;
+        position: relative !important;
+        padding: 10px;
+    }
+
+    /* Order 2: The Sidebar (Full Width Below) */
+    .sphinxsidebar {
+        order: 2 !important;
+        position: relative !important;
+        float: none !important;
+        width: 100% !important;
+        padding: 20px 10px;
+        margin: 0 !important;
+        border-top: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    /* 2. MAIN CONTENT COLUMN (Left of the Top Row) */
+    #main-content-column {
+        flex-grow: 1;
+        min-width: 60%;
+        width: auto !important;
+        float: none !important;
+        position: relative !important;
+        order: 1 !important;
+    }
+    .bodywrapper {
+        margin: 0 !important;
+        float: none !important;
+        width: 100% !important;
+    }
+    .body {
+        max-width: none !important;
+        margin: 0 !important;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        /* Standard tablet padding */
+        padding: 1.5em;
+    }
+
+    /* 3. CONTROLS (Right of the Top Row) */
+    #custom-fixed-controls {
+        position: relative !important;
+        width: auto !important;
+        height: auto !important;
+        float: none !important;
+        order: 2 !important;
+        padding-left: 10px;
+        align-self: flex-start;
+    }
+    #image-links-container {
+        position: static !important;
+        left: auto !important;
+        right: auto !important;
+        margin: 0 !important;
+        width: auto !important;
+
+        /* HORIZONTAL LAYOUT */
+        flex-direction: row !important;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
+    /* Tweak for horizontal buttons in tablet */
+    #image-links-container a {
+        width: auto !important;
+        max-width: 120px;
+    }
+}
+
+
+/* ======================================================= */
+/* 4. MOBILE LAYOUT (<= 959px) - STACKED: Content (1), Controls (2), Sidebar (3) */
+/* ======================================================= */
+
+/* Targets ALL screens below 960px */
+@media (max-width: 959px) {
+
+    .sphinxsidebarwrapper p.logo,
+    .sphinxsidebarwrapper h1.logo {
+        display: none !important;
+    }
+
+    /* --- 1. MAIN WRAPPER: Stacks the top-content-row (1) above the sidebar (2) --- */
+    #main-layout-wrapper {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+    }
+
+    /* --- 2. TOP CONTENT ROW (Order 1) - Contains Content (Order 1) and Controls (Order 2) --- */
+    #top-content-row {
+        order: 1 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        /* Outer padding pushing content/controls away from screen edge */
+        padding: 0 20px !important;
+    }
+
+    /* --- 3. SIDEBAR (Order 2) - Third major block in the final vertical stack --- */
+    .sphinxsidebar {
+        order: 2 !important;
+        position: static !important;
+        width: 100% !important;
+        margin-top: 20px;
+        /* Padding is for the whole sidebar box itself (20px gap from screen edge) */
+        padding: 20px 20px;
+        border-top: 1px solid #ccc;
+    }
+
+    /* FIX: Increased internal padding for sidebar content to 30px */
+    .sphinxsidebarwrapper {
+        padding: 10px 30px;
+    }
+
+    /* --- 4. CONTENT COLUMN (Inner flow 1) - First in the top-row stack --- */
+    #main-content-column {
+        order: 1 !important;
+        width: 100% !important;
+        display: block !important;
+        padding: 0 !important;
+    }
+    .bodywrapper {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+    .body {
+        max-width: 100% !important;
+        margin: 0 !important;
+        /* FIX: Increased horizontal padding to 30px for clear text indentation */
+        padding: 1.5em 30px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    }
+
+    /* --- 5. CONTROLS (Inner flow 2) - Second in the top-row stack --- */
+    #custom-fixed-controls {
+        order: 2 !important;
+        position: static !important;
+        height: auto !important;
+        width: 100% !important;
+        margin-top: 20px;
+        padding: 10px 0;
+    }
+    #image-links-container {
+        position: static !important;
+        max-height: none !important;
+        overflow-y: visible !important;
+        width: 100% !important;
+        margin: 0 !important;
+
+        /* CORRECT: HORIZONTAL LAYOUT */
+        flex-direction: row !important;
+        flex-wrap: wrap;
+        justify-content: center;
+        background-color: rgba(0, 0, 0, 0.95);
+    }
+}
+
+
+/* ======================================================= */
+/* 5. THEME CLASSES & CONTENT VISIBILITY (Applied to the <body>) */
+/* ======================================================= */
+
+/* --- Light Theme --- */
+body.light {
+    color: #333333;
+    background-color: transparent !important;
+}
+body.light .sphinxsidebar {
+    /* Semi-transparent white to see background image */
+    background-color: rgba(247, 247, 247, 0.95) !important;
+}
+body.light .sphinxsidebar .sidebar,
+body.light .sphinxsidebar .sidebarwrapper {
+    background-color: rgba(247, 247, 247, 0.95) !important;
+}
+body.light .body {
+    /* Semi-transparent pure white for main content */
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    color: #333333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Dark Theme --- */
+body.dark {
+    color: #e0e0e0; /* General text color (light gray) */
+    background-color: transparent !important;
+}
+/* Dark Mode Overrides for Content and Sidebar */
+body.dark .sphinxsidebar {
+    background-color: rgba(34, 34, 34, 0.95) !important;
+}
+body.dark .sphinxsidebar .sidebar,
+body.dark .sphinxsidebar .sidebarwrapper {
+    background-color: rgba(34, 34, 34, 0.95) !important;
+}
+body.dark .body {
+    background-color: rgba(46, 46, 46, 0.95) !important;
+    color: #e0e0e0;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+/* --- Dark Theme: Link and Heading Contrast Fixes --- */
+body.dark a {
+    color: #4da6ff; /* A bright, accessible blue */
+    text-decoration: underline;
+}
+body.dark a:visited {
+    color: #a370ff; /* A bright, accessible purple for visited links */
+    text-decoration: underline;
+}
+body.dark a:hover {
+    color: #79c3ff;
+}
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4,
+body.dark h5,
+body.dark h6 {
+    color: #ffffff; /* Pure white for maximum contrast */
+}
+
+
+/* --- Random Theme (Uses CSS variables set by JavaScript) --- */
+body.random {
+    color: var(--random-text-color, #333333);
+    background-color: transparent !important;
+}
+body.random .sphinxsidebar {
+    background-color: var(--random-sidebar-bg, rgba(247, 247, 247, 0.95)) !important;
+}
+body.random .sphinxsidebar .sidebar,
+body.random .sphinxsidebar .sidebarwrapper {
+    background-color: var(--random-sidebar-bg, rgba(247, 247, 247, 0.95)) !important;
+}
+body.random .body {
+    background-color: var(--random-content-bg, rgba(255, 255, 255, 0.95)) !important;
+    color: var(--random-text-color, #333333);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Gallery Mode (Content Hiding) --- */
+
+body.background-visible #main-content-column,
+body.background-visible .sphinxsidebar {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+body.background-visible #custom-fixed-controls {
+    /* When in gallery mode, controls MUST be fixed, regardless of screen size. */
+    position: fixed !important;
+    top: 20px !important;
+    left: 20px !important;
+    right: auto !important;
+    order: initial !important;
+    width: auto !important;
+    height: 0 !important;
+    margin-top: 0 !important;
+
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+body.background-visible #image-links-container {
+    position: fixed !important;
+    top: 20px !important;
+    left: 20px !important;
+    right: auto !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+    width: auto !important;
+    margin: 0 !important;
+    /* In gallery mode, controls are always vertical for space optimization */
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+
+body.background-visible .footer,
+body.background-visible #sidebar-selector {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
