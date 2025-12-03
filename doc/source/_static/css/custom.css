@@ -516,3 +516,7 @@ body.background-visible #sidebar-selector {
     opacity: 0 !important;
     visibility: hidden !important;
 }
+
+#searchbox {
+    margin-bottom: 350px !important;
+}
