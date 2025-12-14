@@ -1,7 +1,7 @@
 # The 400 Faces - Scrape Your GitHub Avatars
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](LICENSE)
-[![GitHub contributors](https://img.shields.io/github/contributors/john-bampton/faces.svg)](https://github.com/john-bampton/faces/graphs/contributors)
+[![GitHub contributors](https://img.shields.io/github/contributors/john-bampton/john-bampton.github.io.svg)](https://github.com/john-bampton/john-bampton.github.io/graphs/contributors)
 
 A Python script to fetch and display the top 400 GitHub user avatars in a sleek, interactive grid. Perfect for exploring the faces behind popular GitHub profiles.
 
@@ -20,7 +20,7 @@ A Python script to fetch and display the top 400 GitHub user avatars in a sleek,
 
 ## Preview
 
-Check out the live preview: [https://john-bampton.github.io/faces/](https://john-bampton.github.io/faces/)
+Check out the live preview: [https://john-bampton.github.io/](https://john-bampton.github.io/)
 
 ---
 
@@ -29,7 +29,7 @@ Check out the live preview: [https://john-bampton.github.io/faces/](https://john
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/john-bampton/faces.git
+git clone https://github.com/john-bampton/john-bampton.github.io.git
 cd faces
 ````
 
