@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top GitHub Faces</title>
+
+<meta name="description" content="Explore the top GitHub users and their avatars. See the 400 most popular GitHub faces in one place.">
+<meta name="keywords" content="GitHub, avatars, top developers, open source, profiles, faces">
+<meta name="author" content="John Bampton">
+<meta name="theme-color" content="#667eea">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GitHub Faces">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Top GitHub Faces">
+<meta property="og:description" content="Explore the top GitHub users and their avatars. See the 400 most popular GitHub faces in one place.">
+<meta property="og:url" content="https://github.com/john-bampton/faces">
+<meta property="og:image" content="https://github.com/john-bampton/faces/raw/main/docs/images/preview.jpg">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Top GitHub Faces">
+<meta name="twitter:description" content="Explore the top GitHub users and their avatars. See the 400 most popular GitHub faces in one place.">
+<meta name="twitter:image" content="https://github.com/john-bampton/faces/raw/main/docs/images/preview.jpg">
+
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="images/other/hm-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="images/other/hm-192.png">
+<link rel="apple-touch-icon" href="images/other/hm-180.png">
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="styles.css?version=3">
+</head>
+<body>
+    <a href="https://github.com/john-bampton/faces">
+        <img class="github-ribbon" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_darkblue_121621.png?resize=149%2C149" alt="Fork me on GitHub">
+    </a>
+
+<!-- Mobile Filter Toggle Button -->
+<button id="filterToggleBtn" class="filter-toggle-btn" onclick="toggleFiltersPanel()" aria-label="Toggle filters">
+    🔍 Filters
+</button>
+
+<!-- Main Layout -->
+<div class="main-layout">
+    <!-- Header -->
+    <header class="header-section">
+        <div id="head"><h1>Top GitHub Faces</h1></div>
+    </header>
+
+    <!-- Filters Aside -->
+    <aside id="filtersAside" class="filters-aside">
+        <!-- Mobile Close Button -->
+        <button id="filterCloseBtn" class="filter-close-btn" onclick="toggleFiltersPanel()" aria-label="Close filters">
+            ✕
+        </button>
+
+        <div class="filters-content">
+            <h2>🔍 Find Your Favorite Developer</h2>
+            
+            <div class="filters-section">
+                <div class="search-input-wrapper">
+                    <input type="text" id="searchInput" placeholder="Search by name, username, or location...">
+                    <span class="search-icon">🔎</span>
+                </div>
+
+                <!-- Sort -->
+                <div class="filter-group">
+                    <label for="sortBy">Sort by:</label>
+                    <select id="sortBy">
+                        <option value="followers-desc">Most Followers</option>
+                        <option value="followers-asc">Least Followers</option>
+                        <option value="following-desc">Most Following</option>
+                        <option value="following-asc">Least Following</option>
+                        <option value="repos-desc">Most Repos</option>
+                        <option value="repos-asc">Least Repos</option>
+                        <option value="forks-desc">Most Forks</option>
+                        <option value="forks-asc">Least Forks</option>
+                        <option value="sponsors-desc">Most Public Sponsors</option>
+                        <option value="sponsors-asc">Least Public Sponsors</option>
+                        <option value="sponsoring-desc">Most Sponsoring</option>
+                        <option value="sponsoring-asc">Least Sponsoring</option>
+                        <option value="ratio-followers-following">Followers/Following Ratio</option>
+                        <option value="name-asc">Name (A-Z)</option>
+                        <option value="name-desc">Name (Z-A)</option>
+                    </select>
+                </div>
+
+                <!-- Followers Filters -->
+                <div class="filter-group">
+                    <label for="followersFilter">Min Followers:</label>
+                    <select id="followersFilter">
+                        <option value="0">Any</option>
+                        <option value="1000">1K+</option>
+                        <option value="2000">2K+</option>
+                        <option value="5000">5K+</option>
+                        <option value="10000">10K+</option>
+                        <option value="25000">25K+</option>
+                        <option value="50000">50K+</option>
+                        <option value="100000">100K+</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="maxFollowersFilter">Max Followers:</label>
+                    <select id="maxFollowersFilter">
+                        <option value="999999999">Any</option>
+                        <option value="999">Less than 1K</option>
+                        <option value="1000">1K</option>
+                        <option value="2000">2K</option>
+                        <option value="5000">5K</option>
+                        <option value="10000">10K</option>
+                        <option value="25000">25K</option>
+                        <option value="50000">50K</option>
+                        <option value="100000">100K</option>
+                        <option value="500000">500K</option>
+                        <option value="1000000">1M</option>
+                    </select>
+                </div>
+
+                <!-- Repository Filters -->
+                <div class="filter-group">
+                    <label for="minReposFilter">Min Repos:</label>
+                    <select id="minReposFilter">
+                        <option value="0">Any</option>
+                        <option value="10">10+</option>
+                        <option value="25">25+</option>
+                        <option value="50">50+</option>
+                        <option value="100">100+</option>
+                        <option value="250">250+</option>
+                        <option value="500">500+</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="maxReposFilter">Max Repos:</label>
+                    <select id="maxReposFilter">
+                        <option value="999999">Any</option>
+                        <option value="10">Less than 10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="250">250</option>
+                        <option value="500">500</option>
+                        <option value="1000">1000</option>
+                    </select>
+                </div>
+
+                <!-- Forks Filters -->
+                <div class="filter-group">
+                    <label for="minForksFilter">Min Forks:</label>
+                    <select id="minForksFilter">
+                        <option value="0">Any</option>
+                        <option value="10">10+</option>
+                        <option value="50">50+</option>
+                        <option value="100">100+</option>
+                        <option value="500">500+</option>
+                        <option value="1000">1000+</option>
+                        <option value="5000">5000+</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="maxForksFilter">Max Forks:</label>
+                    <select id="maxForksFilter">
+                        <option value="999999">Any</option>
+                        <option value="10">Less than 10</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="500">500</option>
+                        <option value="1000">1000</option>
+                        <option value="5000">5000</option>
+                    </select>
+                </div>
+
+                <!-- Public Sponsors Filters -->
+                <div class="filter-group">
+                    <label for="sponsorsFilter">Public Sponsors:</label>
+                    <select id="sponsorsFilter">
+                        <option value="any">Any</option>
+                        <option value="has-sponsors">Has Public Sponsors</option>
+                        <option value="min-1">1+</option>
+                        <option value="min-5">5+</option>
+                        <option value="min-10">10+</option>
+                        <option value="min-50">50+</option>
+                        <option value="min-100">100+</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="sponsoringFilter">Sponsoring:</label>
+                    <select id="sponsoringFilter">
+                        <option value="any">Any</option>
+                        <option value="is-sponsoring">Is Sponsoring</option>
+                        <option value="min-1">1+</option>
+                        <option value="min-5">5+</option>
+                        <option value="min-10">10+</option>
+                        <option value="min-50">50+</option>
+                        <option value="min-100">100+</option>
+                    </select>
+                </div>
+
+                <!-- Avatar Age Filter -->
+                <div class="filter-group">
+                    <label for="avatarAgeFilter">Avatar Updated:</label>
+                    <select id="avatarAgeFilter">
+                        <option value="any">Any</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                        <option value="6months">Last 6 Months</option>
+                        <option value="year">This Year</option>
+                        <option value="2years">Last 2 Years</option>
+                        <option value="5years">Less than 5 Years</option>
+                        <option value="old">Over 5 Years</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="filters-buttons">
+                <button class="btn-apply" onclick="toggleFiltersPanel()">Apply Filters</button>
+                <button class="btn-reset" onclick="resetFilters()">Reset</button>
+            </div>
+
+            <!-- Loading State -->
+            <div class="results-info" id="loadingState" style="display: none;">
+                <div class="loading-spinner"></div>
+                <div>Loading developers...</div>
+            </div>
+
+            <!-- Results Info -->
+            <div class="results-info" id="resultsInfo">
+                <div id="resultsFound">
+                    Showing <strong id="visibleCount">0</strong> of <strong id="totalCount">0</strong> developers
+                </div>
+                <div id="noResults" style="display: none;">
+                    <strong>No developers found</strong> matching your filters.
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Loading State for Desktop -->
+        <div class="results-info-desktop" id="loadingStateDesktop" style="display: none;">
+            <div class="loading-spinner"></div>
+            <div>Loading developers...</div>
+        </div>
+
+        <!-- Results Info for Desktop -->
+        <div class="results-info-desktop" id="resultsInfoDesktop">
+            <div id="resultsFoundDesktop">
+                Showing <strong id="visibleCountDesktop">0</strong> of <strong id="totalCountDesktop">0</strong> developers
+            </div>
+            <div id="noResultsDesktop" style="display: none;">
+                <strong>No developers found</strong> matching your filters.
+            </div>
+        </div>
+        <!-- grid will be injected here by github_faces.py -->

@@ -1,0 +1,9 @@
+[project]
+name = "github-faces"
+version = "0.1.0"
+dependencies = ["requests>=2.31.0", "Jinja2>=3.0.0"]
+
+[tool.poetry.dev-dependencies]
+flake8 = "*"
+pylint = "*"
+yamllint = "*"

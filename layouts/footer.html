@@ -1,0 +1,27 @@
+</main>
+</div>
+
+<footer>
+<p>© 2025 <a href="https://github.com/john-bampton/faces" target="_blank" rel="noopener">John Bampton / GitHub Faces</a>. All rights reserved.</p>
+</footer>
+
+<script src="bootstrap/js/jquery.min.js"></script>
+<script src="bootstrap/js/popper.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="script.js?version=3"></script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(registration => {
+        console.log('✓ Service Worker registered:', registration);
+      })
+      .catch(error => {
+        console.warn('✗ Service Worker registration failed:', error);
+      });
+  });
+}
+</script>
+</body>
+</html>
