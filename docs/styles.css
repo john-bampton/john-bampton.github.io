@@ -2,9 +2,28 @@
     box-sizing: border-box;
 }
 
+/* ============================================================================ */
+/* CSS VARIABLES FOR THEMING */
+/* ============================================================================ */
+:root {
+    --bg-color: #f0f2f5;
+    --text-color: #333;
+    --text-secondary: #666;
+    --card-bg: #ffffff;
+    --card-border: #ddd;
+    --input-bg: #ffffff;
+    --input-border: #ccc;
+    --header-bg: #ffffff;
+    --footer-bg: #ffffff;
+    --footer-border: #e0e0e0;
+    --link-color: #667eea;
+    --link-hover: #764ba2;
+}
+
 body {
     font-family: 'Arial', sans-serif;
-    background: #f0f2f5;
+    background: var(--bg-color);
+    color: var(--text-color);
     margin: 0;
     padding: 0;
 }
@@ -593,60 +612,70 @@ footer {
         display: none;
     }
 }
+
 /* ============================================================================ */
-/* DARK MODE STYLES */
+/* DARK MODE STYLES - USING CSS VARIABLES */
 /* ============================================================================ */
 body.dark-mode {
-    background: #1e1e1e;
-    color: #e0e0e0;
+    --bg-color: #1e1e1e;
+    --text-color: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --card-bg: #2d2d2d;
+    --card-border: #444;
+    --input-bg: #3a3a3a;
+    --input-border: #555;
+    --header-bg: #2d2d2d;
+    --footer-bg: #2d2d2d;
+    --footer-border: #444;
+    --link-color: #667eea;
+    --link-hover: #764ba2;
+}
+
+body.dark-mode {
+    background: var(--bg-color);
+    color: var(--text-color);
 }
 
 body.dark-mode h1 {
-    color: #e0e0e0;
+    color: var(--text-color);
 }
 
 body.dark-mode .header-section {
-    background: #2d2d2d;
+    background: var(--header-bg);
 }
 
 body.dark-mode .filters-aside {
-    background: #2d2d2d;
-    border-right: 1px solid #444;
+    background: var(--header-bg);
+    border-right: 1px solid var(--card-border);
 }
 
-body.dark-mode .filters-aside h2 {
-    color: #e0e0e0;
-}
-
-body.dark-mode .filters-content {
-    color: #e0e0e0;
-}
-
+body.dark-mode .filters-aside h2,
+body.dark-mode .filters-content,
 body.dark-mode .filters-content label {
-    color: #e0e0e0;
+    color: var(--text-color);
 }
 
 body.dark-mode input[type="text"],
 body.dark-mode select {
-    background: #3a3a3a;
-    color: #e0e0e0;
-    border: 1px solid #555;
+    background: var(--input-bg);
+    color: var(--text-color);
+    border: 1px solid var(--input-border);
 }
 
 body.dark-mode input[type="text"]::placeholder {
-    color: #888;
+    color: var(--text-secondary);
 }
 
 body.dark-mode input[type="text"]:focus,
 body.dark-mode select:focus {
-    border-color: #667eea;
-    background: #3a3a3a;
+    border-color: var(--link-color);
+    background: var(--input-bg);
 }
 
 body.dark-mode .card {
-    background: #2d2d2d;
-    color: #e0e0e0;
-    border: 1px solid #444;
+    background: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--card-border);
 }
 
 body.dark-mode .card:hover {
@@ -654,7 +683,7 @@ body.dark-mode .card:hover {
 }
 
 body.dark-mode .details-box {
-    background: #1e1e1e;
+    background: var(--bg-color);
 }
 
 body.dark-mode .details-box strong {
@@ -662,49 +691,40 @@ body.dark-mode .details-box strong {
 }
 
 body.dark-mode .details-box span {
-    color: #b0b0b0;
+    color: var(--text-secondary);
 }
 
-body.dark-mode .details-box a {
-    color: #667eea;
+body.dark-mode .details-box a,
+body.dark-mode footer a {
+    color: var(--link-color);
 }
 
-body.dark-mode .details-box a:hover {
-    color: #764ba2;
+body.dark-mode .details-box a:hover,
+body.dark-mode footer a:hover {
+    color: var(--link-hover);
 }
 
 body.dark-mode .btn-apply,
 body.dark-mode .btn-reset {
-    background: #667eea;
+    background: var(--link-color);
     color: white;
     border: none;
 }
 
 body.dark-mode .btn-apply:hover,
 body.dark-mode .btn-reset:hover {
-    background: #764ba2;
+    background: var(--link-hover);
 }
 
-body.dark-mode .results-info {
-    color: #e0e0e0;
-}
-
+body.dark-mode .results-info,
 body.dark-mode .results-info strong {
-    color: #fff;
+    color: var(--text-color);
 }
 
 body.dark-mode footer {
-    background: #2d2d2d;
-    color: #b0b0b0;
-    border-top: 1px solid #444;
-}
-
-body.dark-mode footer a {
-    color: #667eea;
-}
-
-body.dark-mode footer a:hover {
-    color: #764ba2;
+    background: var(--footer-bg);
+    color: var(--text-secondary);
+    border-top: 1px solid var(--footer-border);
 }
 
 /* Dark Mode Toggle Button */

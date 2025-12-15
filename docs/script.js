@@ -31,6 +31,12 @@
 
 let allUsers = [];
 let filteredUsers = [];
+let darkModeToggleElement = null;
+
+// Dark mode constants
+const DARK_MODE_KEY = 'darkMode';
+const THEME_ENABLED = 'enabled';
+const THEME_DISABLED = 'disabled';
 
 // ============================================================================
 // INITIALIZATION
@@ -41,6 +47,7 @@ document.addEventListener('DOMContentLoaded', initializeApp);
  * Initialize the application on page load
  */
 function initializeApp() {
+    initializeDarkMode();
     const cards = document.querySelectorAll('.card');
     showLoadingState();
     document.getElementById('totalCount').textContent = cards.length.toLocaleString();
@@ -516,18 +523,19 @@ function hideLoadingState() {
  * - Load saved preference from localStorage
  * - Set up toggle button listener
  * - Apply dark mode class if preference is set
+ * - Cache DOM element for performance
  */
 function initializeDarkMode() {
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    const isDarkMode = localStorage.getItem('darkMode') === 'enabled';
+    darkModeToggleElement = document.getElementById('darkModeToggle');
+    const isDarkMode = localStorage.getItem(DARK_MODE_KEY) === THEME_ENABLED;
     
     if (isDarkMode) {
         document.body.classList.add('dark-mode');
         updateDarkModeIcon(true);
     }
     
-    if (darkModeToggle) {
-        darkModeToggle.addEventListener('click', toggleDarkMode);
+    if (darkModeToggleElement) {
+        darkModeToggleElement.addEventListener('click', toggleDarkMode);
     }
 }
 
@@ -538,7 +546,7 @@ function initializeDarkMode() {
  */
 function toggleDarkMode() {
     const isDarkMode = document.body.classList.toggle('dark-mode');
-    localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+    localStorage.setItem(DARK_MODE_KEY, isDarkMode ? THEME_ENABLED : THEME_DISABLED);
     updateDarkModeIcon(isDarkMode);
 }
 
@@ -547,12 +555,8 @@ function toggleDarkMode() {
  * @param {boolean} isDarkMode - Whether dark mode is currently enabled
  */
 function updateDarkModeIcon(isDarkMode) {
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    if (darkModeToggle) {
-        darkModeToggle.textContent = isDarkMode ? '☀️' : '🌙';
-        darkModeToggle.title = isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+    if (darkModeToggleElement) {
+        darkModeToggleElement.textContent = isDarkMode ? '☀️' : '🌙';
+        darkModeToggleElement.title = isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode';
     }
 }
-
-// Call dark mode initialization when DOM is ready
-document.addEventListener('DOMContentLoaded', initializeDarkMode);
