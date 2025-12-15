@@ -70,18 +70,18 @@ function pickRandomUser() {
 
     const randomIndex = Math.floor(Math.random() * usersToPickFrom.length);
     const randomUser = usersToPickFrom[randomIndex];
-    
+
     if (!randomUser.card) {
         return;
     }
 
     randomUser.card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    
+
     setTimeout(() => {
         randomUser.card.classList.remove('highlight');
         void randomUser.card.offsetWidth;
         randomUser.card.classList.add('highlight');
-        
+
         setTimeout(() => {
             randomUser.card.classList.remove('highlight');
         }, 3000);
@@ -749,3 +749,68 @@ function hideLoadingState() {
     if (loadingState) loadingState.style.display = 'none';
     if (loadingStateDesktop) loadingStateDesktop.style.display = 'none';
 }
+
+// ============================================================================
+// DARK MODE TOGGLE
+// ============================================================================
+/**
+ * Initialize dark mode functionality
+ * - Load saved preference from localStorage
+ * - Set up toggle button listener
+ * - Update icon based on current theme state
+ * - Cache DOM element for performance
+ */
+function initializeDarkMode() {
+    // Check local storage or system preference
+    const savedTheme = localStorage.getItem('darkMode');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    let isDarkMode = false;
+    if (savedTheme === 'enabled') {
+        isDarkMode = true;
+    } else if (savedTheme === 'disabled') {
+        isDarkMode = false;
+    } else {
+        isDarkMode = systemPrefersDark;
+    }
+
+    if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+    }
+
+    updateDarkModeIcon(isDarkMode);
+
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    if (darkModeToggle) {
+        darkModeToggle.removeEventListener('click', toggleDarkMode); // Prevent duplicates
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+    }
+}
+
+/**
+ * Toggle dark mode on/off
+ * - Saves preference to localStorage
+ * - Applies/removes dark-mode class from body
+ */
+function toggleDarkMode() {
+    const isDarkMode = document.body.classList.toggle('dark-mode');
+    localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+    updateDarkModeIcon(isDarkMode);
+}
+
+/**
+ * Update dark mode toggle icon
+ * @param {boolean} isDarkMode - Whether dark mode is currently enabled
+ */
+function updateDarkModeIcon(isDarkMode) {
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    if (darkModeToggle) {
+        darkModeToggle.textContent = isDarkMode ? '☀️' : '🌙';
+        darkModeToggle.title = isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+        darkModeToggle.setAttribute('aria-label', isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode');
+    }
+}
+
+// Call dark mode initialization when DOM is ready
+document.addEventListener('DOMContentLoaded', initializeDarkMode);
+>>>>>>> 4a692a6 (Add Dark Mode Toggle Feature (#85-10))
