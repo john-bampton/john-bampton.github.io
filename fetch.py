@@ -203,9 +203,10 @@ def enrich_user_with_details(user: Dict[str, Any], idx: int, total: int) -> None
     user['sponsoring_count'] = sponsorship['sponsoring_count']
     user['avatar_updated_at'] = detail.get('updated_at', '')
 
-    lang_totals, total_stars, last_repo_push_at = fetch_user_repo_summary(user['login'])
+    lang_totals, total_stars, total_forks, last_repo_push_at = fetch_user_repo_summary(user['login'])
     user['top_languages'] = summarize_top_languages(lang_totals)
     user['total_stars'] = total_stars
+    user['total_forks'] = total_forks
     user['last_repo_pushed_at'] = last_repo_push_at
     user['last_public_commit_at'] = fetch_last_public_commit_at(user['login'])
     
@@ -218,12 +219,12 @@ def enrich_all_users(users: List[Dict[str, Any]]) -> None:
     for idx, user in enumerate(users, 1):
         enrich_user_with_details(user, idx, total)
 
-def fetch_user_repo_summary(login: str, max_repos: int = 200) -> Tuple[Dict[str, int], int, str]:
-    """Fetch aggregate language sizes, total stars, and latest repo push date for a user.
+def fetch_user_repo_summary(login: str, max_repos: int = 200) -> Tuple[Dict[str, int], int, int, str]:
+    """Fetch aggregate language sizes, total stars, total forks, and latest repo push date for a user.
 
     Prefers GraphQL for efficiency. Falls back to REST if no token or GraphQL fails.
 
-    Returns: (language_totals_map, total_stars, last_repo_pushed_at)
+    Returns: (language_totals_map, total_stars, total_forks, last_repo_pushed_at)
     """
     token = os.environ.get('GITHUB_TOKEN')
     if token:
@@ -233,14 +234,15 @@ def fetch_user_repo_summary(login: str, max_repos: int = 200) -> Tuple[Dict[str,
             logger.warning(f"GraphQL summary failed for {login}, falling back to REST: {e}")
     return fetch_user_repo_summary_rest(login, max_repos)
 
-def fetch_user_repo_summary_graphql(login: str, max_repos: int = 200) -> Tuple[Dict[str, int], int, str]:
-    """Fetch repo summary via GraphQL with language byte sizes, stars, and last push date.
+def fetch_user_repo_summary_graphql(login: str, max_repos: int = 200) -> Tuple[Dict[str, int], int, int, str]:
+    """Fetch repo summary via GraphQL with language byte sizes, stars, forks, and last push date.
     
-    Returns: (language_bytes_map, total_stars, last_repo_pushed_at)
+    Returns: (language_bytes_map, total_stars, total_forks, last_repo_pushed_at)
     """
     headers = get_github_headers()
     lang_totals: Dict[str, int] = {}
     total_stars = 0
+    total_forks = 0
     last_push = ''
     fetched = 0
     after_cursor = None
@@ -252,6 +254,7 @@ def fetch_user_repo_summary_graphql(login: str, max_repos: int = 200) -> Tuple[D
           pageInfo { hasNextPage endCursor }
           nodes {
             stargazerCount
+            forkCount
             pushedAt
             isFork
             languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
@@ -282,6 +285,7 @@ def fetch_user_repo_summary_graphql(login: str, max_repos: int = 200) -> Tuple[D
         for repo in nodes:
             fetched += 1
             total_stars += int(repo.get('stargazerCount') or 0)
+            total_forks += int(repo.get('forkCount') or 0)
             pushed_at = repo.get('pushedAt') or ''
             if pushed_at and pushed_at > last_push:
                 last_push = pushed_at
@@ -297,9 +301,9 @@ def fetch_user_repo_summary_graphql(login: str, max_repos: int = 200) -> Tuple[D
         else:
             break
 
-    return lang_totals, total_stars, last_push
+    return lang_totals, total_stars, total_forks, last_push
 
-def fetch_user_repo_summary_rest(login: str, max_repos: int = 200) -> Tuple[Dict[str, int], int, str]:
+def fetch_user_repo_summary_rest(login: str, max_repos: int = 200) -> Tuple[Dict[str, int], int, int, str]:
     """Fallback using REST: sums stars and approximates languages by primary language count.
     Note: primary language count is a rough proxy (no byte sizes).
     """
@@ -334,7 +338,7 @@ def fetch_user_repo_summary_rest(login: str, max_repos: int = 200) -> Tuple[Dict
                 break
         page += 1
 
-    return lang_counts, total_stars, last_push
+    return lang_counts, total_stars, 0, last_push
 
 def summarize_top_languages(lang_totals: Dict[str, int], top_n: int = 5) -> List[Dict[str, Any]]:
     """Convert language totals to sorted list with percentages.

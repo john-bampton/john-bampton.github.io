@@ -31,6 +31,12 @@
 let allUsers = [];
 let filteredUsers = [];
 let isDataLoaded = false;
+let darkModeToggleElement = null;
+
+// Dark mode constants
+const DARK_MODE_KEY = 'darkMode';
+const THEME_ENABLED = 'enabled';
+const THEME_DISABLED = 'disabled';
 
 // ============================================================================
 // INITIALIZATION
@@ -40,7 +46,11 @@ document.addEventListener('DOMContentLoaded', initializeApp);
 /**
  * Initialize the application on page load
  */
+/**
+ * Initialize the application on page load
+ */
 async function initializeApp() {
+    initializeDarkMode();
     showLoadingState();
     setupEventListeners();
     await fetchAndPrepareUsers();
@@ -71,19 +81,22 @@ function pickRandomUser() {
     const randomIndex = Math.floor(Math.random() * usersToPickFrom.length);
     const randomUser = usersToPickFrom[randomIndex];
 
-    if (!randomUser.card) {
+    // Find the card element for this user (since it's no longer attached to the user object)
+    const card = document.querySelector(`.card[data-login="${randomUser.login}"]`);
+
+    if (!card) {
         return;
     }
 
-    randomUser.card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
     setTimeout(() => {
-        randomUser.card.classList.remove('highlight');
-        void randomUser.card.offsetWidth;
-        randomUser.card.classList.add('highlight');
+        card.classList.remove('highlight');
+        void card.offsetWidth;
+        card.classList.add('highlight');
 
         setTimeout(() => {
-            randomUser.card.classList.remove('highlight');
+            card.classList.remove('highlight');
         }, 3000);
     }, 500);
 }
@@ -102,16 +115,6 @@ async function fetchAndPrepareUsers() {
         document.getElementById('totalCountDesktop').textContent = total.toLocaleString();
     } catch (err) {
         console.error(err);
-        const noResults = document.getElementById('noResults');
-        const noResultsDesktop = document.getElementById('noResultsDesktop');
-        if (noResults) {
-            noResults.textContent = 'Unable to load users. Please try again later.';
-            noResults.style.display = 'block';
-        }
-        if (noResultsDesktop) {
-            noResultsDesktop.textContent = 'Unable to load users. Please try again later.';
-            noResultsDesktop.style.display = 'block';
-        }
     }
 }
 
@@ -132,7 +135,7 @@ function prepareUserFromJson(user) {
         followers: getNum(user.followers),
         following: getNum(user.following),
         repos: getNum(user.public_repos),
-        forks: 0,
+        forks: getNum(user.total_forks),
         sponsors: getNum(user.sponsors_count),
         sponsoring: getNum(user.sponsoring_count),
         total_stars: getNum(user.total_stars),
@@ -585,7 +588,7 @@ function buildCardElement(user) {
 
     const activity = document.createElement('div');
     activity.className = 'activity-row';
-    let commitText = `Last commit: ${formatDateDisplay(user.last_repo_pushed_at)}`;
+    let commitText = `Last repo push: ${formatDateDisplay(user.last_repo_pushed_at)}`;
     if (user.last_public_commit_at) commitText += `<br>Last public commit: ${formatDateDisplay(user.last_public_commit_at)}`;
     activity.innerHTML = commitText;
 
@@ -761,18 +764,9 @@ function hideLoadingState() {
  * - Cache DOM element for performance
  */
 function initializeDarkMode() {
-    // Check local storage or system preference
-    const savedTheme = localStorage.getItem('darkMode');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    let isDarkMode = false;
-    if (savedTheme === 'enabled') {
-        isDarkMode = true;
-    } else if (savedTheme === 'disabled') {
-        isDarkMode = false;
-    } else {
-        isDarkMode = systemPrefersDark;
-    }
+    darkModeToggleElement = document.getElementById('darkModeToggle');
+    const isDarkMode = localStorage.getItem(DARK_MODE_KEY) === THEME_ENABLED ||
+        (!localStorage.getItem(DARK_MODE_KEY) && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
     if (isDarkMode) {
         document.body.classList.add('dark-mode');
@@ -780,10 +774,9 @@ function initializeDarkMode() {
 
     updateDarkModeIcon(isDarkMode);
 
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    if (darkModeToggle) {
-        darkModeToggle.removeEventListener('click', toggleDarkMode); // Prevent duplicates
-        darkModeToggle.addEventListener('click', toggleDarkMode);
+    if (darkModeToggleElement) {
+        darkModeToggleElement.removeEventListener('click', toggleDarkMode);
+        darkModeToggleElement.addEventListener('click', toggleDarkMode);
     }
 }
 
@@ -794,7 +787,7 @@ function initializeDarkMode() {
  */
 function toggleDarkMode() {
     const isDarkMode = document.body.classList.toggle('dark-mode');
-    localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+    localStorage.setItem(DARK_MODE_KEY, isDarkMode ? THEME_ENABLED : THEME_DISABLED);
     updateDarkModeIcon(isDarkMode);
 }
 
@@ -803,14 +796,12 @@ function toggleDarkMode() {
  * @param {boolean} isDarkMode - Whether dark mode is currently enabled
  */
 function updateDarkModeIcon(isDarkMode) {
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    if (darkModeToggle) {
-        darkModeToggle.textContent = isDarkMode ? '☀️' : '🌙';
-        darkModeToggle.title = isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode';
-        darkModeToggle.setAttribute('aria-label', isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode');
+    if (darkModeToggleElement) {
+        darkModeToggleElement.textContent = isDarkMode ? '☀️' : '🌙';
+        darkModeToggleElement.title = isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+        darkModeToggleElement.setAttribute('aria-label', isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode');
     }
 }
 
 // Call dark mode initialization when DOM is ready
 document.addEventListener('DOMContentLoaded', initializeDarkMode);
->>>>>>> 4a692a6 (Add Dark Mode Toggle Feature (#85-10))
