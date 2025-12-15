@@ -62,7 +62,7 @@ function parseUserCard(card) {
     const name = card.querySelector('strong').textContent.toLowerCase();
     const login = card.querySelector('span:nth-of-type(2)').textContent.toLowerCase();
     const location = extractLocation(card);
-    const languages = (card.querySelector('.languages') ? card.querySelector('.languages').textContent : '').toLowerCase();
+    const languages = (card.querySelector('.languages')?.textContent || '').toLowerCase();
     const followers = parseInt(card.getAttribute('data-followers') || '0');
     const following = parseInt(card.getAttribute('data-following') || '0');
     const repos = parseInt(card.getAttribute('data-repos') || '0');
