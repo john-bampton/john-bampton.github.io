@@ -631,11 +631,6 @@ body.dark-mode {
     --link-hover: #764ba2;
 }
 
-body.dark-mode {
-    background: var(--bg-color);
-    color: var(--text-color);
-}
-
 body.dark-mode h1 {
     color: var(--text-color);
 }
@@ -687,7 +682,7 @@ body.dark-mode .details-box {
 }
 
 body.dark-mode .details-box strong {
-    color: #fff;
+    color: var(--text-color);
 }
 
 body.dark-mode .details-box span {
@@ -743,7 +738,7 @@ body.dark-mode footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 999;
+    z-index: 100001;
     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
     transition: all 0.3s ease;
 }
