@@ -248,6 +248,30 @@ h1 {
     color: #667eea;
 }
 
+.btn-random {
+    width: 100%;
+    padding: 12px;
+    background: #ff9f43; /* bright orange for distinctiveness */
+    border: 2px solid rgba(255,255,255,0.5);
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 1rem;
+}
+
+.btn-random:hover {
+    background: #ffb168;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 159, 67, 0.4);
+}
+
 .results-info {
     text-align: center;
     color: white;
@@ -336,6 +360,18 @@ h1 {
 .card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+}
+
+.card.highlight {
+    animation: pulse-highlight 2s ease-in-out;
+    box-shadow: 0 0 0 4px #ff9f43, 0 10px 20px rgba(0,0,0,0.25);
+    z-index: 10;
+}
+
+@keyframes pulse-highlight {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
 }
 
 .card img {
