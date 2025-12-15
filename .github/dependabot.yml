@@ -7,6 +7,10 @@ updates:
     commit-message:
       prefix: "ci"
       include: "scope"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
 
   - package-ecosystem: "pip"
     directory: "/"
@@ -15,4 +19,8 @@ updates:
     commit-message:
       prefix: "deps"
       include: "scope"
+    groups:
+      python-dependencies:
+        patterns:
+          - "*"
 
