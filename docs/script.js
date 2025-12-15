@@ -150,7 +150,7 @@ function pickRandomUser() {
     randomUser.card.classList.add('visible');
     randomUser.card.scrollIntoView({ behavior: 'smooth', block: 'center' });
     randomUser.card.classList.remove('highlight');
-    void randomUser.card.offsetWidth;
+    void randomUser.card.offsetWidth; // Force reflow to re-trigger CSS animation
     randomUser.card.classList.add('highlight');
     setTimeout(() => {
         randomUser.card.classList.remove('highlight');
