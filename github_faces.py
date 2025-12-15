@@ -1,8 +1,9 @@
-import os
 import json
 import logging
+import os
 import re
-from typing import List, Dict, Any
+from typing import Any, Dict, List
+
 from jinja2 import Environment, FileSystemLoader
 
 SITE_DIR = './docs'
