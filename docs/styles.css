@@ -593,3 +593,165 @@ footer {
         display: none;
     }
 }
+/* ============================================================================ */
+/* DARK MODE STYLES */
+/* ============================================================================ */
+body.dark-mode {
+    background: #1e1e1e;
+    color: #e0e0e0;
+}
+
+body.dark-mode h1 {
+    color: #e0e0e0;
+}
+
+body.dark-mode .header-section {
+    background: #2d2d2d;
+}
+
+body.dark-mode .filters-aside {
+    background: #2d2d2d;
+    border-right: 1px solid #444;
+}
+
+body.dark-mode .filters-aside h2 {
+    color: #e0e0e0;
+}
+
+body.dark-mode .filters-content {
+    color: #e0e0e0;
+}
+
+body.dark-mode .filters-content label {
+    color: #e0e0e0;
+}
+
+body.dark-mode input[type="text"],
+body.dark-mode select {
+    background: #3a3a3a;
+    color: #e0e0e0;
+    border: 1px solid #555;
+}
+
+body.dark-mode input[type="text"]::placeholder {
+    color: #888;
+}
+
+body.dark-mode input[type="text"]:focus,
+body.dark-mode select:focus {
+    border-color: #667eea;
+    background: #3a3a3a;
+}
+
+body.dark-mode .card {
+    background: #2d2d2d;
+    color: #e0e0e0;
+    border: 1px solid #444;
+}
+
+body.dark-mode .card:hover {
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+body.dark-mode .details-box {
+    background: #1e1e1e;
+}
+
+body.dark-mode .details-box strong {
+    color: #fff;
+}
+
+body.dark-mode .details-box span {
+    color: #b0b0b0;
+}
+
+body.dark-mode .details-box a {
+    color: #667eea;
+}
+
+body.dark-mode .details-box a:hover {
+    color: #764ba2;
+}
+
+body.dark-mode .btn-apply,
+body.dark-mode .btn-reset {
+    background: #667eea;
+    color: white;
+    border: none;
+}
+
+body.dark-mode .btn-apply:hover,
+body.dark-mode .btn-reset:hover {
+    background: #764ba2;
+}
+
+body.dark-mode .results-info {
+    color: #e0e0e0;
+}
+
+body.dark-mode .results-info strong {
+    color: #fff;
+}
+
+body.dark-mode footer {
+    background: #2d2d2d;
+    color: #b0b0b0;
+    border-top: 1px solid #444;
+}
+
+body.dark-mode footer a {
+    color: #667eea;
+}
+
+body.dark-mode footer a:hover {
+    color: #764ba2;
+}
+
+/* Dark Mode Toggle Button */
+.dark-mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    transition: all 0.3s ease;
+}
+
+.dark-mode-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.dark-mode-toggle:active {
+    transform: scale(0.95);
+}
+
+body.dark-mode .dark-mode-toggle {
+    background: linear-gradient(135deg, #f4a460 0%, #ff8c69 100%);
+    box-shadow: 0 4px 15px rgba(255, 140, 105, 0.4);
+}
+
+body.dark-mode .dark-mode-toggle:hover {
+    box-shadow: 0 6px 20px rgba(255, 140, 105, 0.6);
+}
+
+@media (max-width: 768px) {
+    .dark-mode-toggle {
+        top: 10px;
+        right: 10px;
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+}

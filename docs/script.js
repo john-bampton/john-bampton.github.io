@@ -508,3 +508,51 @@ function hideLoadingState() {
     if (loadingState) loadingState.style.display = 'none';
     if (loadingStateDesktop) loadingStateDesktop.style.display = 'none';
 }
+// ============================================================================
+// DARK MODE TOGGLE
+// ============================================================================
+/**
+ * Initialize dark mode functionality
+ * - Load saved preference from localStorage
+ * - Set up toggle button listener
+ * - Apply dark mode class if preference is set
+ */
+function initializeDarkMode() {
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const isDarkMode = localStorage.getItem('darkMode') === 'enabled';
+    
+    if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+        updateDarkModeIcon(true);
+    }
+    
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+    }
+}
+
+/**
+ * Toggle dark mode on/off
+ * - Saves preference to localStorage
+ * - Applies/removes dark-mode class from body
+ */
+function toggleDarkMode() {
+    const isDarkMode = document.body.classList.toggle('dark-mode');
+    localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+    updateDarkModeIcon(isDarkMode);
+}
+
+/**
+ * Update dark mode toggle icon
+ * @param {boolean} isDarkMode - Whether dark mode is currently enabled
+ */
+function updateDarkModeIcon(isDarkMode) {
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    if (darkModeToggle) {
+        darkModeToggle.textContent = isDarkMode ? '☀️' : '🌙';
+        darkModeToggle.title = isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+    }
+}
+
+// Call dark mode initialization when DOM is ready
+document.addEventListener('DOMContentLoaded', initializeDarkMode);
