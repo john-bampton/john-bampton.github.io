@@ -1,19 +1,9 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Auto detect text files and enforce LF line endings
+* text=auto eol=lf
 
-# Explicitly declare text files
-*.md text
-*.html text
-*.css text
-*.js text
-*.json text
-*.yml text
-*.yaml text
-
-# Declare binary files
+# Declare binary files to prevent normalization
 *.png binary
 *.jpg binary
 *.jpeg binary
 *.gif binary
 *.ico binary
-
