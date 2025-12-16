@@ -64,7 +64,7 @@ You can modify these directly in `github_faces.py`.
 
 ## Screenshots
 
-![Sample Faces](docs/images/other/preview.jpg)
+![Sample Faces](docs/images/other/screenshot-1280.png)
 
 ---
 

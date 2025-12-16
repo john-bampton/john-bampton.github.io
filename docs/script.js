@@ -30,6 +30,7 @@
  */
 let allUsers = [];
 let filteredUsers = [];
+let isDataLoaded = false;
 
 // ============================================================================
 // INITIALIZATION
@@ -39,93 +40,144 @@ document.addEventListener('DOMContentLoaded', initializeApp);
 /**
  * Initialize the application on page load
  */
-function initializeApp() {
-    const cards = document.querySelectorAll('.card');
+async function initializeApp() {
     showLoadingState();
-    document.getElementById('totalCount').textContent = cards.length.toLocaleString();
-    document.getElementById('totalCountDesktop').textContent = cards.length.toLocaleString();
-    cards.forEach(card => allUsers.push(parseUserCard(card)));
-    filteredUsers = [...allUsers];
     setupEventListeners();
+    await fetchAndPrepareUsers();
     applyFilters();
     updateVisibilityAndSort();
     hideLoadingState();
 }
 
 /**
- * Parse user data from a card element
- * @param {HTMLElement} card - The card element to parse
- * @returns {Object} User object with extracted data
+ * Pick and highlight a random user from the filtered list
  */
-function parseUserCard(card) {
-    const name = card.querySelector('strong').textContent.toLowerCase();
-    const login = card.querySelector('span:nth-of-type(2)').textContent.toLowerCase();
-    const location = extractLocation(card);
-    const followers = parseInt(card.getAttribute('data-followers') || '0');
-    const following = parseInt(card.getAttribute('data-following') || '0');
-    const repos = parseInt(card.getAttribute('data-repos') || '0');
-    const forks = parseInt(card.getAttribute('data-forks') || '0');
-    const {
-        sponsors,
-        sponsoring
-    } = extractStats(card);
-    const avatarUpdated = card.getAttribute('data-avatar-updated') || '';
+function pickRandomUser() {
+    const usersToPickFrom = filteredUsers.length > 0 ? filteredUsers : allUsers;
+    if (usersToPickFrom.length === 0) {
+        const msg = document.createElement('div');
+        msg.className = 'toast-notification';
+        msg.textContent = '🎲 No developers found! Try adjusting your filters.';
+        document.body.appendChild(msg);
+        setTimeout(() => msg.remove(), 3000);
+        return;
+    }
+
+    const filtersAside = document.getElementById('filtersAside');
+    if (filtersAside && filtersAside.classList.contains('open')) {
+        toggleFiltersPanel();
+    }
+
+    const randomIndex = Math.floor(Math.random() * usersToPickFrom.length);
+    const randomUser = usersToPickFrom[randomIndex];
+    
+    if (!randomUser.card) {
+        return;
+    }
+
+    randomUser.card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    
+    setTimeout(() => {
+        randomUser.card.classList.remove('highlight');
+        void randomUser.card.offsetWidth;
+        randomUser.card.classList.add('highlight');
+        
+        setTimeout(() => {
+            randomUser.card.classList.remove('highlight');
+        }, 3000);
+    }, 500);
+}
+
+async function fetchAndPrepareUsers() {
+    try {
+        const res = await fetch('users.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error(`Failed to fetch users.json: ${res.status}`);
+        const users = await res.json();
+        const prepared = users.map(prepareUserFromJson);
+        allUsers = prepared;
+        filteredUsers = [...allUsers];
+        isDataLoaded = true;
+        const total = allUsers.length;
+        document.getElementById('totalCount').textContent = total.toLocaleString();
+        document.getElementById('totalCountDesktop').textContent = total.toLocaleString();
+    } catch (err) {
+        console.error(err);
+        const noResults = document.getElementById('noResults');
+        const noResultsDesktop = document.getElementById('noResultsDesktop');
+        if (noResults) {
+            noResults.textContent = 'Unable to load users. Please try again later.';
+            noResults.style.display = 'block';
+        }
+        if (noResultsDesktop) {
+            noResultsDesktop.textContent = 'Unable to load users. Please try again later.';
+            noResultsDesktop.style.display = 'block';
+        }
+    }
+}
+
+function prepareUserFromJson(user) {
+    const getNum = (v, def = 0) => (v === 'N/A' || v == null ? def : parseInt(v, 10));
+    const safeLower = v => (v ? String(v).toLowerCase() : '');
+    const normalizeDate = v => (v ? new Date(v).toISOString() : '');
+    const topLangs = Array.isArray(user.top_languages) ? user.top_languages : [];
 
     return {
-        card,
-        name,
-        login,
-        location,
-        followers,
-        following,
-        repos,
-        forks,
-        sponsors,
-        sponsoring,
-        avatarUpdated
+        name: safeLower(user.name || user.login),
+        login: safeLower(user.login),
+        location: safeLower(user.location || ''),
+        html_url: user.html_url,
+        avatar_updated_at: normalizeDate(user.avatar_updated_at),
+        last_repo_pushed_at: normalizeDate(user.last_repo_pushed_at),
+        last_public_commit_at: normalizeDate(user.last_public_commit_at),
+        followers: getNum(user.followers),
+        following: getNum(user.following),
+        repos: getNum(user.public_repos),
+        forks: 0,
+        sponsors: getNum(user.sponsors_count),
+        sponsoring: getNum(user.sponsoring_count),
+        total_stars: getNum(user.total_stars),
+        top_languages: topLangs.map(l => ({
+            name: safeLower(l.name),
+            label: l.name,
+            bytes: getNum(l.bytes),
+            percent: l.percent
+        })),
+        followers_display: user.followers_display || formatDisplay(user.followers),
+        following_display: user.following_display || formatDisplay(user.following),
+        repos_display: user.repos_display || formatDisplay(user.public_repos),
+        gists_display: user.gists_display || formatDisplay(user.public_gists),
+        sponsors_display: user.sponsors_display || formatDisplay(user.sponsors_count),
+        sponsoring_display: user.sponsoring_display || formatDisplay(user.sponsoring_count),
+        stars_display: formatDisplay(user.total_stars),
+        raw: user
     };
+}
+
+function formatDisplay(val) {
+    if (val === 'N/A' || val == null) return 'N/A';
+    const num = parseInt(val, 10);
+    return Number.isNaN(num) ? String(val) : num.toLocaleString();
+}
+
+function formatDateDisplay(val) {
+    if (!val) return 'N/A';
+    const dt = new Date(val);
+    if (Number.isNaN(dt.getTime())) return 'N/A';
+    return dt.toISOString().split('T')[0];
 }
 /**
  * Extract location emoji and text from card
  * @param {HTMLElement} card - The card element
  * @returns {string} Location text in lowercase
  */
-function extractLocation(card) {
-    const spans = card.querySelectorAll('span');
-    for (let span of spans) {
-        if (span.textContent.includes('🌐')) {
-            return span.textContent.toLowerCase();
-        }
-    }
-    return '';
-}
+function extractLocation() { return ''; }
 
 /**
  * Extract sponsors and sponsoring counts from stats
  * @param {HTMLElement} card - The card element
  * @returns {Object} Object with sponsors and sponsoring counts
  */
-function extractStats(card) {
-    let sponsors = 0;
-    let sponsoring = 0;
-    const statSpans = card.querySelectorAll('.stat a, .stat');
-
-    statSpans.forEach(stat => {
-        const label = stat.nextElementSibling;
-        if (label && label.classList.contains('stat-label')) {
-            const text = stat.textContent.trim();
-            const value = text === 'N/A' ? 0 : parseInt(text.replace(/,/g, ''));
-
-            if (label.textContent === 'Public Sponsors') sponsors = value;
-            if (label.textContent === 'Public Sponsoring') sponsoring = value;
-        }
-    });
-
-    return {
-        sponsors,
-        sponsoring
-    };
-}
+function extractStats() { return { sponsors: 0, sponsoring: 0 }; }
 
 
 // ============================================================================
@@ -138,16 +190,22 @@ function setupEventListeners() {
     const filterIds = [
         'searchInput', 'sortBy', 'followersFilter', 'maxFollowersFilter',
         'minReposFilter', 'maxReposFilter', 'minForksFilter', 'maxForksFilter',
-        'sponsorsFilter', 'sponsoringFilter', 'avatarAgeFilter'
+        'sponsorsFilter', 'sponsoringFilter', 'avatarAgeFilter',
+        'minStarsFilter', 'languageFilter', 'lastRepoActivityFilter', 'lastCommitFilter'
     ];
 
     filterIds.forEach(id => {
         const element = document.getElementById(id);
         if (element) {
-            const eventType = id === 'searchInput' ? 'input' : 'change';
-            element.addEventListener(eventType, onFilterChange);
+            element.addEventListener('input', onFilterChange);
+            element.addEventListener('change', onFilterChange);
         }
     });
+
+    const randomBtn = document.getElementById('randomUserBtn');
+    if (randomBtn) {
+        randomBtn.addEventListener('click', pickRandomUser);
+    }
 }
 
 /**
@@ -200,7 +258,11 @@ function getActiveFilters() {
         maxForks: parseInt(document.getElementById('maxForksFilter').value),
         sponsorsFilter: document.getElementById('sponsorsFilter').value,
         sponsoringFilter: document.getElementById('sponsoringFilter').value,
-        avatarAgeFilter: document.getElementById('avatarAgeFilter').value
+        avatarAgeFilter: document.getElementById('avatarAgeFilter').value,
+        minStars: parseInt(document.getElementById('minStarsFilter').value),
+        languageFilter: document.getElementById('languageFilter').value.toLowerCase().trim(),
+        lastRepoActivityFilter: document.getElementById('lastRepoActivityFilter').value,
+        lastCommitFilter: document.getElementById('lastCommitFilter').value
     };
 }
 
@@ -253,7 +315,11 @@ function matchesAllFilters(user, filters, dateRanges) {
         matchesForkRange(user, filters) &&
         matchesPublicSponsors(user, filters.sponsorsFilter) &&
         matchesSponsoring(user, filters.sponsoringFilter) &&
-        matchesAvatarAge(user, filters.avatarAgeFilter, dateRanges);
+        matchesAvatarAge(user, filters.avatarAgeFilter, dateRanges) &&
+        matchesStars(user, filters.minStars) &&
+        matchesLanguage(user, filters.languageFilter) &&
+        matchesRepoActivity(user, filters.lastRepoActivityFilter, dateRanges) &&
+        matchesCommitActivity(user, filters.lastCommitFilter, dateRanges);
 }
 
 /**
@@ -339,9 +405,9 @@ function matchesSponsoring(user, sponsoringFilter) {
  * @returns {boolean} True if matches
  */
 function matchesAvatarAge(user, ageFilter, dateRanges) {
-    if (ageFilter === 'any' || !user.avatarUpdated) return true;
+    if (ageFilter === 'any' || !user.avatar_updated_at) return true;
 
-    const avatarDate = new Date(user.avatarUpdated);
+    const avatarDate = new Date(user.avatar_updated_at);
     const ranges = {
         'week': avatarDate >= dateRanges.oneWeekAgo,
         'month': avatarDate >= dateRanges.oneMonthAgo,
@@ -353,6 +419,39 @@ function matchesAvatarAge(user, ageFilter, dateRanges) {
     };
 
     return ranges[ageFilter] !== undefined ? ranges[ageFilter] : true;
+}
+
+function matchesStars(user, minStars) {
+    return user.total_stars >= (Number.isNaN(minStars) ? 0 : minStars);
+}
+
+function matchesLanguage(user, languageFilter) {
+    if (!languageFilter) return true;
+    return user.top_languages.some(l => l.name.includes(languageFilter));
+}
+
+function matchesRepoActivity(user, activityFilter, dateRanges) {
+    if (activityFilter === 'any' || !user.last_repo_pushed_at) return true;
+    return matchesDateByRange(user.last_repo_pushed_at, activityFilter, dateRanges);
+}
+
+function matchesCommitActivity(user, commitFilter, dateRanges) {
+    if (commitFilter === 'any' || !user.last_public_commit_at) return true;
+    return matchesDateByRange(user.last_public_commit_at, commitFilter, dateRanges);
+}
+
+function matchesDateByRange(dateString, rangeKey, dateRanges) {
+    const dt = new Date(dateString);
+    const ranges = {
+        'week': dt >= dateRanges.oneWeekAgo,
+        'month': dt >= dateRanges.oneMonthAgo,
+        '6months': dt >= dateRanges.sixMonthsAgo,
+        'year': dt >= dateRanges.oneYearAgo,
+        '2years': dt >= dateRanges.twoYearsAgo,
+        '5years': dt >= dateRanges.fiveYearsAgo,
+        'old': dt < dateRanges.fiveYearsAgo
+    };
+    return ranges[rangeKey] !== undefined ? ranges[rangeKey] : true;
 }
 
 
@@ -392,6 +491,12 @@ function getSortedUsers(sortBy) {
         'sponsors-asc': (a, b) => a.sponsors - b.sponsors,
         'sponsoring-desc': (a, b) => b.sponsoring - a.sponsoring,
         'sponsoring-asc': (a, b) => a.sponsoring - b.sponsoring,
+        'stars-desc': (a, b) => b.total_stars - a.total_stars,
+        'stars-asc': (a, b) => a.total_stars - b.total_stars,
+        'last-repo-desc': (a, b) => new Date(b.last_repo_pushed_at || 0) - new Date(a.last_repo_pushed_at || 0),
+        'last-repo-asc': (a, b) => new Date(a.last_repo_pushed_at || 0) - new Date(b.last_repo_pushed_at || 0),
+        'last-commit-desc': (a, b) => new Date(b.last_public_commit_at || 0) - new Date(a.last_public_commit_at || 0),
+        'last-commit-asc': (a, b) => new Date(a.last_public_commit_at || 0) - new Date(b.last_public_commit_at || 0),
         'name-asc': (a, b) => a.name.localeCompare(b.name),
         'name-desc': (a, b) => b.name.localeCompare(a.name),
         'ratio-followers-following': (a, b) => {
@@ -414,11 +519,130 @@ function getSortedUsers(sortBy) {
  */
 function renderCards(sortedUsers) {
     const grid = document.getElementById('grid');
-    allUsers.forEach(user => user.card.classList.remove('visible'));
+    if (!grid) return;
+    grid.innerHTML = '';
+    const frag = document.createDocumentFragment();
     sortedUsers.forEach(user => {
-        user.card.classList.add('visible');
-        grid.appendChild(user.card);
+        const card = buildCardElement(user);
+        frag.appendChild(card);
     });
+    grid.appendChild(frag);
+}
+
+function buildCardElement(user) {
+    const card = document.createElement('div');
+    card.className = 'card visible';
+    card.setAttribute('data-followers', user.followers);
+    card.setAttribute('data-repos', user.repos);
+    card.setAttribute('data-forks', user.forks);
+    card.setAttribute('data-name', user.name);
+    card.setAttribute('data-login', user.login);
+    card.setAttribute('data-location', user.location);
+    card.setAttribute('data-avatar-updated', user.avatar_updated_at || '');
+    card.setAttribute('data-stars', user.total_stars || 0);
+
+    const link = document.createElement('a');
+    link.href = user.html_url;
+    link.target = '_blank';
+    link.rel = 'noopener';
+
+    const img = document.createElement('img');
+    img.src = `images/faces/${user.login}.png`;
+    img.alt = user.login;
+    img.title = user.login;
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    link.appendChild(img);
+
+    const box = document.createElement('div');
+    box.className = 'details-box';
+
+    const strong = document.createElement('strong');
+    strong.textContent = user.raw.name || user.raw.login;
+    const atSpan = document.createElement('span');
+    atSpan.textContent = `@${user.raw.login}`;
+
+    box.appendChild(strong);
+    box.appendChild(atSpan);
+
+    box.appendChild(buildLabeledSpan('Followers:', user.raw.followers !== 'N/A', `${user.html_url}?tab=followers`, user.followers_display));
+    box.appendChild(buildLabeledSpan('Following:', user.raw.following !== 'N/A', `${user.html_url}?tab=following`, user.following_display));
+
+    if (user.raw.location) {
+        const locSpan = document.createElement('span');
+        locSpan.textContent = `🌐 ${user.raw.location}`;
+        box.appendChild(locSpan);
+    }
+
+    const statsRow = document.createElement('div');
+    statsRow.className = 'stats-row';
+    statsRow.appendChild(buildStat(user.raw.public_repos !== 'N/A', `${user.html_url}?tab=repositories`, user.repos_display, 'Repos'));
+    statsRow.appendChild(buildStat(user.raw.public_gists !== 'N/A', `https://gist.github.com/${user.raw.login}`, user.gists_display, 'Gists'));
+    statsRow.appendChild(buildStat(user.raw.sponsors_count !== 'N/A', `${user.html_url}?tab=sponsors`, user.sponsors_display, 'Public Sponsors'));
+    statsRow.appendChild(buildStat(user.raw.sponsoring_count !== 'N/A', `${user.html_url}?tab=sponsoring`, user.sponsoring_display, 'Public Sponsoring'));
+    statsRow.appendChild(buildStat(true, `${user.html_url}?tab=repositories`, user.stars_display, 'Total Stars'));
+    box.appendChild(statsRow);
+
+    const activity = document.createElement('div');
+    activity.className = 'activity-row';
+    let commitText = `Last commit: ${formatDateDisplay(user.last_repo_pushed_at)}`;
+    if (user.last_public_commit_at) commitText += `<br>Last public commit: ${formatDateDisplay(user.last_public_commit_at)}`;
+    activity.innerHTML = commitText;
+
+    box.appendChild(activity);
+
+    if (user.top_languages.length) {
+        const langRow = document.createElement('div');
+        langRow.className = 'lang-row';
+        user.top_languages.slice(0, 3).forEach(lang => {
+            const pill = document.createElement('span');
+            pill.className = 'lang-pill';
+            pill.textContent = `${lang.label}${lang.percent ? ` (${lang.percent}%)` : ''}`;
+            langRow.appendChild(pill);
+        });
+        box.appendChild(langRow);
+    }
+
+    card.appendChild(link);
+    card.appendChild(box);
+    return card;
+}
+
+function buildLabeledSpan(labelText, hasLink, href, valueText) {
+    const span = document.createElement('span');
+    const labelNode = document.createTextNode(`${labelText} `);
+    span.appendChild(labelNode);
+    if (hasLink) {
+        const a = document.createElement('a');
+        a.href = href;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.textContent = valueText;
+        span.appendChild(a);
+    } else {
+        span.appendChild(document.createTextNode(valueText));
+    }
+    return span;
+}
+
+function buildStat(hasLink, href, valueText, label) {
+    const stat = document.createElement('div');
+    stat.className = 'stat';
+    if (hasLink) {
+        const a = document.createElement('a');
+        a.href = href;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.textContent = valueText;
+        stat.appendChild(a);
+    } else {
+        stat.appendChild(document.createTextNode(valueText));
+    }
+    const lbl = document.createElement('span');
+    lbl.className = 'stat-label';
+    lbl.textContent = label;
+    stat.appendChild(lbl);
+    return stat;
 }
 
 /**
@@ -455,11 +679,6 @@ function updateResultsMessage(sortedUsers) {
         if (noResults) noResults.style.display = 'block';
         if (resultsFoundDesktop) resultsFoundDesktop.style.display = 'none';
         if (noResultsDesktop) noResultsDesktop.style.display = 'block';
-    } else if (visibleCount === totalCount) {
-        if (resultsFound) resultsFound.style.display = 'none';
-        if (noResults) noResults.style.display = 'none';
-        if (resultsFoundDesktop) resultsFoundDesktop.style.display = 'none';
-        if (noResultsDesktop) noResultsDesktop.style.display = 'none';
     } else {
         if (resultsFound) resultsFound.style.display = 'block';
         if (noResults) noResults.style.display = 'none';
@@ -486,7 +705,11 @@ function resetFilters() {
         maxForksFilter: '999999',
         sponsorsFilter: 'any',
         sponsoringFilter: 'any',
-        avatarAgeFilter: 'any'
+        avatarAgeFilter: 'any',
+        minStarsFilter: '0',
+        languageFilter: '',
+        lastRepoActivityFilter: 'any',
+        lastCommitFilter: 'any'
     };
 
     Object.entries(defaults).forEach(([id, value]) => {

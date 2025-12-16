@@ -3,18 +3,19 @@ import logging
 import os
 import time
 from calendar import timegm
-from typing import Any, Dict, List
 from urllib.request import urlretrieve
-
 import requests
+from typing import List, Dict, Any, Tuple
 
-CACHE_DIR = './temp/cache'
+CACHE_DIR = './docs'
 FACES_DIR = './docs/images/faces'
 GITHUB_USER_SEARCH_URL = 'https://api.github.com/search/users?q=followers:1..10000000&per_page=100&page='
 GITHUB_USER_DETAIL_URL = 'https://api.github.com/users/{}'
+GITHUB_USER_REPOS_URL = 'https://api.github.com/users/{}/repos?type=owner&per_page=100&sort=updated'
 GITHUB_GRAPHQL_URL = 'https://api.github.com/graphql'
 
 TARGET_USERS = 400
+# TARGET_USERS = 20
 MAX_EXTRA_PAGES = 2
 
 def setup_logger() -> logging.Logger:
@@ -36,7 +37,8 @@ logger = setup_logger()
 def get_github_headers() -> Dict[str, str]:
     """Get GitHub API headers with authentication token if available."""
     token = os.environ.get('GITHUB_TOKEN')
-    return {'Authorization': f'token {token}'} if token else {}
+    base = {'Accept': 'application/vnd.github+json'}
+    return ({**base, 'Authorization': f'Bearer {token}'} if token else base)
 
 def safe_filename(name: str) -> str:
     """Convert username to safe lowercase filename format."""
@@ -199,7 +201,13 @@ def enrich_user_with_details(user: Dict[str, Any], idx: int, total: int) -> None
     user['public_gists'] = detail.get('public_gists', 'N/A')
     user['sponsors_count'] = sponsorship['sponsors_count']
     user['sponsoring_count'] = sponsorship['sponsoring_count']
-    user['avatar_updated_at'] = detail.get('avatar_url', '')
+    user['avatar_updated_at'] = detail.get('updated_at', '')
+
+    lang_totals, total_stars, last_repo_push_at = fetch_user_repo_summary(user['login'])
+    user['top_languages'] = summarize_top_languages(lang_totals)
+    user['total_stars'] = total_stars
+    user['last_repo_pushed_at'] = last_repo_push_at
+    user['last_public_commit_at'] = fetch_last_public_commit_at(user['login'])
     
     logger.info(f"[{idx}/{total} - {progress:.1f}%] Fetched details for {user['login']}")
     time.sleep(0.15)
@@ -209,6 +217,153 @@ def enrich_all_users(users: List[Dict[str, Any]]) -> None:
     total = len(users)
     for idx, user in enumerate(users, 1):
         enrich_user_with_details(user, idx, total)
+
+def fetch_user_repo_summary(login: str, max_repos: int = 200) -> Tuple[Dict[str, int], int, str]:
+    """Fetch aggregate language sizes, total stars, and latest repo push date for a user.
+
+    Prefers GraphQL for efficiency. Falls back to REST if no token or GraphQL fails.
+
+    Returns: (language_totals_map, total_stars, last_repo_pushed_at)
+    """
+    token = os.environ.get('GITHUB_TOKEN')
+    if token:
+        try:
+            return fetch_user_repo_summary_graphql(login, max_repos)
+        except Exception as e:
+            logger.warning(f"GraphQL summary failed for {login}, falling back to REST: {e}")
+    return fetch_user_repo_summary_rest(login, max_repos)
+
+def fetch_user_repo_summary_graphql(login: str, max_repos: int = 200) -> Tuple[Dict[str, int], int, str]:
+    """Fetch repo summary via GraphQL with language byte sizes, stars, and last push date.
+    
+    Returns: (language_bytes_map, total_stars, last_repo_pushed_at)
+    """
+    headers = get_github_headers()
+    lang_totals: Dict[str, int] = {}
+    total_stars = 0
+    last_push = ''
+    fetched = 0
+    after_cursor = None
+
+    query = """
+    query($login: String!, $first: Int!, $after: String) {
+      user(login: $login) {
+        repositories(first: $first, after: $after, privacy: PUBLIC, ownerAffiliations: OWNER, orderBy: {field: UPDATED_AT, direction: DESC}) {
+          pageInfo { hasNextPage endCursor }
+          nodes {
+            stargazerCount
+            pushedAt
+            isFork
+            languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
+              edges { size node { name } }
+            }
+          }
+        }
+      }
+    }
+    """
+
+    while fetched < max_repos:
+        page_size = min(50, max_repos - fetched)
+        resp = requests.post(
+            GITHUB_GRAPHQL_URL,
+            headers=headers,
+            json={
+                'query': query,
+                'variables': { 'login': login, 'first': page_size, 'after': after_cursor }
+            },
+            timeout=20
+        )
+        resp.raise_for_status()
+        data = resp.json()
+        nodes = (((data.get('data') or {}).get('user') or {}).get('repositories') or {}).get('nodes') or []
+        page_info = (((data.get('data') or {}).get('user') or {}).get('repositories') or {}).get('pageInfo') or {}
+
+        for repo in nodes:
+            fetched += 1
+            total_stars += int(repo.get('stargazerCount') or 0)
+            pushed_at = repo.get('pushedAt') or ''
+            if pushed_at and pushed_at > last_push:
+                last_push = pushed_at
+            langs = (((repo.get('languages') or {}).get('edges')) or [])
+            for edge in langs:
+                name = ((edge.get('node') or {}).get('name') or '').strip()
+                size = int(edge.get('size') or 0)
+                if name:
+                    lang_totals[name] = lang_totals.get(name, 0) + size
+
+        if page_info.get('hasNextPage') and page_info.get('endCursor'):
+            after_cursor = page_info['endCursor']
+        else:
+            break
+
+    return lang_totals, total_stars, last_push
+
+def fetch_user_repo_summary_rest(login: str, max_repos: int = 200) -> Tuple[Dict[str, int], int, str]:
+    """Fallback using REST: sums stars and approximates languages by primary language count.
+    Note: primary language count is a rough proxy (no byte sizes).
+    """
+    headers = get_github_headers()
+    total_stars = 0
+    lang_counts: Dict[str, int] = {}
+    last_push = ''
+    page = 1
+    fetched = 0
+
+    while fetched < max_repos:
+        url = GITHUB_USER_REPOS_URL.format(login) + f"&page={page}"
+        resp = requests.get(url, headers=headers, timeout=15)
+        if resp.status_code == 404:
+            break
+        resp.raise_for_status()
+        repos = resp.json()
+        if not repos:
+            break
+        for r in repos:
+            if r.get('private'):
+                continue
+            fetched += 1
+            total_stars += int(r.get('stargazers_count') or 0)
+            primary = r.get('language')
+            if primary:
+                lang_counts[primary] = lang_counts.get(primary, 0) + 1
+            pushed_at = r.get('pushed_at') or ''
+            if pushed_at and pushed_at > last_push:
+                last_push = pushed_at
+            if fetched >= max_repos:
+                break
+        page += 1
+
+    return lang_counts, total_stars, last_push
+
+def summarize_top_languages(lang_totals: Dict[str, int], top_n: int = 5) -> List[Dict[str, Any]]:
+    """Convert language totals to sorted list with percentages.
+    
+    Returns: List of top N languages with name, bytes, and percent.
+    """
+    total = sum(lang_totals.values()) or 1
+    top = sorted(lang_totals.items(), key=lambda kv: kv[1], reverse=True)[:top_n]
+    return [
+        { 'name': name, 'bytes': size, 'percent': round((size / total) * 100, 1) }
+        for name, size in top
+    ]
+
+def fetch_last_public_commit_at(login: str) -> str:
+    """Get last public commit time via user public events (PushEvent)."""
+    headers = get_github_headers()
+    try:
+        resp = requests.get(f"https://api.github.com/users/{login}/events/public", headers=headers, timeout=10)
+        if resp.status_code == 404:
+            return ''
+        resp.raise_for_status()
+        events = resp.json() or []
+        for ev in events:
+            if ev.get('type') == 'PushEvent':
+                return ev.get('created_at', '')
+        return events[0].get('created_at', '') if events else ''
+    except Exception as e:
+        logger.warning(f"Failed to fetch last public commit for {login}: {e}")
+        return ''
 
 def fetch_search_page(page_num: int, headers: Dict[str, str]) -> List[Dict[str, Any]]:
     """Fetch single search results page from GitHub API."""
@@ -244,7 +399,7 @@ def save_cache(users: List[Dict[str, Any]]) -> None:
     cache_file = os.path.join(CACHE_DIR, 'users.json')
     try:
         with open(cache_file, 'w', encoding='utf-8') as f:
-            json.dump(users, f, indent=2, ensure_ascii=False)
+            json.dump(users, f, indent=(2 if os.environ.get('APP_ENV') == 'development' else None), ensure_ascii=False)
         logger.info(f"Cache saved ({len(users)} users)")
     except Exception as e:
         logger.error(f"Failed to save cache: {e}")
