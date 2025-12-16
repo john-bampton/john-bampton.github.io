@@ -28,7 +28,6 @@
  * Initialize with: document.addEventListener('DOMContentLoaded', initializeApp)
  * All filtering happens automatically via event listeners on filter controls.
  */
-
 let allUsers = [];
 let filteredUsers = [];
 
@@ -67,10 +66,26 @@ function parseUserCard(card) {
     const following = parseInt(card.getAttribute('data-following') || '0');
     const repos = parseInt(card.getAttribute('data-repos') || '0');
     const forks = parseInt(card.getAttribute('data-forks') || '0');
-    const { sponsors, sponsoring } = extractStats(card);
+    const {
+        sponsors,
+        sponsoring
+    } = extractStats(card);
     const avatarUpdated = card.getAttribute('data-avatar-updated') || '';
 
-    return { card, name, login, location, languages, followers, following, repos, forks, sponsors, sponsoring, avatarUpdated };
+    return {
+        card,
+        name,
+        login,
+        location,
+        languages,
+        followers,
+        following,
+        repos,
+        forks,
+        sponsors,
+        sponsoring,
+        avatarUpdated
+    };
 }
 /**
  * Extract location emoji and text from card
@@ -102,12 +117,16 @@ function extractStats(card) {
         if (label && label.classList.contains('stat-label')) {
             const text = stat.textContent.trim();
             const value = text === 'N/A' ? 0 : parseInt(text.replace(/,/g, ''));
+
             if (label.textContent === 'Public Sponsors') sponsors = value;
-            if (label.textContent === 'Sponsoring') sponsoring = value;
+            if (label.textContent === 'Public Sponsoring') sponsoring = value;
         }
     });
 
-    return { sponsors, sponsoring };
+    return {
+        sponsors,
+        sponsoring
+    };
 }
 
 
