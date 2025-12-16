@@ -1,11 +1,12 @@
-import os
 import json
+import logging
+import os
 import time
 from calendar import timegm
+from typing import Any, Dict, List
 from urllib.request import urlretrieve
+
 import requests
-import logging
-from typing import List, Dict, Any
 
 CACHE_DIR = './temp/cache'
 FACES_DIR = './docs/images/faces'
