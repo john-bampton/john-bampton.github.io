@@ -64,13 +64,13 @@ You can modify these directly in `github_faces.py`.
 
 ## Screenshots
 
-![Sample Faces](docs/images/preview.jpg)
+![Sample Faces](docs/images/other/preview.jpg)
 
 ---
 
 ## Powered by
 
-[![Python Powered](docs/images/other/python-powered.png)](https://www.python.org/)
+[![Python Powered](docs/images/other/python-logo.png)](https://www.python.org/)
 [![PyCharm Powered](docs/images/other/pycharm-logo.png)](https://www.jetbrains.com/pycharm/)
 
 ---
