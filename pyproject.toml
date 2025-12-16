@@ -7,3 +7,8 @@ dependencies = ["requests>=2.31.0", "Jinja2>=3.0.0"]
 flake8 = "*"
 pylint = "*"
 yamllint = "*"
+isort = "*"
+
+[tool.isort]
+profile = "black"
+line_length = 88
