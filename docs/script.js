@@ -28,7 +28,6 @@
  * Initialize with: document.addEventListener('DOMContentLoaded', initializeApp)
  * All filtering happens automatically via event listeners on filter controls.
  */
-
 let allUsers = [];
 let filteredUsers = [];
 let darkModeToggleElement = null;
@@ -73,10 +72,25 @@ function parseUserCard(card) {
     const following = parseInt(card.getAttribute('data-following') || '0');
     const repos = parseInt(card.getAttribute('data-repos') || '0');
     const forks = parseInt(card.getAttribute('data-forks') || '0');
-    const { sponsors, sponsoring } = extractStats(card);
+    const {
+        sponsors,
+        sponsoring
+    } = extractStats(card);
     const avatarUpdated = card.getAttribute('data-avatar-updated') || '';
-    
-    return { card, name, login, location, followers, following, repos, forks, sponsors, sponsoring, avatarUpdated };
+
+    return {
+        card,
+        name,
+        login,
+        location,
+        followers,
+        following,
+        repos,
+        forks,
+        sponsors,
+        sponsoring,
+        avatarUpdated
+    };
 }
 /**
  * Extract location emoji and text from card
@@ -102,18 +116,22 @@ function extractStats(card) {
     let sponsors = 0;
     let sponsoring = 0;
     const statSpans = card.querySelectorAll('.stat a, .stat');
-    
+
     statSpans.forEach(stat => {
         const label = stat.nextElementSibling;
         if (label && label.classList.contains('stat-label')) {
             const text = stat.textContent.trim();
             const value = text === 'N/A' ? 0 : parseInt(text.replace(/,/g, ''));
+
             if (label.textContent === 'Public Sponsors') sponsors = value;
-            if (label.textContent === 'Sponsoring') sponsoring = value;
+            if (label.textContent === 'Public Sponsoring') sponsoring = value;
         }
     });
-    
-    return { sponsors, sponsoring };
+
+    return {
+        sponsors,
+        sponsoring
+    };
 }
 
 
@@ -129,7 +147,7 @@ function setupEventListeners() {
         'minReposFilter', 'maxReposFilter', 'minForksFilter', 'maxForksFilter',
         'sponsorsFilter', 'sponsoringFilter', 'avatarAgeFilter'
     ];
-    
+
     filterIds.forEach(id => {
         const element = document.getElementById(id);
         if (element) {
@@ -168,7 +186,7 @@ function applyFilters() {
     const filters = getActiveFilters();
     validateRangeFilters(filters);
     const dateRanges = getDateRanges();
-    
+
     filteredUsers = allUsers.filter(user => {
         return matchesAllFilters(user, filters, dateRanges);
     });
@@ -237,12 +255,12 @@ function getDateRanges() {
  */
 function matchesAllFilters(user, filters, dateRanges) {
     return matchesSearch(user, filters.searchTerm) &&
-           matchesFollowerRange(user, filters) &&
-           matchesRepoRange(user, filters) &&
-           matchesForkRange(user, filters) &&
-           matchesPublicSponsors(user, filters.sponsorsFilter) &&
-           matchesSponsoring(user, filters.sponsoringFilter) &&
-           matchesAvatarAge(user, filters.avatarAgeFilter, dateRanges);
+        matchesFollowerRange(user, filters) &&
+        matchesRepoRange(user, filters) &&
+        matchesForkRange(user, filters) &&
+        matchesPublicSponsors(user, filters.sponsorsFilter) &&
+        matchesSponsoring(user, filters.sponsoringFilter) &&
+        matchesAvatarAge(user, filters.avatarAgeFilter, dateRanges);
 }
 
 /**
@@ -254,8 +272,8 @@ function matchesAllFilters(user, filters, dateRanges) {
 function matchesSearch(user, searchTerm) {
     if (!searchTerm) return true;
     return user.name.includes(searchTerm) ||
-           user.login.includes(searchTerm) ||
-           user.location.includes(searchTerm);
+        user.login.includes(searchTerm) ||
+        user.location.includes(searchTerm);
 }
 
 /**
@@ -329,7 +347,7 @@ function matchesSponsoring(user, sponsoringFilter) {
  */
 function matchesAvatarAge(user, ageFilter, dateRanges) {
     if (ageFilter === 'any' || !user.avatarUpdated) return true;
-    
+
     const avatarDate = new Date(user.avatarUpdated);
     const ranges = {
         'week': avatarDate >= dateRanges.oneWeekAgo,
@@ -340,7 +358,7 @@ function matchesAvatarAge(user, ageFilter, dateRanges) {
         '5years': avatarDate >= dateRanges.fiveYearsAgo,
         'old': avatarDate < dateRanges.fiveYearsAgo
     };
-    
+
     return ranges[ageFilter] !== undefined ? ranges[ageFilter] : true;
 }
 
@@ -354,7 +372,7 @@ function matchesAvatarAge(user, ageFilter, dateRanges) {
 function updateVisibilityAndSort() {
     const sortBy = document.getElementById('sortBy').value;
     const sortedUsers = getSortedUsers(sortBy);
-    
+
     renderCards(sortedUsers);
     updateCounts(sortedUsers);
     updateResultsMessage(sortedUsers);
@@ -367,7 +385,7 @@ function updateVisibilityAndSort() {
  */
 function getSortedUsers(sortBy) {
     const sorted = [...filteredUsers];
-    
+
     const sorters = {
         'followers-desc': (a, b) => b.followers - a.followers,
         'followers-asc': (a, b) => a.followers - b.followers,
@@ -389,11 +407,11 @@ function getSortedUsers(sortBy) {
             return ratioB - ratioA;
         }
     };
-    
+
     if (sorters[sortBy]) {
         sorted.sort(sorters[sortBy]);
     }
-    
+
     return sorted;
 }
 
@@ -417,10 +435,10 @@ function renderCards(sortedUsers) {
 function updateCounts(sortedUsers) {
     const visibleCount = sortedUsers.length;
     const totalCount = allUsers.length;
-    
+
     document.getElementById('visibleCount').textContent = visibleCount.toLocaleString();
     document.getElementById('totalCount').textContent = totalCount.toLocaleString();
-    
+
     document.getElementById('visibleCountDesktop').textContent = visibleCount.toLocaleString();
     document.getElementById('totalCountDesktop').textContent = totalCount.toLocaleString();
 }
@@ -432,13 +450,13 @@ function updateCounts(sortedUsers) {
 function updateResultsMessage(sortedUsers) {
     const visibleCount = sortedUsers.length;
     const totalCount = allUsers.length;
-    
+
     const resultsFound = document.getElementById('resultsFound');
     const noResults = document.getElementById('noResults');
-    
+
     const resultsFoundDesktop = document.getElementById('resultsFoundDesktop');
     const noResultsDesktop = document.getElementById('noResultsDesktop');
-    
+
     if (visibleCount === 0) {
         if (resultsFound) resultsFound.style.display = 'none';
         if (noResults) noResults.style.display = 'block';
@@ -477,12 +495,12 @@ function resetFilters() {
         sponsoringFilter: 'any',
         avatarAgeFilter: 'any'
     };
-    
+
     Object.entries(defaults).forEach(([id, value]) => {
         const element = document.getElementById(id);
         if (element) element.value = value;
     });
-    
+
     applyFilters();
     updateVisibilityAndSort();
 }
@@ -498,7 +516,7 @@ function showLoadingState() {
     const loadingStateDesktop = document.getElementById('loadingStateDesktop');
     const resultsInfo = document.getElementById('resultsInfo');
     const resultsInfoDesktop = document.getElementById('resultsInfoDesktop');
-    
+
     if (loadingState) loadingState.style.display = 'block';
     if (loadingStateDesktop) loadingStateDesktop.style.display = 'block';
     if (resultsInfo) resultsInfo.style.display = 'none';
@@ -511,7 +529,7 @@ function showLoadingState() {
 function hideLoadingState() {
     const loadingState = document.getElementById('loadingState');
     const loadingStateDesktop = document.getElementById('loadingStateDesktop');
-    
+
     if (loadingState) loadingState.style.display = 'none';
     if (loadingStateDesktop) loadingStateDesktop.style.display = 'none';
 }

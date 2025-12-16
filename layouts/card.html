@@ -1,19 +1,19 @@
 {%- for user in users %}
         <div class="card" data-followers="{{ user.followers if user.followers != 'N/A' else 0 }}" data-repos="{{ user.public_repos if user.public_repos != 'N/A' else 0 }}" data-forks="0" data-name="{{ user.name | lower }}" data-login="{{ user.login | lower }}" data-location="{{ user.location | lower }}" data-avatar-updated="{{ user.avatar_updated_at | default('') }}">
             <a href="{{ user.html_url }}" target="_blank" rel="noopener">
-                <img src="images/faces/{{ user.login | lower }}.png" alt="{{ user.login }}" title="{{ user.login }}">
+                <img src="images/faces/{{ user.login | lower }}.png" alt="{{ user.login }}" title="{{ user.login }}" loading="lazy" decoding="async">
             </a>
             <div class="details-box">
                 <strong>{{ user.name or user.login }}</strong>
                 <span>@{{ user.login }}</span>
-                <span>Followers: 
+                <span>Followers:
                     {%- if user.followers != 'N/A' %}
                     <a href="{{ user.html_url }}?tab=followers" target="_blank" rel="noopener">{{ user.followers_display }}</a>
                     {%- else %}
                     {{ user.followers_display }}
                     {%- endif %}
                 </span>
-                <span>Following: 
+                <span>Following:
                     {%- if user.following != 'N/A' %}
                     <a href="{{ user.html_url }}?tab=following" target="_blank" rel="noopener">{{ user.following_display }}</a>
                     {%- else %}
