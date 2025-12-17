@@ -188,10 +188,13 @@ h1 {
 }
 
 .stat-label {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.95);
-    font-weight: 600;
+    font-size: 1.1rem;
+    color: #ffffff !important;
+    font-weight: 700;
     text-transform: capitalize;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    opacity: 1 !important;
+    display: block;
 }
 
 .featured-user-languages {
