@@ -783,10 +783,10 @@ function initializeDarkMode() {
 /**
  * Toggle dark mode on/off
  * - Saves preference to localStorage
- * - Applies/removes dark-mode class from body
+ * - Applies/removes dark-mode class from html element
  */
 function toggleDarkMode() {
-    const isDarkMode = document.body.classList.toggle('dark-mode');
+    const isDarkMode = document.documentElement.classList.toggle('dark-mode');
     localStorage.setItem(DARK_MODE_KEY, isDarkMode ? THEME_ENABLED : THEME_DISABLED);
     updateDarkModeIcon(isDarkMode);
 }
