@@ -94,7 +94,7 @@ Special thanks to all contributors and avatar owners included in this project.
 The idea for this showcase site originally came from the movie [300](https://en.wikipedia.org/wiki/300_(film)).
 The plot revolves around King Leonidas (Gerard Butler), who leads 300 Spartans into
 battle against the Persian "God-King" Xerxes (Rodrigo Santoro). Here our showcase is
-currently lead by [Linus Torvalds](https://en.wikipedia.org/wiki/Linus_Torvalds).
+currently led by [Linus Torvalds](https://en.wikipedia.org/wiki/Linus_Torvalds).
 
 ---
 
