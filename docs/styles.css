@@ -765,7 +765,7 @@ html.dark-mode .card img {
 html.dark-mode .card:hover img {
     opacity: 1;
 }
-}
+
 
 /* Dark Mode Toggle Button */
 .dark-mode-toggle {
@@ -790,7 +790,7 @@ html.dark-mode .card:hover img {
 
 .dark-mode-toggle:hover {
     transform: scale(1.1);
-    background: #555;
+    background: linear-gradient(135deg, #5a68c4 0%, #613e86 100%);
 }
 
 /* Adjust position for mobile if needed */

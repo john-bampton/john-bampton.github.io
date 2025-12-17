@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', initializeApp);
  */
 async function initializeApp() {
     initializeDarkMode();
-    const cards = document.querySelectorAll('.card');
+
     showLoadingState();
     setupEventListeners();
     await fetchAndPrepareUsers();
@@ -799,5 +799,4 @@ function updateDarkModeIcon(isDarkMode) {
         darkModeToggleElement.textContent = isDarkMode ? '☀️' : '🌙';
         darkModeToggleElement.title = isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode';
     }
-}
 }
