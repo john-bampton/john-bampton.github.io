@@ -38,6 +38,8 @@ const DARK_MODE_KEY = 'darkMode';
 const THEME_ENABLED = 'enabled';
 const THEME_DISABLED = 'disabled';
 
+
+
 // ============================================================================
 // INITIALIZATION
 // ============================================================================
@@ -99,6 +101,7 @@ function pickRandomUser() {
             card.classList.remove('highlight');
         }, 3000);
     }, 500);
+
 }
 
 async function fetchAndPrepareUsers() {
@@ -115,6 +118,16 @@ async function fetchAndPrepareUsers() {
         document.getElementById('totalCountDesktop').textContent = total.toLocaleString();
     } catch (err) {
         console.error(err);
+        const noResults = document.getElementById('noResults');
+        const noResultsDesktop = document.getElementById('noResultsDesktop');
+        if (noResults) {
+            noResults.textContent = 'Unable to load users. Please try again later.';
+            noResults.style.display = 'block';
+        }
+        if (noResultsDesktop) {
+            noResultsDesktop.textContent = 'Unable to load users. Please try again later.';
+            noResultsDesktop.style.display = 'block';
+        }
     }
 }
 
@@ -202,6 +215,101 @@ function setupEventListeners() {
         if (element) {
             element.addEventListener('input', onFilterChange);
             element.addEventListener('change', onFilterChange);
+
+        }
+    });
+
+    const randomBtn = document.getElementById('randomUserBtn');
+    if (randomBtn) {
+        randomBtn.addEventListener('click', pickRandomUser);
+    }
+
+    // Initialize keyboard navigation for the grid
+    initGridNavigation();
+}
+
+/**
+ * Initialize arrow key navigation for the user grid
+ */
+function initGridNavigation() {
+    const grid = document.getElementById('grid');
+    if (!grid) return;
+
+    grid.addEventListener('keydown', (e) => {
+        // Only handle arrow keys
+        if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) return;
+
+        const activeElement = document.activeElement;
+        // Only proceed if a card is currently focused
+        if (!activeElement.classList.contains('card')) return;
+
+        const cards = Array.from(document.querySelectorAll('.card.visible'));
+        const currentIndex = cards.indexOf(activeElement);
+        if (currentIndex === -1) return;
+
+        e.preventDefault(); // Prevent default page scrolling
+
+        let nextIndex = currentIndex;
+
+        // Calculate columns based on grid layout
+        // Mobile: 1 column
+        // Tablet: 2 or 3 columns (depends on exact width)
+        // Desktop: dynamic
+
+        // We can approximate the number of columns by checking offsetTop
+        // This is a robust way to handle responsive grids without hardcoding breakpoints
+        const currentRect = activeElement.getBoundingClientRect();
+
+        // Find how many items are in one row by checking when the top offset changes
+        let columns = 1;
+        for (let i = currentIndex + 1; i < cards.length; i++) {
+            if (cards[i].offsetTop !== activeElement.offsetTop) {
+                // Determine columns by counting items with same top offset as first item in row
+                // Alternatively, checking neighbor relation:
+                // If item (i) is on a new row, then (i - currentIndex) might be the count? 
+                // Not necessarily if we are in the middle of a row.
+
+                // Better approach: Check relative horizontal positions
+                // Simply find items visually above/below
+                break;
+            }
+        }
+
+        // Smarter column detection: find the first item in the next row
+        // or just calculate based on container width / card width + gap
+        const gridComputedStyle = window.getComputedStyle(grid);
+        // If using flexbox, this is harder. Let's try visual navigation logic.
+
+        // Visual Navigation Logic:
+        // Left/Right is easy: +/- 1
+        // Up/Down: Find the card visually closest in the center of the column above/below
+
+        if (e.key === 'ArrowRight') {
+            nextIndex = Math.min(currentIndex + 1, cards.length - 1);
+        } else if (e.key === 'ArrowLeft') {
+            nextIndex = Math.max(currentIndex - 1, 0);
+        } else {
+            // Up or Down
+            // Determine column count dynamically
+            const cardWidth = activeElement.offsetWidth;
+            const gap = 20; // approximate gap
+            const containerWidth = grid.clientWidth;
+            // Rough estimate of items per row
+            const itemsPerRow = Math.floor((containerWidth + gap) / (cardWidth + gap));
+            // Fallback to 1 if calculation fails
+            const cols = Math.max(1, itemsPerRow);
+
+            if (e.key === 'ArrowUp') {
+                nextIndex = Math.max(currentIndex - cols, 0);
+            } else if (e.key === 'ArrowDown') {
+                nextIndex = Math.min(currentIndex + cols, cards.length - 1);
+            }
+        }
+
+        if (nextIndex !== currentIndex) {
+            cards[nextIndex].focus();
+            cards[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
         }
     });
 
@@ -606,8 +714,17 @@ function buildCardElement(user) {
         box.appendChild(langRow);
     }
 
-    card.appendChild(link);
     card.appendChild(box);
+
+    // Make card focusable for keyboard navigation
+    card.setAttribute('tabindex', '0');
+
+    // Allow Enter key to open the profile
+    card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            link.click();
+        }
+    });
     return card;
 }
 
