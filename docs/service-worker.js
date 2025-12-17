@@ -33,8 +33,6 @@ const PRECACHE_URLS = [
   'bootstrap/js/bootstrap.min.js',
   'bootstrap/js/jquery.min.js',
   'bootstrap/js/popper.min.js',
-  'images/other/hm-192.png',
-  'images/other/hm-512.png'
 ];
 
 // The install handler takes care of precaching the resources we always need.
