@@ -540,17 +540,14 @@ function hideLoadingState() {
  * Initialize dark mode functionality
  * - Load saved preference from localStorage
  * - Set up toggle button listener
- * - Apply dark mode class if preference is set
+ * - Update icon based on current theme state
  * - Cache DOM element for performance
  */
 function initializeDarkMode() {
     darkModeToggleElement = document.getElementById('darkModeToggle');
-    const isDarkMode = localStorage.getItem(DARK_MODE_KEY) === THEME_ENABLED;
+    const isDarkMode = document.documentElement.classList.contains('dark-mode');
     
-    if (isDarkMode) {
-        document.body.classList.add('dark-mode');
-        updateDarkModeIcon(true);
-    }
+    updateDarkModeIcon(isDarkMode);
     
     if (darkModeToggleElement) {
         darkModeToggleElement.addEventListener('click', toggleDarkMode);
@@ -560,10 +557,10 @@ function initializeDarkMode() {
 /**
  * Toggle dark mode on/off
  * - Saves preference to localStorage
- * - Applies/removes dark-mode class from body
+ * - Applies/removes dark-mode class from html element
  */
 function toggleDarkMode() {
-    const isDarkMode = document.body.classList.toggle('dark-mode');
+    const isDarkMode = document.documentElement.classList.toggle('dark-mode');
     localStorage.setItem(DARK_MODE_KEY, isDarkMode ? THEME_ENABLED : THEME_DISABLED);
     updateDarkModeIcon(isDarkMode);
 }
