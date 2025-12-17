@@ -66,6 +66,6 @@ featured_data = {
 }
 
 with open('./docs/featured.json', 'w') as f:
-    json.dump(featured_data, f, indent=2, ensure_ascii=False)
+    json.dump(featured_data, f, ensure_ascii=False)
 
 print(f"\n✅ Created docs/featured.json with {featured['login']} as featured user!")

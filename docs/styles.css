@@ -188,9 +188,10 @@ h1 {
 }
 
 .stat-label {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.8);
-    font-weight: 500;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 600;
+    text-transform: capitalize;
 }
 
 .featured-user-languages {

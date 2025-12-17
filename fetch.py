@@ -534,7 +534,7 @@ def save_featured_user(featured_user: Dict[str, Any]) -> None:
             'month': datetime.now(timezone.utc).strftime('%B %Y')
         }
         with open(featured_file, 'w', encoding='utf-8') as f:
-            json.dump(featured_data, f, indent=(2 if os.environ.get('APP_ENV') == 'development' else None), ensure_ascii=False)
+            json.dump(featured_data, f, ensure_ascii=False)
         logger.info(f"Featured user saved: {featured_user.get('login')}")
     except Exception as e:
         logger.error(f"Failed to save featured user: {e}")
