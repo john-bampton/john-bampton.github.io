@@ -58,6 +58,30 @@ self.addEventListener('activate', event => {
   );
 });
 
+// Cache durations for JSON files
+const CACHE_DURATIONS = {
+  'featured.json': 7 * 24 * 60 * 60 * 1000, // 1 week
+  'users.json': 24 * 60 * 60 * 1000, // 1 day
+};
+
+// Check if cached response is still valid based on custom durations
+function isCacheValid(cachedResponse, url) {
+  if (!cachedResponse) return false;
+  
+  const cachedTime = cachedResponse.headers.get('sw-cache-time');
+  if (!cachedTime) return false;
+  
+  const fileName = url.split('/').pop();
+  const duration = CACHE_DURATIONS[fileName];
+  
+  if (duration) {
+    const age = Date.now() - parseInt(cachedTime);
+    return age < duration;
+  }
+  
+  return true; // No specific duration, cache is valid
+}
+
 // The fetch handler serves responses for same-origin resources from a cache.
 // If no response is found, it populates the runtime cache with the response
 // from the network before returning it to the page.
@@ -66,13 +90,24 @@ self.addEventListener('fetch', event => {
   if (event.request.url.startsWith(self.location.origin)) {
     event.respondWith(
       caches.match(event.request).then(cachedResponse => {
-        if (cachedResponse) {
+        if (isCacheValid(cachedResponse, event.request.url)) {
           return cachedResponse;
         }
 
         return caches.open(RUNTIME).then(cache => {
           return fetch(event.request).then(response => {
-            return cache.put(event.request, response.clone()).then(() => {
+            // Clone the response and add cache timestamp
+            const responseToCache = response.clone();
+            const headers = new Headers(responseToCache.headers);
+            headers.append('sw-cache-time', Date.now().toString());
+            
+            const modifiedResponse = new Response(responseToCache.body, {
+              status: responseToCache.status,
+              statusText: responseToCache.statusText,
+              headers: headers
+            });
+            
+            return cache.put(event.request, modifiedResponse).then(() => {
               return response;
             });
           });
