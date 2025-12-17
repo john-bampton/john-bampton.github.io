@@ -1,0 +1,66 @@
+{
+  "user": {
+    "login": "torvalds",
+    "id": 1024025,
+    "node_id": "MDQ6VXNlcjEwMjQwMjU=",
+    "avatar_url": "https://avatars.githubusercontent.com/u/1024025?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/torvalds",
+    "html_url": "https://github.com/torvalds",
+    "followers_url": "https://api.github.com/users/torvalds/followers",
+    "following_url": "https://api.github.com/users/torvalds/following{/other_user}",
+    "gists_url": "https://api.github.com/users/torvalds/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/torvalds/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/torvalds/subscriptions",
+    "organizations_url": "https://api.github.com/users/torvalds/orgs",
+    "repos_url": "https://api.github.com/users/torvalds/repos",
+    "events_url": "https://api.github.com/users/torvalds/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/torvalds/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false,
+    "score": 1.0,
+    "followers": 266192,
+    "following": 0,
+    "location": "Portland, OR",
+    "name": "Linus Torvalds",
+    "public_repos": 9,
+    "public_gists": 1,
+    "sponsors_count": 0,
+    "sponsoring_count": 0,
+    "avatar_updated_at": "2025-11-24T04:16:14Z",
+    "top_languages": [
+      {
+        "name": "C",
+        "bytes": 1384925448,
+        "percent": 97.7
+      },
+      {
+        "name": "Assembly",
+        "bytes": 9727594,
+        "percent": 0.7
+      },
+      {
+        "name": "Shell",
+        "bytes": 5784810,
+        "percent": 0.4
+      },
+      {
+        "name": "Rust",
+        "bytes": 4587698,
+        "percent": 0.3
+      },
+      {
+        "name": "Python",
+        "bytes": 3805691,
+        "percent": 0.3
+      }
+    ],
+    "total_stars": 217154,
+    "last_repo_pushed_at": "2025-12-16T08:05:45Z",
+    "last_public_commit_at": "2025-12-16T08:05:46Z",
+    "engagement_score": 74.97144444444444
+  },
+  "selected_at": "2025-12-17T13:51:40.820097+00:00",
+  "month": "December 2025"
+}

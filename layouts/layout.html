@@ -47,6 +47,56 @@
         <div id="head"><h1>Top GitHub Faces</h1></div>
     </header>
 
+    <!-- Featured User Section -->
+    <section id="featuredUserSection" class="featured-user-section" style="display: none;">
+        <div class="featured-badge">⭐ Featured Developer of the Month</div>
+        <div class="featured-user-content">
+            <div class="featured-user-left">
+                <a id="featuredUserLink" href="#" target="_blank" rel="noopener noreferrer">
+                    <img id="featuredUserAvatar" src="" alt="Featured User Avatar" class="featured-user-avatar">
+                </a>
+            </div>
+            <div class="featured-user-right">
+                <div class="featured-user-header">
+                    <h2 id="featuredUserName" class="featured-user-name"></h2>
+                    <a id="featuredUserLoginLink" href="#" target="_blank" rel="noopener noreferrer" class="featured-user-login"></a>
+                </div>
+                <div id="featuredUserLocation" class="featured-user-location"></div>
+                <div class="featured-user-stats">
+                    <div class="featured-stat">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="featuredUserFollowers">0</div>
+                            <div class="stat-label">Followers</div>
+                        </div>
+                    </div>
+                    <div class="featured-stat">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="featuredUserStars">0</div>
+                            <div class="stat-label">Total Stars</div>
+                        </div>
+                    </div>
+                    <div class="featured-stat">
+                        <div class="stat-icon">📦</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="featuredUserRepos">0</div>
+                            <div class="stat-label">Repositories</div>
+                        </div>
+                    </div>
+                    <div class="featured-stat">
+                        <div class="stat-icon">💝</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="featuredUserSponsors">0</div>
+                            <div class="stat-label">Public Sponsors</div>
+                        </div>
+                    </div>
+                </div>
+                <div id="featuredUserLanguages" class="featured-user-languages"></div>
+            </div>
+        </div>
+    </section>
+
     <aside id="filtersAside" class="filters-aside">
         <button id="filterCloseBtn" class="filter-close-btn" onclick="toggleFiltersPanel()" aria-label="Close filters">
             ✕

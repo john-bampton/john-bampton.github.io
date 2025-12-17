@@ -393,6 +393,124 @@ def fetch_users_from_search(target: int = TARGET_USERS) -> List[Dict[str, Any]]:
     
     return users
 
+def calculate_engagement_score(user: Dict[str, Any]) -> float:
+    """Calculate engagement score for monthly featured user selection.
+    
+    Score based on:
+    - Followers (weight: 0.3)
+    - Total stars (weight: 0.25)
+    - Public repos (weight: 0.15)
+    - Sponsors count (weight: 0.15)
+    - Recent activity (weight: 0.15)
+    
+    Returns normalized score between 0-100.
+    """
+    try:
+        followers = int(user.get('followers', 0)) if user.get('followers') != 'N/A' else 0
+        total_stars = int(user.get('total_stars', 0)) if user.get('total_stars') != 'N/A' else 0
+        repos = int(user.get('public_repos', 0)) if user.get('public_repos') != 'N/A' else 0
+        sponsors = int(user.get('sponsors_count', 0)) if user.get('sponsors_count') != 'N/A' else 0
+        
+        # Recent activity bonus (last 30 days)
+        last_repo = user.get('last_repo_pushed_at', '')
+        last_commit = user.get('last_public_commit_at', '')
+        activity_bonus = 0
+        
+        from datetime import datetime, timezone
+        now = datetime.now(timezone.utc)
+        
+        for date_str in [last_repo, last_commit]:
+            if date_str:
+                try:
+                    date = datetime.fromisoformat(date_str.replace('Z', '+00:00'))
+                    days_ago = (now - date).days
+                    if days_ago <= 30:
+                        activity_bonus += 1000
+                    elif days_ago <= 90:
+                        activity_bonus += 500
+                except:
+                    pass
+        
+        # Calculate weighted score
+        score = (
+            (followers * 0.3) +
+            (total_stars * 0.25) +
+            (repos * 10 * 0.15) +
+            (sponsors * 50 * 0.15) +
+            (activity_bonus * 0.15)
+        )
+        
+        return score
+    except Exception as e:
+        logger.warning(f"Error calculating engagement score for {user.get('login')}: {e}")
+        return 0.0
+def calculate_engagement_score(user: Dict[str, Any]) -> float:
+    """Calculate engagement score for a user based on multiple metrics.
+    
+    Weighted scoring:
+    - Followers: 40%
+    - Total stars: 30%
+    - Public repos: 15%
+    - Sponsors: 10%
+    - Recent activity: 5%
+    """
+    from datetime import datetime, timezone, timedelta
+    
+    score = 0.0
+    
+    # Followers contribution (40%)
+    followers = user.get('followers', 0)
+    if followers != 'N/A' and followers:
+        score += min(followers / 1000, 100) * 0.4
+    
+    # Total stars contribution (30%)
+    stars = user.get('total_stars', 0)
+    if stars != 'N/A' and stars:
+        score += min(stars / 500, 100) * 0.3
+    
+    # Public repos contribution (15%)
+    repos = user.get('public_repos', 0)
+    if repos != 'N/A' and repos:
+        score += min(repos / 50, 100) * 0.15
+    
+    # Sponsors contribution (10%)
+    sponsors = user.get('sponsors_count', 0)
+    if sponsors != 'N/A' and sponsors:
+        score += min(sponsors / 20, 100) * 0.1
+    
+    # Recent activity bonus (5%)
+    last_commit = user.get('last_public_commit_at', '')
+    if last_commit:
+        try:
+            commit_date = datetime.fromisoformat(last_commit.replace('Z', '+00:00'))
+            days_ago = (datetime.now(timezone.utc) - commit_date).days
+            # Bonus decreases with time: full bonus if within 7 days, 0 after 90 days
+            if days_ago < 90:
+                recency_score = max(0, (90 - days_ago) / 90 * 100)
+                score += recency_score * 0.05
+        except (ValueError, TypeError):
+            pass
+    
+    return score
+def select_featured_user(users: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """Select monthly featured user based on highest engagement score.
+    
+    Returns the user with the highest engagement score, considering
+    followers, stars, repos, sponsors, and recent activity.
+    """
+    if not users:
+        return {}
+    
+    # Calculate scores for all users
+    for user in users:
+        user['engagement_score'] = calculate_engagement_score(user)
+    
+    # Sort by engagement score and select top user
+    featured = max(users, key=lambda u: u.get('engagement_score', 0))
+    logger.info(f"Featured user selected: {featured['login']} (score: {featured['engagement_score']:.2f})")
+    
+    return featured
+
 def save_cache(users: List[Dict[str, Any]]) -> None:
     """Save user data to JSON cache file."""
     ensure_dir(CACHE_DIR)
@@ -403,6 +521,23 @@ def save_cache(users: List[Dict[str, Any]]) -> None:
         logger.info(f"Cache saved ({len(users)} users)")
     except Exception as e:
         logger.error(f"Failed to save cache: {e}")
+
+def save_featured_user(featured_user: Dict[str, Any]) -> None:
+    """Save featured user data to separate JSON file."""
+    ensure_dir(CACHE_DIR)
+    featured_file = os.path.join(CACHE_DIR, 'featured.json')
+    try:
+        from datetime import datetime, timezone
+        featured_data = {
+            'user': featured_user,
+            'selected_at': datetime.now(timezone.utc).isoformat(),
+            'month': datetime.now(timezone.utc).strftime('%B %Y')
+        }
+        with open(featured_file, 'w', encoding='utf-8') as f:
+            json.dump(featured_data, f, indent=(2 if os.environ.get('APP_ENV') == 'development' else None), ensure_ascii=False)
+        logger.info(f"Featured user saved: {featured_user.get('login')}")
+    except Exception as e:
+        logger.error(f"Failed to save featured user: {e}")
 
 def print_section(title: str) -> None:
     """Print formatted section header with title."""
@@ -437,6 +572,11 @@ def run() -> None:
     
     print_section("Saving user data to cache...")
     save_cache(users)
+    
+    print_section("Selecting featured user of the month...")
+    featured_user = select_featured_user(users)
+    if featured_user:
+        save_featured_user(featured_user)
     
     print_section(f"✅ FETCH COMPLETE! {len(users)} users cached.")
 
