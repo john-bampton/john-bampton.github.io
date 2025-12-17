@@ -744,11 +744,16 @@ html.dark-mode .stat-label {
     color: #888;
 }
 
-html.dark-mode .btn-apply,
-html.dark-mode .btn-reset {
+html.dark-mode .btn-apply {
     background: var(--link-color);
     color: white;
     border: none;
+}
+
+html.dark-mode .btn-reset {
+    background: rgba(255, 80, 80, 0.3);
+    color: white;
+    border: 1px solid rgba(255, 80, 80, 0.5);
 }
 
 html.dark-mode .btn-apply:hover,
