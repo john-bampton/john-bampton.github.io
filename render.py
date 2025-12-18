@@ -53,7 +53,7 @@ def prepare_users(users: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         public_gists = user.get('public_gists', 'N/A')
         sponsors_count = user.get('sponsors_count', 'N/A')
         sponsoring_count = user.get('sponsoring_count', 'N/A')
-        
+
         prepared.append({
             **user,
             'followers_display': format_number(followers),
@@ -71,7 +71,7 @@ def load_cache(cache_file: str = CACHE_FILE) -> List[Dict[str, Any]]:
         logger.error(f"Cache file not found: {cache_file}")
         logger.error("Please run fetch_users.py first to fetch and cache user data.")
         return []
-    
+
     try:
         with open(cache_file, 'r', encoding='utf-8') as f:
             users = json.load(f)
@@ -85,7 +85,7 @@ def build_html() -> str:
     """Build the HTML layout using Jinja2 templates."""
     layout_template = jinja_env.get_template('layout.html')
     layout = layout_template.render()
-    
+
     return layout
 
 def minify_html(html: str) -> str:
@@ -129,17 +129,17 @@ def minify_css(code: str) -> str:
 def run() -> None:
     """Main entry point: load cache, export JSON, and generate minified HTML shell."""
     ensure_dir(SITE_DIR)
-    
+
     logger.info("Loading user data from cache...")
     users = load_cache()
-    
+
     if not users:
         logger.error("No users found in cache. Please run fetch_users.py first.")
         return
-    
+
     logger.info("Building HTML shell (header + footer + empty grid)...")
     html_content = minify_html(build_html())
-    
+
     try:
         output_file = os.path.join(SITE_DIR, 'index.html')
         with open(output_file, 'w', encoding='utf-8') as f:
