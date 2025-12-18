@@ -706,9 +706,12 @@ footer {
         display: none;
     }
 }
+ {
+    background: var(--link-hover);
+}
 
-/* ============================================================================ */
-/* DARK MODE STYLES - USING CSS VARIABLES */
+html.dark-mode .btn-reset:hover {
+    background: rgba(255, 80, 80, 0.5VARIABLES */
 /* ============================================================================ */
 html.dark-mode {
     --bg-color: #1e1e1e;
