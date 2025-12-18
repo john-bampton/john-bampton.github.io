@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Quick script to generate featured.json from existing users.json"""
 import json
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 
 
 def calculate_engagement_score(user):
