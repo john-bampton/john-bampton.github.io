@@ -18,6 +18,11 @@
     --footer-border: #e0e0e0;
     --link-color: #667eea;
     --link-hover: #764ba2;
+    --accent: #f7f8fb;
+    --accent-light: #eef0f5;
+    --text-muted: #999;
+    --text-subtle: #555;
+    --text-pill: #4a4a4a;
 }
 
 body {
@@ -469,7 +474,7 @@ h1 {
 .stat-label {
     display: block;
     font-size: 0.75rem;
-    color: #999;
+    color: var(--text-muted);
     margin-top: 2px;
 }
 
@@ -477,9 +482,9 @@ h1 {
     margin-top: 10px;
     padding: 8px;
     font-size: 0.8rem;
-    color: #555;
-    background: #f7f8fb;
-    border: 1px solid #eef0f5;
+    color: var(--text-subtle);
+    background: var(--accent);
+    border: 1px solid var(--accent-light);
     border-radius: 8px;
     line-height: 1.4;
 }
@@ -496,7 +501,7 @@ h1 {
     padding: 6px 10px;
     border-radius: 999px;
     background: linear-gradient(135deg, rgba(102, 126, 234, 0.12), rgba(118, 75, 162, 0.12));
-    color: #4a4a4a;
+    color: var(--text-pill);
     font-size: 0.8rem;
     border: 1px solid rgba(102, 126, 234, 0.25);
     white-space: nowrap;
@@ -718,11 +723,11 @@ html.dark-mode {
     --footer-border: #444;
     --link-color: #667eea;
     --link-hover: #764ba2;
-    --dark-accent: #252525;
-    --dark-accent-light: #333;
-    --dark-text-muted: #ccc;
-    --dark-text-subtle: #888;
-    --dark-text-secondary: #ddd;
+    --accent: #252525;
+    --accent-light: #333;
+    --text-muted: #ccc;
+    --text-subtle: #888;
+    --text-pill: #ddd;
 }
 
 html.dark-mode .filters-aside {
@@ -734,19 +739,19 @@ html.dark-mode .card:hover {
 }
 
 html.dark-mode .activity-row {
-    background: var(--dark-accent);
-    border-color: var(--dark-accent-light);
-    color: var(--dark-text-muted);
+    background: var(--accent);
+    border-color: var(--accent-light);
+    color: var(--text-muted);
 }
 
 html.dark-mode .lang-pill {
     background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
     border-color: rgba(102, 126, 234, 0.4);
-    color: var(--dark-text-secondary);
+    color: var(--text-pill);
 }
 
 html.dark-mode .stat-label {
-    color: var(--dark-text-subtle);
+    color: var(--text-muted);
 }
 
 html.dark-mode .btn-apply {
