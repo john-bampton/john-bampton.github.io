@@ -73,7 +73,7 @@ def download_single_avatar(user: Dict[str, Any], faces_dir: str) -> None:
     """Download or update avatar image for a single user."""
     login_safe = safe_filename(user['login'])
     file_path = os.path.join(faces_dir, f"{login_safe}.png")
-    
+
     if should_download(file_path, user['avatar_url']):
         try:
             urlretrieve(user['avatar_url'], file_path)
@@ -121,7 +121,7 @@ def fetch_sponsorship_info(login: str) -> Dict[str, Any]:
     """Fetch sponsor and sponsoring counts via GraphQL API."""
     if not os.environ.get('GITHUB_TOKEN'):
         return {'sponsors_count': 'N/A', 'sponsoring_count': 'N/A'}
-    
+
     query = """
     query($login: String!) {
       user(login: $login) {
@@ -130,7 +130,7 @@ def fetch_sponsorship_info(login: str) -> Dict[str, Any]:
       }
     }
     """
-    
+
     try:
         headers = get_github_headers()
         resp = requests.post(
@@ -154,33 +154,33 @@ def fetch_sponsorship_info(login: str) -> Dict[str, Any]:
 def fetch_user_detail_with_retry(login: str, max_retries: int = 5) -> Dict[str, Any]:
     """Fetch user details with automatic retry on rate limits or errors."""
     headers = get_github_headers()
-    
+
     for attempt in range(max_retries):
         try:
             detail_url = GITHUB_USER_DETAIL_URL.format(login)
             resp = requests.get(detail_url, headers=headers, timeout=10)
-            
+
             if resp.status_code == 404:
                 logger.warning(f"User not found: {login}")
                 return {}
-            
+
             if resp.status_code == 403 and "rate limit" in resp.text.lower():
                 sleep_for = handle_rate_limit(resp)
                 time.sleep(sleep_for + 3)
                 continue
-            
+
             if resp.status_code == 429:
                 retry_after = resp.headers.get('Retry-After', '5')
                 sleep_for = handle_429_error(retry_after, attempt)
                 time.sleep(sleep_for)
                 continue
-            
+
             resp.raise_for_status()
             return resp.json()
         except Exception as e:
             logger.warning(f"Error fetching {login} (attempt {attempt+1}): {e}")
             time.sleep(2 ** attempt)
-    
+
     logger.warning(f"Failed to fetch {login} after {max_retries} attempts")
     return {}
 
@@ -189,10 +189,10 @@ def enrich_user_with_details(user: Dict[str, Any], idx: int, total: int) -> None
     detail = fetch_user_detail_with_retry(user['login'])
     if not detail:
         return
-    
+
     progress = (idx / total) * 100
     sponsorship = fetch_sponsorship_info(user['login'])
-    
+
     user['followers'] = detail.get('followers', 'N/A')
     user['following'] = detail.get('following', 'N/A')
     user['location'] = detail.get('location', '')
@@ -208,7 +208,7 @@ def enrich_user_with_details(user: Dict[str, Any], idx: int, total: int) -> None
     user['total_stars'] = total_stars
     user['last_repo_pushed_at'] = last_repo_push_at
     user['last_public_commit_at'] = fetch_last_public_commit_at(user['login'])
-    
+
     logger.info(f"[{idx}/{total} - {progress:.1f}%] Fetched details for {user['login']}")
     time.sleep(0.15)
 
@@ -235,7 +235,7 @@ def fetch_user_repo_summary(login: str, max_repos: int = 200) -> Tuple[Dict[str,
 
 def fetch_user_repo_summary_graphql(login: str, max_repos: int = 200) -> Tuple[Dict[str, int], int, str]:
     """Fetch repo summary via GraphQL with language byte sizes, stars, and last push date.
-    
+
     Returns: (language_bytes_map, total_stars, last_repo_pushed_at)
     """
     headers = get_github_headers()
@@ -338,7 +338,7 @@ def fetch_user_repo_summary_rest(login: str, max_repos: int = 200) -> Tuple[Dict
 
 def summarize_top_languages(lang_totals: Dict[str, int], top_n: int = 5) -> List[Dict[str, Any]]:
     """Convert language totals to sorted list with percentages.
-    
+
     Returns: List of top N languages with name, bytes, and percent.
     """
     total = sum(lang_totals.values()) or 1
@@ -381,16 +381,16 @@ def fetch_users_from_search(target: int = TARGET_USERS) -> List[Dict[str, Any]]:
     users = []
     headers = get_github_headers()
     max_pages = target // 100 + MAX_EXTRA_PAGES
-    
+
     for page_num in range(1, max_pages + 1):
         page_users = fetch_search_page(page_num, headers)
         users.extend(page_users)
         progress = (len(users) / target) * 100
         logger.info(f"Page {page_num}: {len(page_users)} users | Total: {len(users)}/{target} ({progress:.1f}%)")
-        
+
         if len(users) >= target:
             return users[:target]
-    
+
     return users
 
 def save_cache(users: List[Dict[str, Any]]) -> None:
@@ -415,29 +415,29 @@ def run() -> None:
     print_section("Starting GitHub Users Fetch Process")
     logger.info(f"Target users: {TARGET_USERS}")
     logger.info("")
-    
+
     users = fetch_users_from_search(TARGET_USERS)
-    
+
     if not users:
         logger.error("No valid users fetched. Exiting.")
         return
-    
+
     print_section(f"Fetched {len(users)} users successfully")
     logger.info("Fetching extra details (followers, following, location)...")
     logger.info("")
-    
+
     enrich_all_users(users)
-    
+
     print_section("Downloading/updating avatars...")
     download_avatars(users, FACES_DIR)
-    
+
     print_section("Cleaning old avatars...")
     current_logins = [user['login'] for user in users]
     clean_old_avatars(current_logins, FACES_DIR)
-    
+
     print_section("Saving user data to cache...")
     save_cache(users)
-    
+
     print_section(f"✅ FETCH COMPLETE! {len(users)} users cached.")
 
 if __name__ == '__main__':

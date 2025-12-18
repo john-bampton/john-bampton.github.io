@@ -70,18 +70,18 @@ function pickRandomUser() {
 
     const randomIndex = Math.floor(Math.random() * usersToPickFrom.length);
     const randomUser = usersToPickFrom[randomIndex];
-    
+
     if (!randomUser.card) {
         return;
     }
 
     randomUser.card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    
+
     setTimeout(() => {
         randomUser.card.classList.remove('highlight');
         void randomUser.card.offsetWidth;
         randomUser.card.classList.add('highlight');
-        
+
         setTimeout(() => {
             randomUser.card.classList.remove('highlight');
         }, 3000);
