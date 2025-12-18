@@ -668,13 +668,6 @@ h1 {
   text-decoration: underline;
 }
 
-.stat-label {
-  display: block;
-  font-size: 0.75rem;
-  color: #999;
-  margin-top: 2px;
-}
-
 .activity-row {
   margin-top: 10px;
   padding: 8px;
