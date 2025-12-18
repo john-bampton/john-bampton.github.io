@@ -133,7 +133,7 @@ def handle_429_error(retry_after: str, attempt: int) -> int:
     """Handle HTTP 429 Too Many Requests and return sleep duration."""
     retry_secs = int(retry_after)
     logger.warning(
-        f"429 Too Many Requests, sleeping {retry_secs}s (attempt {attempt+1})"
+        f"429 Too Many Requests, sleeping {retry_secs}s (attempt {attempt + 1})"
     )
     return retry_secs
 
@@ -204,7 +204,7 @@ def fetch_user_detail_with_retry(login: str, max_retries: int = 5) -> Dict[str, 
             resp.raise_for_status()
             return resp.json()
         except Exception as e:
-            logger.warning(f"Error fetching {login} (attempt {attempt+1}): {e}")
+            logger.warning(f"Error fetching {login} (attempt {attempt + 1}): {e}")
             time.sleep(2**attempt)
 
     logger.warning(f"Failed to fetch {login} after {max_retries} attempts")

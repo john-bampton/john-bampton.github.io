@@ -31,7 +31,7 @@ Check out the live preview: [https://john-bampton.github.io/](https://john-bampt
 ```bash
 git clone https://github.com/john-bampton/john-bampton.github.io.git
 cd faces
-````
+```
 
 2. Install dependencies:
 
@@ -55,8 +55,8 @@ docs/index.html
 
 ## Configuration
 
-* **TARGET_USERS**: Number of GitHub users to fetch (default: 400).
-* **MAX_EXTRA_PAGES**: Extra pages to fetch if not enough users are found (default: 2).
+- **TARGET_USERS**: Number of GitHub users to fetch (default: 400).
+- **MAX_EXTRA_PAGES**: Extra pages to fetch if not enough users are found (default: 2).
 
 You can modify these directly in `github_faces.py`.
 
@@ -79,10 +79,10 @@ You can modify these directly in `github_faces.py`.
 
 We welcome contributions! Feel free to:
 
-* Submit issues for bugs or feature requests.
-* Fork the repository and open pull requests.
-* Suggest new ways to improve the avatar grid or functionality.
-* Spread the word by adding a ⭐ to this repository.
+- Submit issues for bugs or feature requests.
+- Fork the repository and open pull requests.
+- Suggest new ways to improve the avatar grid or functionality.
+- Spread the word by adding a ⭐ to this repository.
 
 ---
 
@@ -91,7 +91,7 @@ We welcome contributions! Feel free to:
 Inspired by the GitHub community and the creativity of open-source developers.
 Special thanks to all contributors and avatar owners included in this project.
 
-The idea for this showcase site originally came from the movie [300](https://en.wikipedia.org/wiki/300_(film)).
+The idea for this showcase site originally came from the movie [300](<https://en.wikipedia.org/wiki/300_(film)>).
 The plot revolves around King Leonidas (Gerard Butler), who leads 300 Spartans into
 battle against the Persian "God-King" Xerxes (Rodrigo Santoro). Here our showcase is
 currently led by [Linus Torvalds](https://en.wikipedia.org/wiki/Linus_Torvalds).
