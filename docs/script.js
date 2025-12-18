@@ -755,6 +755,7 @@ function hideLoadingState() {
     const loadingState = document.getElementById('loadingState');
     const loadingStateDesktop = document.getElementById('loadingStateDesktop');
 
+    if (loadingState) loadingState.style.display = 'none';
     if (loadingStateDesktop) loadingStateDesktop.style.display = 'none';
 }
 
@@ -763,7 +764,7 @@ function hideLoadingState() {
 // ============================================================================
 /**
  * Initialize dark mode functionality
- * - Load saved preference from localStorage
+ * - Reads current theme state from the DOM (loaded by inline script)
  * - Set up toggle button listener
  * - Update icon based on current theme state
  * - Cache DOM element for performance
@@ -796,7 +797,9 @@ function toggleDarkMode() {
  */
 function updateDarkModeIcon(isDarkMode) {
     if (darkModeToggleElement) {
+        const newLabel = isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode';
         darkModeToggleElement.textContent = isDarkMode ? '☀️' : '🌙';
-        darkModeToggleElement.title = isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+        darkModeToggleElement.title = newLabel;
+        darkModeToggleElement.setAttribute('aria-label', newLabel);
     }
 }

@@ -718,6 +718,11 @@ html.dark-mode {
     --footer-border: #444;
     --link-color: #667eea;
     --link-hover: #764ba2;
+    --dark-accent: #252525;
+    --dark-accent-light: #333;
+    --dark-text-muted: #ccc;
+    --dark-text-subtle: #888;
+    --dark-text-secondary: #ddd;
 }
 
 html.dark-mode .filters-aside {
@@ -729,19 +734,19 @@ html.dark-mode .card:hover {
 }
 
 html.dark-mode .activity-row {
-    background: #252525;
-    border-color: #333;
-    color: #ccc;
+    background: var(--dark-accent);
+    border-color: var(--dark-accent-light);
+    color: var(--dark-text-muted);
 }
 
 html.dark-mode .lang-pill {
     background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
     border-color: rgba(102, 126, 234, 0.4);
-    color: #ddd;
+    color: var(--dark-text-secondary);
 }
 
 html.dark-mode .stat-label {
-    color: #888;
+    color: var(--dark-text-subtle);
 }
 
 html.dark-mode .btn-apply {
