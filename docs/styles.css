@@ -812,6 +812,7 @@ html.dark-mode .card:hover img {
 /* Adjust position for mobile if needed */
 @media (max-width: 767px) {
     .dark-mode-toggle {
+        top: unset;
         bottom: 80px;
         /* Above the filter toggle button */
         width: 45px;
