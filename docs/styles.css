@@ -764,9 +764,12 @@ html.dark-mode .btn-reset {
     border: 1px solid rgba(255, 80, 80, 0.5);
 }
 
-html.dark-mode .btn-apply:hover,
-html.dark-mode .btn-reset:hover {
+html.dark-mode .btn-apply:hover {
     background: var(--link-hover);
+}
+
+html.dark-mode .btn-reset:hover {
+    background: rgba(255, 80, 80, 0.5);
 }
 
 /* Ensure images have slight opacity reduction in dark mode for comfort */
