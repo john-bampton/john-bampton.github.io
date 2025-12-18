@@ -3,6 +3,7 @@ import logging
 import os
 import time
 from calendar import timegm
+from datetime import datetime, timezone
 from typing import Any, Dict, List, Tuple
 from urllib.request import urlretrieve
 
@@ -457,72 +458,6 @@ def fetch_users_from_search(target: int = TARGET_USERS) -> List[Dict[str, Any]]:
 
 
 def calculate_engagement_score(user: Dict[str, Any]) -> float:
-    """Calculate engagement score for monthly featured user selection.
-
-    Score based on:
-    - Followers (weight: 0.3)
-    - Total stars (weight: 0.25)
-    - Public repos (weight: 0.15)
-    - Sponsors count (weight: 0.15)
-    - Recent activity (weight: 0.15)
-
-    Returns normalized score between 0-100.
-    """
-    try:
-        followers = (
-            int(user.get("followers", 0)) if user.get("followers") != "N/A" else 0
-        )
-        total_stars = (
-            int(user.get("total_stars", 0)) if user.get("total_stars") != "N/A" else 0
-        )
-        repos = (
-            int(user.get("public_repos", 0)) if user.get("public_repos") != "N/A" else 0
-        )
-        sponsors = (
-            int(user.get("sponsors_count", 0))
-            if user.get("sponsors_count") != "N/A"
-            else 0
-        )
-
-        # Recent activity bonus (last 30 days)
-        last_repo = user.get("last_repo_pushed_at", "")
-        last_commit = user.get("last_public_commit_at", "")
-        activity_bonus = 0
-
-        from datetime import datetime, timezone
-
-        now = datetime.now(timezone.utc)
-
-        for date_str in [last_repo, last_commit]:
-            if date_str:
-                try:
-                    date = datetime.fromisoformat(date_str.replace("Z", "+00:00"))
-                    days_ago = (now - date).days
-                    if days_ago <= 30:
-                        activity_bonus += 1000
-                    elif days_ago <= 90:
-                        activity_bonus += 500
-                except:
-                    pass
-
-        # Calculate weighted score
-        score = (
-            (followers * 0.3)
-            + (total_stars * 0.25)
-            + (repos * 10 * 0.15)
-            + (sponsors * 50 * 0.15)
-            + (activity_bonus * 0.15)
-        )
-
-        return score
-    except Exception as e:
-        logger.warning(
-            f"Error calculating engagement score for {user.get('login')}: {e}"
-        )
-        return 0.0
-
-
-def calculate_engagement_score(user: Dict[str, Any]) -> float:
     """Calculate engagement score for a user based on multiple metrics.
 
     Weighted scoring:
@@ -532,8 +467,6 @@ def calculate_engagement_score(user: Dict[str, Any]) -> float:
     - Sponsors: 10%
     - Recent activity: 5%
     """
-    from datetime import datetime, timedelta, timezone
-
     score = 0.0
 
     # Followers contribution (40%)
@@ -616,8 +549,6 @@ def save_featured_user(featured_user: Dict[str, Any]) -> None:
     ensure_dir(CACHE_DIR)
     featured_file = os.path.join(CACHE_DIR, "featured.json")
     try:
-        from datetime import datetime, timezone
-
         featured_data = {
             "user": featured_user,
             "selected_at": datetime.now(timezone.utc).isoformat(),
