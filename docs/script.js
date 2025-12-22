@@ -35,7 +35,7 @@ let isDataLoaded = false;
 // ============================================================================
 // INITIALIZATION
 // ============================================================================
-document.addEventListener("DOMContentLoaded", initializeApp);
+document.addEventListener('DOMContentLoaded', initializeApp);
 
 /**
  * Initialize the application on page load
@@ -58,8 +58,8 @@ async function initializeApp() {
  * @param {string} message - The message to display
  */
 function showToast(message) {
-  const msg = document.createElement("div");
-  msg.className = "toast-notification";
+  const msg = document.createElement('div');
+  msg.className = 'toast-notification';
   msg.textContent = message;
   document.body.appendChild(msg);
   setTimeout(() => msg.remove(), 3000);
@@ -78,12 +78,12 @@ function pickRandomUser(event) {
 
   const usersToPickFrom = getVisibleSortedUsers();
   if (usersToPickFrom.length === 0) {
-    showToast("🎲 No developers found! Try adjusting your filters.");
+    showToast('🎲 No developers found! Try adjusting your filters.');
     return false;
   }
 
-  const filtersAside = document.getElementById("filtersAside");
-  if (filtersAside && filtersAside.classList.contains("open")) {
+  const filtersAside = document.getElementById('filtersAside');
+  if (filtersAside && filtersAside.classList.contains('open')) {
     toggleFiltersPanel();
   }
 
@@ -99,42 +99,42 @@ function pickRandomUser(event) {
     if (fallbackCard) {
       randomUser.card = fallbackCard;
     } else {
-      showToast("🎲 Could not locate the selected developer card. Try again.");
+      showToast('🎲 Could not locate the selected developer card. Try again.');
       return false;
     }
   }
 
   // Find and disable ALL links in the card to prevent any navigation
-  const cardLinks = randomUser.card.querySelectorAll("a");
+  const cardLinks = randomUser.card.querySelectorAll('a');
   const originalPointerEvents = [];
 
   cardLinks.forEach((link, index) => {
     originalPointerEvents[index] = link.style.pointerEvents;
-    link.style.pointerEvents = "none";
+    link.style.pointerEvents = 'none';
   });
 
   // Scroll near the card (with a small offset to avoid landing exactly on it)
   const cardRect = randomUser.card.getBoundingClientRect();
   const scrollOffset = cardRect.top + window.scrollY - 100; // 100px offset from top
-  window.scrollTo({ top: Math.max(0, scrollOffset), behavior: "smooth" });
+  window.scrollTo({top: Math.max(0, scrollOffset), behavior: 'smooth'});
 
   // Highlight the card
-  randomUser.card.classList.remove("highlight");
+  randomUser.card.classList.remove('highlight');
   void randomUser.card.offsetWidth; // Force reflow
-  randomUser.card.classList.add("highlight");
+  randomUser.card.classList.add('highlight');
 
   // Re-enable the links and remove highlight after 3 seconds
   setTimeout(() => {
     cardLinks.forEach((link, index) => {
-      link.style.pointerEvents = originalPointerEvents[index] || "";
+      link.style.pointerEvents = originalPointerEvents[index] || '';
     });
-    randomUser.card.classList.remove("highlight");
+    randomUser.card.classList.remove('highlight');
   }, 3000);
 }
 
 async function fetchAndPrepareUsers() {
   try {
-    const res = await fetch("users.json", { cache: "no-store" });
+    const res = await fetch('users.json', {cache: 'no-store'});
     if (!res.ok) throw new Error(`Failed to fetch users.json: ${res.status}`);
     const users = await res.json();
     const prepared = users.map(prepareUserFromJson);
@@ -142,23 +142,23 @@ async function fetchAndPrepareUsers() {
     filteredUsers = [...allUsers];
     isDataLoaded = true;
     const total = allUsers.length;
-    document.getElementById("totalCount").textContent = total.toLocaleString();
-    document.getElementById("totalCountDesktop").textContent =
+    document.getElementById('totalCount').textContent = total.toLocaleString();
+    document.getElementById('totalCountDesktop').textContent =
       total.toLocaleString();
   } catch (err) {
     console.error(err);
-    const loadingStates = document.querySelectorAll(".loading-state");
+    const loadingStates = document.querySelectorAll('.loading-state');
     loadingStates.forEach((state) => {
-      const spinner = state.querySelector(".loading-spinner");
-      const errorMessage = state.querySelector(".error-message");
-      const loadingMessage = state.querySelector("p:not(.error-message)");
+      const spinner = state.querySelector('.loading-spinner');
+      const errorMessage = state.querySelector('.error-message');
+      const loadingMessage = state.querySelector('p:not(.error-message)');
 
-      if (spinner) spinner.style.display = "none";
-      if (loadingMessage) loadingMessage.style.display = "none";
+      if (spinner) spinner.style.display = 'none';
+      if (loadingMessage) loadingMessage.style.display = 'none';
       if (errorMessage) {
         errorMessage.textContent =
-          "Unable to load users. Please try again later.";
-        errorMessage.style.display = "block";
+          'Unable to load users. Please try again later.';
+        errorMessage.style.display = 'block';
       }
     });
   }
@@ -166,15 +166,15 @@ async function fetchAndPrepareUsers() {
 
 function prepareUserFromJson(user) {
   const getNum = (v, def = 0) =>
-    v === "N/A" || v == null ? def : parseInt(v, 10);
-  const safeLower = (v) => (v ? String(v).toLowerCase() : "");
-  const normalizeDate = (v) => (v ? new Date(v).toISOString() : "");
+    v === 'N/A' || v == null ? def : parseInt(v, 10);
+  const safeLower = (v) => (v ? String(v).toLowerCase() : '');
+  const normalizeDate = (v) => (v ? new Date(v).toISOString() : '');
   const topLangs = Array.isArray(user.top_languages) ? user.top_languages : [];
 
   return {
     name: safeLower(user.name || user.login),
     login: safeLower(user.login),
-    location: safeLower(user.location || ""),
+    location: safeLower(user.location || ''),
     html_url: user.html_url,
     avatar_updated_at: normalizeDate(user.avatar_updated_at),
     last_repo_pushed_at: normalizeDate(user.last_repo_pushed_at),
@@ -207,16 +207,16 @@ function prepareUserFromJson(user) {
 }
 
 function formatDisplay(val) {
-  if (val === "N/A" || val == null) return "N/A";
+  if (val === 'N/A' || val == null) return 'N/A';
   const num = parseInt(val, 10);
   return Number.isNaN(num) ? String(val) : num.toLocaleString();
 }
 
 function formatDateDisplay(val) {
-  if (!val) return "N/A";
+  if (!val) return 'N/A';
   const dt = new Date(val);
-  if (Number.isNaN(dt.getTime())) return "N/A";
-  return dt.toISOString().split("T")[0];
+  if (Number.isNaN(dt.getTime())) return 'N/A';
+  return dt.toISOString().split('T')[0];
 }
 /**
  * Extract location emoji and text from card
@@ -224,7 +224,7 @@ function formatDateDisplay(val) {
  * @returns {string} Location text in lowercase
  */
 function extractLocation() {
-  return "";
+  return '';
 }
 
 /**
@@ -233,7 +233,7 @@ function extractLocation() {
  * @returns {Object} Object with sponsors and sponsoring counts
  */
 function extractStats() {
-  return { sponsors: 0, sponsoring: 0 };
+  return {sponsors: 0, sponsoring: 0};
 }
 
 // ============================================================================
@@ -244,36 +244,36 @@ function extractStats() {
  */
 function setupEventListeners() {
   const filterIds = [
-    "searchInput",
-    "sortBy",
-    "followersFilter",
-    "maxFollowersFilter",
-    "minReposFilter",
-    "maxReposFilter",
-    "minForksFilter",
-    "maxForksFilter",
-    "sponsorsFilter",
-    "sponsoringFilter",
-    "avatarAgeFilter",
-    "minStarsFilter",
-    "languageFilter",
-    "lastRepoActivityFilter",
-    "lastCommitFilter",
+    'searchInput',
+    'sortBy',
+    'followersFilter',
+    'maxFollowersFilter',
+    'minReposFilter',
+    'maxReposFilter',
+    'minForksFilter',
+    'maxForksFilter',
+    'sponsorsFilter',
+    'sponsoringFilter',
+    'avatarAgeFilter',
+    'minStarsFilter',
+    'languageFilter',
+    'lastRepoActivityFilter',
+    'lastCommitFilter',
   ];
 
   filterIds.forEach((id) => {
     const element = document.getElementById(id);
     if (element) {
-      element.addEventListener("input", onFilterChange);
-      element.addEventListener("change", onFilterChange);
+      element.addEventListener('input', onFilterChange);
+      element.addEventListener('change', onFilterChange);
     }
   });
 
-  const randomBtn = document.getElementById("randomUserBtn");
+  const randomBtn = document.getElementById('randomUserBtn');
   if (randomBtn) {
     // Change button type to prevent form submission
-    randomBtn.type = "button";
-    randomBtn.addEventListener("click", pickRandomUser);
+    randomBtn.type = 'button';
+    randomBtn.addEventListener('click', pickRandomUser);
   }
 }
 
@@ -283,7 +283,7 @@ function setupEventListeners() {
  * @returns {Array} Array of visible user objects in displayed order
  */
 function getVisibleSortedUsers() {
-  const sortBy = document.getElementById("sortBy").value;
+  const sortBy = document.getElementById('sortBy').value;
   return getSortedUsers(sortBy);
 }
 
@@ -301,9 +301,9 @@ function onFilterChange() {
  * Toggle the mobile filters panel
  */
 function toggleFiltersPanel() {
-  const filtersAside = document.getElementById("filtersAside");
-  filtersAside.classList.toggle("open");
-  document.body.classList.toggle("filters-open");
+  const filtersAside = document.getElementById('filtersAside');
+  filtersAside.classList.toggle('open');
+  document.body.classList.toggle('filters-open');
 }
 
 // ============================================================================
@@ -325,20 +325,20 @@ function applyFilters() {
 // Export JSON
 function exportFilteredJSON() {
   if (!filteredUsers.length) {
-    alert("No users to export");
+    alert('No users to export');
     return;
   }
 
   const userData = filteredUsers.map((user) => user.raw);
 
   const jsonString = JSON.stringify(userData, null, 2);
-  const blob = new Blob([jsonString], { type: "application/json" });
+  const blob = new Blob([jsonString], {type: 'application/json'});
 
   const url = URL.createObjectURL(blob);
 
-  const a = document.createElement("a");
+  const a = document.createElement('a');
   a.href = url;
-  a.download = "github-faces.json";
+  a.download = 'github-faces.json';
 
   document.body.appendChild(a);
   a.click();
@@ -350,7 +350,7 @@ function exportFilteredJSON() {
 // Export CSV
 function exportFilteredCSV() {
   if (!filteredUsers.length) {
-    alert("No users to export");
+    alert('No users to export');
     return;
   }
 
@@ -358,10 +358,10 @@ function exportFilteredCSV() {
   const headers = Object.keys(rows[0]);
 
   const escapeCSV = (value) => {
-    if (value == null) return "";
+    if (value == null) return '';
     // if object or array, stringify it
     const str =
-      typeof value === "object"
+      typeof value === 'object'
         ? JSON.stringify(value).replace(/"/g, '""')
         : String(value).replace(/"/g, '""');
 
@@ -369,17 +369,17 @@ function exportFilteredCSV() {
   };
 
   const csv = [
-    headers.join(","),
-    ...rows.map((row) => headers.map((h) => escapeCSV(row[h])).join(",")),
-  ].join("\n");
+    headers.join(','),
+    ...rows.map((row) => headers.map((h) => escapeCSV(row[h])).join(',')),
+  ].join('\n');
 
-  const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+  const blob = new Blob([csv], {type: 'text/csv;charset=utf-8'});
 
   const url = URL.createObjectURL(blob);
 
-  const a = document.createElement("a");
+  const a = document.createElement('a');
   a.href = url;
-  a.download = "github-faces.csv";
+  a.download = 'github-faces.csv';
 
   document.body.appendChild(a);
   a.click();
@@ -394,24 +394,24 @@ function exportFilteredCSV() {
  */
 function getActiveFilters() {
   return {
-    searchTerm: document.getElementById("searchInput").value.toLowerCase(),
-    minFollowers: parseInt(document.getElementById("followersFilter").value),
-    maxFollowers: parseInt(document.getElementById("maxFollowersFilter").value),
-    minRepos: parseInt(document.getElementById("minReposFilter").value),
-    maxRepos: parseInt(document.getElementById("maxReposFilter").value),
-    minForks: parseInt(document.getElementById("minForksFilter").value),
-    maxForks: parseInt(document.getElementById("maxForksFilter").value),
-    sponsorsFilter: document.getElementById("sponsorsFilter").value,
-    sponsoringFilter: document.getElementById("sponsoringFilter").value,
-    avatarAgeFilter: document.getElementById("avatarAgeFilter").value,
-    minStars: parseInt(document.getElementById("minStarsFilter").value),
+    searchTerm: document.getElementById('searchInput').value.toLowerCase(),
+    minFollowers: parseInt(document.getElementById('followersFilter').value),
+    maxFollowers: parseInt(document.getElementById('maxFollowersFilter').value),
+    minRepos: parseInt(document.getElementById('minReposFilter').value),
+    maxRepos: parseInt(document.getElementById('maxReposFilter').value),
+    minForks: parseInt(document.getElementById('minForksFilter').value),
+    maxForks: parseInt(document.getElementById('maxForksFilter').value),
+    sponsorsFilter: document.getElementById('sponsorsFilter').value,
+    sponsoringFilter: document.getElementById('sponsoringFilter').value,
+    avatarAgeFilter: document.getElementById('avatarAgeFilter').value,
+    minStars: parseInt(document.getElementById('minStarsFilter').value),
     languageFilter: document
-      .getElementById("languageFilter")
+      .getElementById('languageFilter')
       .value.toLowerCase()
       .trim(),
-    lastRepoActivityFilter: document.getElementById("lastRepoActivityFilter")
+    lastRepoActivityFilter: document.getElementById('lastRepoActivityFilter')
       .value,
-    lastCommitFilter: document.getElementById("lastCommitFilter").value,
+    lastCommitFilter: document.getElementById('lastCommitFilter').value,
   };
 }
 
@@ -421,15 +421,15 @@ function getActiveFilters() {
  */
 function validateRangeFilters(filters) {
   if (filters.minFollowers > filters.maxFollowers) {
-    document.getElementById("maxFollowersFilter").value = "999999999";
+    document.getElementById('maxFollowersFilter').value = '999999999';
     filters.maxFollowers = 999999999;
   }
   if (filters.minRepos > filters.maxRepos) {
-    document.getElementById("maxReposFilter").value = "999999";
+    document.getElementById('maxReposFilter').value = '999999';
     filters.maxRepos = 999999;
   }
   if (filters.minForks > filters.maxForks) {
-    document.getElementById("maxForksFilter").value = "999999";
+    document.getElementById('maxForksFilter').value = '999999';
     filters.maxForks = 999999;
   }
 }
@@ -536,10 +536,10 @@ function matchesForkRange(user, filters) {
  * @returns {boolean} True if matches
  */
 function matchesPublicSponsors(user, sponsorsFilter) {
-  if (sponsorsFilter === "any") return true;
-  if (sponsorsFilter === "has-sponsors") return user.sponsors > 0;
-  if (sponsorsFilter.startsWith("min-")) {
-    const minPublicSponsors = parseInt(sponsorsFilter.split("-")[1]);
+  if (sponsorsFilter === 'any') return true;
+  if (sponsorsFilter === 'has-sponsors') return user.sponsors > 0;
+  if (sponsorsFilter.startsWith('min-')) {
+    const minPublicSponsors = parseInt(sponsorsFilter.split('-')[1]);
     return user.sponsors >= minPublicSponsors;
   }
   return true;
@@ -552,10 +552,10 @@ function matchesPublicSponsors(user, sponsorsFilter) {
  * @returns {boolean} True if matches
  */
 function matchesSponsoring(user, sponsoringFilter) {
-  if (sponsoringFilter === "any") return true;
-  if (sponsoringFilter === "is-sponsoring") return user.sponsoring > 0;
-  if (sponsoringFilter.startsWith("min-")) {
-    const minSponsoring = parseInt(sponsoringFilter.split("-")[1]);
+  if (sponsoringFilter === 'any') return true;
+  if (sponsoringFilter === 'is-sponsoring') return user.sponsoring > 0;
+  if (sponsoringFilter.startsWith('min-')) {
+    const minSponsoring = parseInt(sponsoringFilter.split('-')[1]);
     return user.sponsoring >= minSponsoring;
   }
   return true;
@@ -569,16 +569,16 @@ function matchesSponsoring(user, sponsoringFilter) {
  * @returns {boolean} True if matches
  */
 function matchesAvatarAge(user, ageFilter, dateRanges) {
-  if (ageFilter === "any" || !user.avatar_updated_at) return true;
+  if (ageFilter === 'any' || !user.avatar_updated_at) return true;
 
   const avatarDate = new Date(user.avatar_updated_at);
   const ranges = {
     week: avatarDate >= dateRanges.oneWeekAgo,
     month: avatarDate >= dateRanges.oneMonthAgo,
-    "6months": avatarDate >= dateRanges.sixMonthsAgo,
+    '6months': avatarDate >= dateRanges.sixMonthsAgo,
     year: avatarDate >= dateRanges.oneYearAgo,
-    "2years": avatarDate >= dateRanges.twoYearsAgo,
-    "5years": avatarDate >= dateRanges.fiveYearsAgo,
+    '2years': avatarDate >= dateRanges.twoYearsAgo,
+    '5years': avatarDate >= dateRanges.fiveYearsAgo,
     old: avatarDate < dateRanges.fiveYearsAgo,
   };
 
@@ -595,7 +595,7 @@ function matchesLanguage(user, languageFilter) {
 }
 
 function matchesRepoActivity(user, activityFilter, dateRanges) {
-  if (activityFilter === "any" || !user.last_repo_pushed_at) return true;
+  if (activityFilter === 'any' || !user.last_repo_pushed_at) return true;
   return matchesDateByRange(
     user.last_repo_pushed_at,
     activityFilter,
@@ -604,7 +604,7 @@ function matchesRepoActivity(user, activityFilter, dateRanges) {
 }
 
 function matchesCommitActivity(user, commitFilter, dateRanges) {
-  if (commitFilter === "any" || !user.last_public_commit_at) return true;
+  if (commitFilter === 'any' || !user.last_public_commit_at) return true;
   return matchesDateByRange(
     user.last_public_commit_at,
     commitFilter,
@@ -617,10 +617,10 @@ function matchesDateByRange(dateString, rangeKey, dateRanges) {
   const ranges = {
     week: dt >= dateRanges.oneWeekAgo,
     month: dt >= dateRanges.oneMonthAgo,
-    "6months": dt >= dateRanges.sixMonthsAgo,
+    '6months': dt >= dateRanges.sixMonthsAgo,
     year: dt >= dateRanges.oneYearAgo,
-    "2years": dt >= dateRanges.twoYearsAgo,
-    "5years": dt >= dateRanges.fiveYearsAgo,
+    '2years': dt >= dateRanges.twoYearsAgo,
+    '5years': dt >= dateRanges.fiveYearsAgo,
     old: dt < dateRanges.fiveYearsAgo,
   };
   return ranges[rangeKey] !== undefined ? ranges[rangeKey] : true;
@@ -633,7 +633,7 @@ function matchesDateByRange(dateString, rangeKey, dateRanges) {
  * Update visibility and sort the user cards
  */
 function updateVisibilityAndSort() {
-  const sortBy = document.getElementById("sortBy").value;
+  const sortBy = document.getElementById('sortBy').value;
   const sortedUsers = getSortedUsers(sortBy);
 
   renderCards(sortedUsers);
@@ -650,37 +650,37 @@ function getSortedUsers(sortBy) {
   const sorted = [...filteredUsers];
 
   const sorters = {
-    "followers-desc": (a, b) => b.followers - a.followers,
-    "followers-asc": (a, b) => a.followers - b.followers,
-    "following-desc": (a, b) => b.following - a.following,
-    "following-asc": (a, b) => a.following - b.following,
-    "repos-desc": (a, b) => b.repos - a.repos,
-    "repos-asc": (a, b) => a.repos - b.repos,
-    "gists-desc": (a, b) => b.gists - a.gists,
-    "gists-asc": (a, b) => a.gists - b.gists,
-    "forks-desc": (a, b) => b.forks - a.forks,
-    "forks-asc": (a, b) => a.forks - b.forks,
-    "sponsors-desc": (a, b) => b.sponsors - a.sponsors,
-    "sponsors-asc": (a, b) => a.sponsors - b.sponsors,
-    "sponsoring-desc": (a, b) => b.sponsoring - a.sponsoring,
-    "sponsoring-asc": (a, b) => a.sponsoring - b.sponsoring,
-    "stars-desc": (a, b) => b.total_stars - a.total_stars,
-    "stars-asc": (a, b) => a.total_stars - b.total_stars,
-    "last-repo-desc": (a, b) =>
+    'followers-desc': (a, b) => b.followers - a.followers,
+    'followers-asc': (a, b) => a.followers - b.followers,
+    'following-desc': (a, b) => b.following - a.following,
+    'following-asc': (a, b) => a.following - b.following,
+    'repos-desc': (a, b) => b.repos - a.repos,
+    'repos-asc': (a, b) => a.repos - b.repos,
+    'gists-desc': (a, b) => b.gists - a.gists,
+    'gists-asc': (a, b) => a.gists - b.gists,
+    'forks-desc': (a, b) => b.forks - a.forks,
+    'forks-asc': (a, b) => a.forks - b.forks,
+    'sponsors-desc': (a, b) => b.sponsors - a.sponsors,
+    'sponsors-asc': (a, b) => a.sponsors - b.sponsors,
+    'sponsoring-desc': (a, b) => b.sponsoring - a.sponsoring,
+    'sponsoring-asc': (a, b) => a.sponsoring - b.sponsoring,
+    'stars-desc': (a, b) => b.total_stars - a.total_stars,
+    'stars-asc': (a, b) => a.total_stars - b.total_stars,
+    'last-repo-desc': (a, b) =>
       new Date(b.last_repo_pushed_at || 0) -
       new Date(a.last_repo_pushed_at || 0),
-    "last-repo-asc": (a, b) =>
+    'last-repo-asc': (a, b) =>
       new Date(a.last_repo_pushed_at || 0) -
       new Date(b.last_repo_pushed_at || 0),
-    "last-commit-desc": (a, b) =>
+    'last-commit-desc': (a, b) =>
       new Date(b.last_public_commit_at || 0) -
       new Date(a.last_public_commit_at || 0),
-    "last-commit-asc": (a, b) =>
+    'last-commit-asc': (a, b) =>
       new Date(a.last_public_commit_at || 0) -
       new Date(b.last_public_commit_at || 0),
-    "name-asc": (a, b) => a.name.localeCompare(b.name),
-    "name-desc": (a, b) => b.name.localeCompare(a.name),
-    "ratio-followers-following": (a, b) => {
+    'name-asc': (a, b) => a.name.localeCompare(b.name),
+    'name-desc': (a, b) => b.name.localeCompare(a.name),
+    'ratio-followers-following': (a, b) => {
       const ratioA = a.following > 0 ? a.followers / a.following : a.followers;
       const ratioB = b.following > 0 ? b.followers / b.following : b.followers;
       return ratioB - ratioA;
@@ -699,9 +699,9 @@ function getSortedUsers(sortBy) {
  * @param {Array} sortedUsers - Sorted users array
  */
 function renderCards(sortedUsers) {
-  const grid = document.getElementById("grid");
+  const grid = document.getElementById('grid');
   if (!grid) return;
-  grid.innerHTML = "";
+  grid.innerHTML = '';
   const frag = document.createDocumentFragment();
   sortedUsers.forEach((user) => {
     const card = buildCardElement(user);
@@ -711,36 +711,36 @@ function renderCards(sortedUsers) {
 }
 
 function buildCardElement(user) {
-  const card = document.createElement("div");
-  card.className = "card visible";
-  card.setAttribute("data-followers", user.followers);
-  card.setAttribute("data-repos", user.repos);
-  card.setAttribute("data-forks", user.forks);
-  card.setAttribute("data-name", user.name);
-  card.setAttribute("data-login", user.login);
-  card.setAttribute("data-location", user.location);
-  card.setAttribute("data-avatar-updated", user.avatar_updated_at || "");
-  card.setAttribute("data-stars", user.total_stars || 0);
+  const card = document.createElement('div');
+  card.className = 'card visible';
+  card.setAttribute('data-followers', user.followers);
+  card.setAttribute('data-repos', user.repos);
+  card.setAttribute('data-forks', user.forks);
+  card.setAttribute('data-name', user.name);
+  card.setAttribute('data-login', user.login);
+  card.setAttribute('data-location', user.location);
+  card.setAttribute('data-avatar-updated', user.avatar_updated_at || '');
+  card.setAttribute('data-stars', user.total_stars || 0);
 
-  const link = document.createElement("a");
+  const link = document.createElement('a');
   link.href = user.html_url;
-  link.target = "_blank";
-  link.rel = "noopener";
+  link.target = '_blank';
+  link.rel = 'noopener';
 
-  const img = document.createElement("img");
+  const img = document.createElement('img');
   img.src = `images/faces/${user.login}.png`;
   img.alt = user.login;
   img.title = user.login;
-  img.loading = "lazy";
-  img.decoding = "async";
+  img.loading = 'lazy';
+  img.decoding = 'async';
   link.appendChild(img);
 
-  const box = document.createElement("div");
-  box.className = "details-box";
+  const box = document.createElement('div');
+  box.className = 'details-box';
 
-  const strong = document.createElement("strong");
+  const strong = document.createElement('strong');
   strong.textContent = user.raw.name || user.raw.login;
-  const atSpan = document.createElement("span");
+  const atSpan = document.createElement('span');
   atSpan.textContent = `@${user.raw.login}`;
 
   box.appendChild(strong);
@@ -748,59 +748,59 @@ function buildCardElement(user) {
 
   box.appendChild(
     buildLabeledSpan(
-      "Followers:",
-      user.raw.followers !== "N/A",
+      'Followers:',
+      user.raw.followers !== 'N/A',
       `${user.html_url}?tab=followers`,
       user.followers_display,
     ),
   );
   box.appendChild(
     buildLabeledSpan(
-      "Following:",
-      user.raw.following !== "N/A",
+      'Following:',
+      user.raw.following !== 'N/A',
       `${user.html_url}?tab=following`,
       user.following_display,
     ),
   );
 
   if (user.raw.location) {
-    const locSpan = document.createElement("span");
+    const locSpan = document.createElement('span');
     locSpan.textContent = `🌐 ${user.raw.location}`;
     box.appendChild(locSpan);
   }
 
-  const statsRow = document.createElement("div");
-  statsRow.className = "stats-row";
+  const statsRow = document.createElement('div');
+  statsRow.className = 'stats-row';
   statsRow.appendChild(
     buildStat(
-      user.raw.public_repos !== "N/A",
+      user.raw.public_repos !== 'N/A',
       `${user.html_url}?tab=repositories`,
       user.repos_display,
-      "Repos",
+      'Repos',
     ),
   );
   statsRow.appendChild(
     buildStat(
-      user.raw.public_gists !== "N/A",
+      user.raw.public_gists !== 'N/A',
       `https://gist.github.com/${user.raw.login}`,
       user.gists_display,
-      "Gists",
+      'Gists',
     ),
   );
   statsRow.appendChild(
     buildStat(
-      user.raw.sponsors_count !== "N/A",
+      user.raw.sponsors_count !== 'N/A',
       `${user.html_url}?tab=sponsors`,
       user.sponsors_display,
-      "Public Sponsors",
+      'Public Sponsors',
     ),
   );
   statsRow.appendChild(
     buildStat(
-      user.raw.sponsoring_count !== "N/A",
+      user.raw.sponsoring_count !== 'N/A',
       `${user.html_url}?tab=sponsoring`,
       user.sponsoring_display,
-      "Public Sponsoring",
+      'Public Sponsoring',
     ),
   );
   statsRow.appendChild(
@@ -808,13 +808,13 @@ function buildCardElement(user) {
       true,
       `${user.html_url}?tab=repositories`,
       user.stars_display,
-      "Total Stars",
+      'Total Stars',
     ),
   );
   box.appendChild(statsRow);
 
-  const activity = document.createElement("div");
-  activity.className = "activity-row";
+  const activity = document.createElement('div');
+  activity.className = 'activity-row';
   let commitText = `Last commit: ${formatDateDisplay(user.last_repo_pushed_at)}`;
   if (user.last_public_commit_at)
     commitText += `<br>Last public commit: ${formatDateDisplay(user.last_public_commit_at)}`;
@@ -823,12 +823,12 @@ function buildCardElement(user) {
   box.appendChild(activity);
 
   if (user.top_languages.length) {
-    const langRow = document.createElement("div");
-    langRow.className = "lang-row";
+    const langRow = document.createElement('div');
+    langRow.className = 'lang-row';
     user.top_languages.slice(0, 3).forEach((lang) => {
-      const pill = document.createElement("span");
-      pill.className = "lang-pill";
-      pill.textContent = `${lang.label}${lang.percent ? ` (${lang.percent}%)` : ""}`;
+      const pill = document.createElement('span');
+      pill.className = 'lang-pill';
+      pill.textContent = `${lang.label}${lang.percent ? ` (${lang.percent}%)` : ''}`;
       langRow.appendChild(pill);
     });
     box.appendChild(langRow);
@@ -842,14 +842,14 @@ function buildCardElement(user) {
 }
 
 function buildLabeledSpan(labelText, hasLink, href, valueText) {
-  const span = document.createElement("span");
+  const span = document.createElement('span');
   const labelNode = document.createTextNode(`${labelText} `);
   span.appendChild(labelNode);
   if (hasLink) {
-    const a = document.createElement("a");
+    const a = document.createElement('a');
     a.href = href;
-    a.target = "_blank";
-    a.rel = "noopener";
+    a.target = '_blank';
+    a.rel = 'noopener';
     a.textContent = valueText;
     span.appendChild(a);
   } else {
@@ -859,20 +859,20 @@ function buildLabeledSpan(labelText, hasLink, href, valueText) {
 }
 
 function buildStat(hasLink, href, valueText, label) {
-  const stat = document.createElement("div");
-  stat.className = "stat";
+  const stat = document.createElement('div');
+  stat.className = 'stat';
   if (hasLink) {
-    const a = document.createElement("a");
+    const a = document.createElement('a');
     a.href = href;
-    a.target = "_blank";
-    a.rel = "noopener";
+    a.target = '_blank';
+    a.rel = 'noopener';
     a.textContent = valueText;
     stat.appendChild(a);
   } else {
     stat.appendChild(document.createTextNode(valueText));
   }
-  const lbl = document.createElement("span");
-  lbl.className = "stat-label";
+  const lbl = document.createElement('span');
+  lbl.className = 'stat-label';
   lbl.textContent = label;
   stat.appendChild(lbl);
   return stat;
@@ -886,14 +886,14 @@ function updateCounts(sortedUsers) {
   const visibleCount = sortedUsers.length;
   const totalCount = allUsers.length;
 
-  document.getElementById("visibleCount").textContent =
+  document.getElementById('visibleCount').textContent =
     visibleCount.toLocaleString();
-  document.getElementById("totalCount").textContent =
+  document.getElementById('totalCount').textContent =
     totalCount.toLocaleString();
 
-  document.getElementById("visibleCountDesktop").textContent =
+  document.getElementById('visibleCountDesktop').textContent =
     visibleCount.toLocaleString();
-  document.getElementById("totalCountDesktop").textContent =
+  document.getElementById('totalCountDesktop').textContent =
     totalCount.toLocaleString();
 }
 
@@ -905,22 +905,22 @@ function updateResultsMessage(sortedUsers) {
   const visibleCount = sortedUsers.length;
   const totalCount = allUsers.length;
 
-  const resultsFound = document.getElementById("resultsFound");
-  const noResults = document.getElementById("noResults");
+  const resultsFound = document.getElementById('resultsFound');
+  const noResults = document.getElementById('noResults');
 
-  const resultsFoundDesktop = document.getElementById("resultsFoundDesktop");
-  const noResultsDesktop = document.getElementById("noResultsDesktop");
+  const resultsFoundDesktop = document.getElementById('resultsFoundDesktop');
+  const noResultsDesktop = document.getElementById('noResultsDesktop');
 
   if (visibleCount === 0) {
-    if (resultsFound) resultsFound.style.display = "none";
-    if (noResults) noResults.style.display = "block";
-    if (resultsFoundDesktop) resultsFoundDesktop.style.display = "none";
-    if (noResultsDesktop) noResultsDesktop.style.display = "block";
+    if (resultsFound) resultsFound.style.display = 'none';
+    if (noResults) noResults.style.display = 'block';
+    if (resultsFoundDesktop) resultsFoundDesktop.style.display = 'none';
+    if (noResultsDesktop) noResultsDesktop.style.display = 'block';
   } else {
-    if (resultsFound) resultsFound.style.display = "block";
-    if (noResults) noResults.style.display = "none";
-    if (resultsFoundDesktop) resultsFoundDesktop.style.display = "block";
-    if (noResultsDesktop) noResultsDesktop.style.display = "none";
+    if (resultsFound) resultsFound.style.display = 'block';
+    if (noResults) noResults.style.display = 'none';
+    if (resultsFoundDesktop) resultsFoundDesktop.style.display = 'block';
+    if (noResultsDesktop) noResultsDesktop.style.display = 'none';
   }
 }
 
@@ -932,21 +932,21 @@ function updateResultsMessage(sortedUsers) {
  */
 function resetFilters() {
   const defaults = {
-    searchInput: "",
-    sortBy: "followers-desc",
-    followersFilter: "0",
-    maxFollowersFilter: "999999999",
-    minReposFilter: "0",
-    maxReposFilter: "999999",
-    minForksFilter: "0",
-    maxForksFilter: "999999",
-    sponsorsFilter: "any",
-    sponsoringFilter: "any",
-    avatarAgeFilter: "any",
-    minStarsFilter: "0",
-    languageFilter: "",
-    lastRepoActivityFilter: "any",
-    lastCommitFilter: "any",
+    searchInput: '',
+    sortBy: 'followers-desc',
+    followersFilter: '0',
+    maxFollowersFilter: '999999999',
+    minReposFilter: '0',
+    maxReposFilter: '999999',
+    minForksFilter: '0',
+    maxForksFilter: '999999',
+    sponsorsFilter: 'any',
+    sponsoringFilter: 'any',
+    avatarAgeFilter: 'any',
+    minStarsFilter: '0',
+    languageFilter: '',
+    lastRepoActivityFilter: 'any',
+    lastCommitFilter: 'any',
   };
 
   Object.entries(defaults).forEach(([id, value]) => {
@@ -965,29 +965,29 @@ function resetFilters() {
  * Show loading spinner
  */
 function showLoadingState() {
-  const loadingState = document.getElementById("loadingState");
-  const loadingStateDesktop = document.getElementById("loadingStateDesktop");
-  const resultsInfo = document.getElementById("resultsInfo");
-  const resultsInfoDesktop = document.getElementById("resultsInfoDesktop");
+  const loadingState = document.getElementById('loadingState');
+  const loadingStateDesktop = document.getElementById('loadingStateDesktop');
+  const resultsInfo = document.getElementById('resultsInfo');
+  const resultsInfoDesktop = document.getElementById('resultsInfoDesktop');
 
   [loadingState, loadingStateDesktop].forEach(
-    (el) => el && (el.style.display = "flex"),
+    (el) => el && (el.style.display = 'flex'),
   );
-  if (resultsInfo) resultsInfo.style.display = "none";
-  if (resultsInfoDesktop) resultsInfoDesktop.style.display = "none";
+  if (resultsInfo) resultsInfo.style.display = 'none';
+  if (resultsInfoDesktop) resultsInfoDesktop.style.display = 'none';
 }
 
 /**
  * Hide loading spinner
  */
 function hideLoadingState() {
-  const loadingState = document.getElementById("loadingState");
-  const loadingStateDesktop = document.getElementById("loadingStateDesktop");
-  const resultsInfo = document.getElementById("resultsInfo");
-  const resultsInfoDesktop = document.getElementById("resultsInfoDesktop");
+  const loadingState = document.getElementById('loadingState');
+  const loadingStateDesktop = document.getElementById('loadingStateDesktop');
+  const resultsInfo = document.getElementById('resultsInfo');
+  const resultsInfoDesktop = document.getElementById('resultsInfoDesktop');
 
-  if (loadingState) loadingState.style.display = "none";
-  if (loadingStateDesktop) loadingStateDesktop.style.display = "none";
-  if (resultsInfo) resultsInfo.style.display = "block";
-  if (resultsInfoDesktop) resultsInfoDesktop.style.display = "block";
+  if (loadingState) loadingState.style.display = 'none';
+  if (loadingStateDesktop) loadingStateDesktop.style.display = 'none';
+  if (resultsInfo) resultsInfo.style.display = 'block';
+  if (resultsInfoDesktop) resultsInfoDesktop.style.display = 'block';
 }
