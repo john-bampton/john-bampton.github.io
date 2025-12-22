@@ -109,16 +109,14 @@ def minify_html(html: str) -> str:
     html = re.sub(r">\s+<", "><", html)
     html = re.sub(r"\s{2,}", " ", html)
     html = re.sub(
-        r"<script>(.*?)</script>",
+        r"(?is)<script\b[^>]*>(.*?)</script\s*>",
         lambda m: "<script>" + minify_js(m.group(1)) + "</script>",
         html,
-        flags=re.DOTALL,
     )
     html = re.sub(
-        r"<style>(.*?)</style>",
+        r"(?is)<style\b[^>]*>(.*?)</style\s*>",
         lambda m: "<style>" + minify_css(m.group(1)) + "</style>",
         html,
-        flags=re.DOTALL,
     )
     return html.strip()
 
