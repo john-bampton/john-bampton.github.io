@@ -300,6 +300,10 @@ h1 {
     font-weight: 600;
 }
 
+#resultsFound {
+    display: none;
+}
+
 .results-info-desktop {
     text-align: center;
     color: #666;
@@ -308,6 +312,10 @@ h1 {
 
 .results-info-desktop strong {
     font-weight: 600;
+}
+
+#resultsFoundDesktop {
+    display: none;
 }
 
 /* ============================================================================ */

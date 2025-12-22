@@ -981,9 +981,13 @@ function showLoadingState() {
  * Hide loading spinner
  */
 function hideLoadingState() {
-  const loadingState = document.getElementById("loadingState");
-  const loadingStateDesktop = document.getElementById("loadingStateDesktop");
+  const loadingState = document.getElementById('loadingState');
+  const loadingStateDesktop = document.getElementById('loadingStateDesktop');
+  const resultsInfo = document.getElementById('resultsInfo');
+  const resultsInfoDesktop = document.getElementById('resultsInfoDesktop')
 
-  if (loadingState) loadingState.style.display = "none";
-  if (loadingStateDesktop) loadingStateDesktop.style.display = "none";
+  if (loadingState) loadingState.style.display = 'none';
+  if (loadingStateDesktop) loadingStateDesktop.style.display = 'none';
+  if (resultsInfo) resultsInfo.style.display = 'block';
+  if (resultsInfoDesktop) resultsInfoDesktop.style.display = 'block';
 }
