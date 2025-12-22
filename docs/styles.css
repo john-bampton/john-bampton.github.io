@@ -786,7 +786,7 @@ html.dark-mode .card:hover img {
 /* Dark Mode Toggle Button */
 .dark-mode-toggle {
     position: fixed;
-    top: 20px;
+    bottom: 20px;
     right: 20px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border: none;
@@ -812,9 +812,9 @@ html.dark-mode .card:hover img {
 /* Adjust position for mobile if needed */
 @media (max-width: 767px) {
     .dark-mode-toggle {
-        top: unset;
         bottom: 80px;
         /* Above the filter toggle button */
+        right: 20px;
         width: 45px;
         height: 45px;
         font-size: 18px;
