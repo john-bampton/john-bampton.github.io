@@ -32,29 +32,33 @@ Explore and showcase the top GitHub user avatars in a modern, interactive grid. 
 ## ⚡ Quickstart
 
 1. **Clone the repo:**
-	```bash
-	git clone https://github.com/john-bampton/john-bampton.github.io.git
-	cd john-bampton.github.io
-	```
+
+   ```bash
+   git clone https://github.com/john-bampton/john-bampton.github.io.git
+   cd john-bampton.github.io
+   ```
 
 2. **Install dependencies:**
-	```bash
-	pip install -e .
-	```
+
+   ```bash
+   pip install -e .
+   ```
 
 3. **Run the fetcher:**
-	```bash
-	APP_ENV=test python fetch.py
-	```
-	<br>
-	<sup>
-	<b>Tip:</b> Setting <code>APP_ENV=test</code> will fetch only <b>20 users</b> for fast testing. Omit this variable to fetch <b>400 users</b> (default, production mode).
-	</sup>
+
+   ```bash
+   APP_ENV=test python fetch.py
+   ```
+
+   <br>
+   <sup>
+   <b>Tip:</b> Setting <code>APP_ENV=test</code> will fetch only <b>20 users</b> for fast testing. Omit this variable to fetch <b>400 users</b> (default, production mode).
+   </sup>
 
 4. **Open the grid:**
-	```bash
-	docs/index.html
-	```
+   ```bash
+   docs/index.html
+   ```
 
 ---
 
@@ -92,18 +96,17 @@ Explore and showcase the top GitHub user avatars in a modern, interactive grid. 
 
 ## 🤝 Contributing
 
-
 We welcome PRs, issues, and suggestions! Add a ⭐, fork, or help improve the grid and features.
 
 **Code Quality Reminder:**
 
 - Always run `pre-commit run --all-files` before pushing or opening a pull request. This ensures your code is auto-formatted and passes all checks.
 - If you don't have pre-commit installed, run:
-	```bash
-	pip install pre-commit
-	pre-commit install
-	```
-	This sets up the hooks for your local repo.
+  ```bash
+  pip install pre-commit
+  pre-commit install
+  ```
+  This sets up the hooks for your local repo.
 
 ---
 
