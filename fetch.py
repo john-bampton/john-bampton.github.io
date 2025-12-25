@@ -646,7 +646,92 @@ def run() -> None:
     print_section("Saving user data to cache...")
     save_cache(users)
 
+    print_section("Selecting featured user of the month...")
+    featured_user = select_featured_user(users)
+    if featured_user:
+        save_featured_user(featured_user)
+
     print_section(f"✅ FETCH COMPLETE! {len(users)} users cached.")
+
+
+def calculate_engagement_score(user: Dict[str, Any]) -> float:
+    """Calculate engagement score for user selection."""
+    followers = user.get("followers", 0) if user.get("followers") != "N/A" else 0
+    stars = user.get("total_stars", 0) if user.get("total_stars") != "N/A" else 0
+    repos = user.get("public_repos", 0) if user.get("public_repos") != "N/A" else 0
+    sponsors = (
+        user.get("sponsors_count", 0) if user.get("sponsors_count") != "N/A" else 0
+    )
+
+    # Check for recent activity
+    has_recent_activity = False
+    if user.get("last_repo_pushed_at"):
+        try:
+            from datetime import datetime, timezone
+
+            last_push = datetime.fromisoformat(
+                user["last_repo_pushed_at"].replace("Z", "+00:00")
+            )
+            days_since = (datetime.now(timezone.utc) - last_push).days
+            has_recent_activity = days_since < 90
+        except (ValueError, AttributeError):
+            pass
+
+    # Weighted scoring
+    score = (
+        (followers * 0.4)
+        + (stars * 0.3)
+        + (repos * 0.15)
+        + (sponsors * 0.10)
+        + (5 if has_recent_activity else 0)
+    )
+
+    return score
+
+
+def select_featured_user(users: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """Select featured user based on engagement score."""
+    from datetime import datetime
+
+    if not users:
+        return None
+
+    # Calculate scores for all users
+    scored_users = []
+    for user in users:
+        score = calculate_engagement_score(user)
+        scored_users.append((user, score))
+
+    # Sort by score descending
+    scored_users.sort(key=lambda x: x[1], reverse=True)
+
+    # Get top user
+    featured_user, score = scored_users[0]
+
+    logger.info(
+        f"Selected featured user: {featured_user.get('login')} (score: {score:.2f})"
+    )
+
+    return featured_user
+
+
+def save_featured_user(featured_user: Dict[str, Any]) -> None:
+    """Save featured user to featured.json."""
+    from datetime import datetime
+
+    featured_data = {
+        "user": featured_user,
+        "selected_at": datetime.now().isoformat(),
+        "month": datetime.now().strftime("%B %Y"),
+    }
+
+    featured_path = safe_path(os.path.join(SITE_DIR, "featured.json"))
+    try:
+        with open(featured_path, "w", encoding="utf-8") as f:
+            json.dump(featured_data, f, separators=(",", ":"))
+        logger.info(f"Featured user saved: {featured_user.get('login')}")
+    except Exception as e:
+        logger.error(f"Failed to save featured user: {e}")
 
 
 if __name__ == "__main__":

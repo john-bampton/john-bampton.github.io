@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', initializeApp);
 async function initializeApp() {
   showLoadingState();
   setupEventListeners();
-  await fetchAndPrepareUsers();
+  await Promise.all([fetchAndPrepareUsers(), loadFeaturedUser()]);
 
   // Do these if data is loaded
   if (isDataLoaded) {
@@ -161,6 +161,79 @@ async function fetchAndPrepareUsers() {
         errorMessage.style.display = 'block';
       }
     });
+  }
+}
+
+/**
+ * Load and display the featured user of the month
+ */
+async function loadFeaturedUser() {
+  try {
+    const res = await fetch('featured.json', { cache: 'no-store' });
+    if (!res.ok) {
+      console.log('No featured user available yet');
+      return;
+    }
+    const data = await res.json();
+    const user = data.user;
+
+    if (!user || !user.login) {
+      return;
+    }
+
+    // Update featured user section
+    const section = document.getElementById('featuredUserSection');
+    const avatar = document.getElementById('featuredUserAvatar');
+    const link = document.getElementById('featuredUserLink');
+    const name = document.getElementById('featuredUserName');
+    const loginLink = document.getElementById('featuredUserLoginLink');
+    const location = document.getElementById('featuredUserLocation');
+    const followers = document.getElementById('featuredUserFollowers');
+    const stars = document.getElementById('featuredUserStars');
+    const repos = document.getElementById('featuredUserRepos');
+    const sponsors = document.getElementById('featuredUserSponsors');
+    const languages = document.getElementById('featuredUserLanguages');
+
+    // Set avatar and links
+    const avatarUrl = `images/faces/${user.login.toLowerCase()}.png`;
+    avatar.src = avatarUrl;
+    avatar.alt = `${user.login}'s avatar`;
+    link.href = user.html_url;
+    loginLink.href = user.html_url;
+    loginLink.textContent = `@${user.login}`;
+
+    // Set name
+    name.textContent = user.name || user.login;
+
+    // Set location
+    if (user.location) {
+      location.querySelector('.location-text').textContent = user.location;
+      location.style.display = 'flex';
+    } else {
+      location.style.display = 'none';
+    }
+
+    // Set stats
+    followers.textContent = formatDisplay(user.followers);
+    stars.textContent = formatDisplay(user.total_stars);
+    repos.textContent = formatDisplay(user.public_repos);
+    sponsors.textContent = formatDisplay(user.sponsors_count);
+
+    // Set languages
+    languages.innerHTML = '';
+    if (Array.isArray(user.top_languages) && user.top_languages.length > 0) {
+      user.top_languages.slice(0, 5).forEach((lang) => {
+        const badge = document.createElement('div');
+        badge.className = 'featured-language-badge';
+        badge.textContent = lang.name;
+        languages.appendChild(badge);
+      });
+    }
+
+    // Show the section
+    section.style.display = 'block';
+  } catch (err) {
+    console.error('Failed to load featured user:', err);
   }
 }
 
