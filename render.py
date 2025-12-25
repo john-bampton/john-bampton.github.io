@@ -35,6 +35,19 @@ def setup_logger() -> logging.Logger:
 logger = setup_logger()
 
 
+def generate_sitemap_xml(urls: list, output_path: str) -> None:
+    """Generate a simple sitemap.xml for search engines."""
+    urlset = "\n".join(
+        f"    <url>\n        <loc>{url}</loc>\n    </url>" for url in urls
+    )
+    sitemap = f"""<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n{urlset}\n</urlset>\n"""
+    minified = minify_xml(sitemap)
+    safe_output_path = safe_path(output_path)
+    with open(safe_output_path, "w", encoding="utf-8") as f:
+        f.write(minified)
+    logger.info("Sitemap generated at %s", output_path)
+
+
 def safe_path(path: str, base_dir: str = SITE_DIR) -> str:
     """Ensure the path is within the allowed base directory."""
     abs_path = os.path.abspath(path)
@@ -257,6 +270,11 @@ def run() -> None:
             items=rss_items,
             output_path=rss_path,
         )
+
+        sitemap_filename = "sitemap.xml"
+        sitemap_urls = list({item.get("guid", item.get("link", main_url)) for item in rss_items})
+        sitemap_urls.append(DEPLOY_BASEURL + "/feed.xml")
+        generate_sitemap_xml(sitemap_urls, sitemap_filename)
     except Exception as e:
         logger.error("Failed to save HTML page or RSS feed: %s", e)
 
