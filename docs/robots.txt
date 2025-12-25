@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://john-bampton.github.io/sitemap.xml

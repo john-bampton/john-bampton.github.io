@@ -1,109 +1,128 @@
-# The 400 Faces - Scrape Your GitHub Avatars
+# GitHub Faces: Curated Avatars & Profiles
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](LICENSE)
 [![GitHub contributors](https://img.shields.io/github/contributors/john-bampton/john-bampton.github.io.svg)](https://github.com/john-bampton/john-bampton.github.io/graphs/contributors)
 
-A Python script to fetch and display the top 400 GitHub user avatars in a sleek, interactive grid. Perfect for exploring the faces behind popular GitHub profiles.
+> "Explore the faces behind GitHub. Discover the people shaping open-source."
+
+Explore and showcase the top GitHub user avatars in a modern, interactive grid. This project fetches, caches, and displays real GitHub profiles with up-to-date avatars and stats.
 
 ---
 
-## Features
+## 🚀 Features
 
-- Fetches GitHub users dynamically via the GitHub API.
-- Downloads avatars for offline use.
-- Builds a responsive HTML page showcasing all avatars.
-- Filters only real users (`type: User`) to ensure authentic profiles.
-- Automatically updates avatars when new versions are available.
-- Clean and modern card design using Bootstrap.
-
----
-
-## Preview
-
-Check out the live preview: [https://john-bampton.github.io/](https://john-bampton.github.io/)
+- Dynamic fetching of GitHub users via the API
+- Secure avatar downloads and cache management
+- Responsive HTML grid with Bootstrap
+- Real user filtering (`type: User`)
+- Automatic avatar updates
+- RSS feed for new faces
+- Modern, clean design
+- Pre-commit hooks for code quality (black, isort)
+- XSS-safe Jinja2 templates
 
 ---
 
-## Installation
+## 🌐 Live Preview
 
-1. Clone the repository:
-
-```bash
-git clone https://github.com/john-bampton/john-bampton.github.io.git
-cd faces
-````
-
-2. Install dependencies:
-
-```bash
-pip install -e .
-```
-
-3. Run the script:
-
-```bash
-python github_faces.py
-```
-
-4. Open the generated HTML page in your browser:
-
-```bash
-docs/index.html
-```
+[View the site](https://john-bampton.github.io/)
 
 ---
 
-## Configuration
+## ⚡ Quickstart
 
-* **TARGET_USERS**: Number of GitHub users to fetch (default: 400).
-* **MAX_EXTRA_PAGES**: Extra pages to fetch if not enough users are found (default: 2).
+1. **Clone the repo:**
 
-You can modify these directly in `github_faces.py`.
+   ```bash
+   git clone https://github.com/john-bampton/john-bampton.github.io.git
+   cd john-bampton.github.io
+   ```
+
+2. **Install dependencies:**
+
+   ```bash
+   pip install -e .
+   ```
+
+3. **Run the fetcher:**
+
+   ```bash
+   APP_ENV=test python fetch.py
+   ```
+
+   <br>
+   <sup>
+   <b>Tip:</b> Setting <code>APP_ENV=test</code> will fetch only <b>20 users</b> for fast testing. Omit this variable to fetch <b>400 users</b> (default, production mode).
+   </sup>
+
+4. **Open the grid:**
+   ```bash
+   docs/index.html
+   ```
 
 ---
 
-## Screenshots
+## ⚙️ Configuration
+
+- `TARGET_USERS`: Number of GitHub users to fetch (default: 400, or 20 in test mode)
+- `MAX_EXTRA_PAGES`: Extra pages to fetch if needed (default: 2)
+- Set `APP_ENV=test` for test mode (fetches 20 users)
+
+---
+
+## 🖼️ Screenshots
 
 ![Sample Faces](docs/images/other/screenshot-1280.png)
 
 ---
 
+## 🛠️ Development & Quality
+
+- Code formatted with [black](https://github.com/psf/black) and [isort](https://github.com/pycqa/isort)
+- Pre-commit hooks: see `.pre-commit-config.yaml`
+- Configs in `pyproject.toml`
+- Linting: flake8, pylint, yamllint, isort, black
+
+---
+
+## 📦 RSS Feed & Sitemap
+
+- RSS feed generated at [docs/feed.xml](https://john-bampton.github.io/feed.xml)
+- Sitemap generated at [docs/sitemap.xml](https://john-bampton.github.io/sitemap.xml)
+- Both are auto-generated when you run `render.py`
+- RSS feed follows RSS 2.0 format and is loaded in your HTML via:
+  `<link rel="alternate" type="application/rss+xml" title="John Bampton RSS Feed" href="/feed.xml">`
+- Sitemap follows the standard XML sitemap protocol for search engines and is referenced in `robots.txt`:
+  ```
+  Sitemap: https://john-bampton.github.io/sitemap.xml
+  ```
+- Subscribe for new updates and enjoy better SEO!
+
+---
+
+## 🤝 Contributing
+
+We welcome PRs, issues, and suggestions! Add a ⭐, fork, or help improve the grid and features.
+
+**Code Quality Reminder:**
+
+- Always run `pre-commit run --all-files` before pushing or opening a pull request. This ensures your code is auto-formatted and passes all checks.
+- If you don't have pre-commit installed, run:
+  ```bash
+  pip install pre-commit
+  pre-commit install
+  ```
+  This sets up the hooks for your local repo.
+
+---
+
 ## Powered by
 
-[![Python Powered](docs/images/other/python-logo.png)](https://www.python.org/)
-[![PyCharm Powered](docs/images/other/pycharm-logo.png)](https://www.jetbrains.com/pycharm/)
+[<img src="docs/images/other/python-logo.png" alt="Python Powered" style="height:80px;">](https://www.python.org/)
+[<img src="docs/images/other/pycharm-logo.png" alt="PyCharm Powered" style="height:80px;">](https://www.jetbrains.com/pycharm/)
 
 ---
 
-## Contributing
+## 📝 License
 
-We welcome contributions! Feel free to:
-
-* Submit issues for bugs or feature requests.
-* Fork the repository and open pull requests.
-* Suggest new ways to improve the avatar grid or functionality.
-* Spread the word by adding a ⭐ to this repository.
-
----
-
-## Acknowledgements
-
-Inspired by the GitHub community and the creativity of open-source developers.
-Special thanks to all contributors and avatar owners included in this project.
-
-The idea for this showcase site originally came from the movie [300](https://en.wikipedia.org/wiki/300_(film)).
-The plot revolves around King Leonidas (Gerard Butler), who leads 300 Spartans into
-battle against the Persian "God-King" Xerxes (Rodrigo Santoro). Here our showcase is
-currently led by [Linus Torvalds](https://en.wikipedia.org/wiki/Linus_Torvalds).
-
----
-
-## License
-
-This project is licensed under the MIT License.
-
-© 2025 John Bampton, and Seyyed Ali Mohammadiyeh (Max Base).
-
----
-
-> "Explore the faces behind GitHub. Discover the people shaping open-source."
+MIT License © 2025 John Bampton & Seyyed Ali Mohammadiyeh (Max Base)

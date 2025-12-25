@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en-US">
 
 <head>
@@ -15,6 +15,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="GitHub Faces">
+
+    <link rel="alternate" type="application/rss+xml" title="John Bampton RSS Feed" href="/feed.xml">
 
     <meta property="og:type" content="website">
     <meta property="og:title" content="Top GitHub Faces">
@@ -51,7 +53,11 @@
 
 <body>
     <a href="https://github.com/john-bampton/john-bampton.github.io">
-        <img class="github-ribbon" src="images/other/fork.png" alt="Fork me on GitHub">
+      <img
+        class="github-ribbon"
+        src="images/other/fork.png"
+        alt="Fork me on GitHub"
+      />
     </a>
 
     <!-- Dark Mode Toggle Button -->
@@ -84,6 +90,8 @@
                     <select id="sortBy">
                         <option value="followers-desc">Most Followers</option>
                         <option value="followers-asc">Least Followers</option>
+                        <option value="followers-growth-desc">Trending (Followers ↑)</option>
+                        <option value="followers-growth-asc">Trending (Followers ↓)</option>
                         <option value="following-desc">Most Following</option>
                         <option value="following-asc">Least Following</option>
                         <option value="repos-desc">Most Repos</option>
@@ -112,33 +120,6 @@
                     <div class="search-input-wrapper">
                         <input type="text" id="searchInput" placeholder="Search by name, username, or location...">
                         <span class="search-icon">🔎</span>
-                    </div>
-
-                    <div class="filter-group">
-                        <label for="sortBy">Sort by:</label>
-                        <select id="sortBy">
-                            <option value="followers-desc">Most Followers</option>
-                            <option value="followers-asc">Least Followers</option>
-                            <option value="following-desc">Most Following</option>
-                            <option value="following-asc">Least Following</option>
-                            <option value="repos-desc">Most Repos</option>
-                            <option value="repos-asc">Least Repos</option>
-                            <option value="forks-desc">Most Forks</option>
-                            <option value="forks-asc">Least Forks</option>
-                            <option value="sponsors-desc">Most Public Sponsors</option>
-                            <option value="sponsors-asc">Least Public Sponsors</option>
-                            <option value="sponsoring-desc">Most Sponsoring</option>
-                            <option value="sponsoring-asc">Least Sponsoring</option>
-                            <option value="stars-desc">Most Stars</option>
-                            <option value="stars-asc">Least Stars</option>
-                            <option value="last-repo-desc">Recent Repo Activity</option>
-                            <option value="last-repo-asc">Oldest Repo Activity</option>
-                            <option value="last-commit-desc">Recent Public Commit</option>
-                            <option value="last-commit-asc">Oldest Public Commit</option>
-                            <option value="ratio-followers-following">Followers/Following Ratio</option>
-                            <option value="name-asc">Name (A-Z)</option>
-                            <option value="name-desc">Name (Z-A)</option>
-                        </select>
                     </div>
 
                     <div class="filter-group">
@@ -315,9 +296,15 @@
                     <button class="btn-reset" onclick="resetFilters()">Reset</button>
                 </div>
 
+                <div class="filters-buttons export-buttons">
+                    <button class="btn-apply" onclick="exportFilteredJSON()">Export JSON</button>
+                    <button class="btn-apply" onclick="exportFilteredCSV()">Export CSV</button>
+                </div>
+
                 <div class="results-info" id="loadingState" style="display: none;">
                     <div class="loading-spinner"></div>
                     <div>Loading developers...</div>
+                    <p class="error-message" style="display: none"></p>
                 </div>
 
                 <div class="results-info" id="resultsInfo">
@@ -335,6 +322,7 @@
             <div class="results-info-desktop" id="loadingStateDesktop" style="display: none;">
                 <div class="loading-spinner"></div>
                 <div>Loading developers...</div>
+                <p class="error-message" style="display: none"></p>
             </div>
 
             <div class="results-info-desktop" id="resultsInfoDesktop">

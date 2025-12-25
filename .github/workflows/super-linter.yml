@@ -1,10 +1,15 @@
 name: Lint Code
-
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
+
+permissions:
+  contents: read
+  statuses: write
+  pull-requests: write
+  checks: write
 
 jobs:
   super-linter:
@@ -21,3 +26,7 @@ jobs:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PYTHON_PYLINT_CONFIG_FILE: .pylintrc
+          VALIDATE_ALL_CODEBASE: false
+          DISABLE_ERRORS: false
+          VALIDATE_GITHUB_ACTIONS: true
+          VALIDATE_JSON: true
