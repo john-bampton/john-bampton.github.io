@@ -25,7 +25,8 @@ TARGET_USERS = 400
 # TARGET_USERS = 20
 MAX_EXTRA_PAGES = 2
 
-WEEK_SECONDS = 7 * 24 * 60 * 60 # for trending feature
+WEEK_SECONDS = 7 * 24 * 60 * 60  # for trending feature
+
 
 def load_previous_users(path: str = "./docs/users.json") -> Dict[str, Dict[str, Any]]:
     """Load previous user data from a JSON file and index it by login.
@@ -230,7 +231,10 @@ def fetch_user_detail_with_retry(login: str, max_retries: int = 5) -> Dict[str, 
     logger.warning("Failed to fetch %s after %d attempts", login, max_retries)
     return {}
 
-def compute_follower_growth(login: str, current_followers: Any, previous_users: Dict[str, Dict[str, Any]]) -> Dict[str, Any]:
+
+def compute_follower_growth(
+    login: str, current_followers: Any, previous_users: Dict[str, Dict[str, Any]]
+) -> Dict[str, Any]:
     """
     Trending feature: compute follower growth data, including snapshot timestamp.
     """
@@ -271,7 +275,12 @@ def compute_follower_growth(login: str, current_followers: Any, previous_users: 
     }
 
 
-def enrich_user_with_details(user: Dict[str, Any], idx: int, total: int, previous_users: Dict[str, Dict[str, Any]]) -> None:
+def enrich_user_with_details(
+    user: Dict[str, Any],
+    idx: int,
+    total: int,
+    previous_users: Dict[str, Dict[str, Any]],
+) -> None:
     """Add detailed information (followers, repos, sponsors) to user dict."""
     detail = fetch_user_detail_with_retry(user["login"])
     if not detail:
@@ -314,7 +323,9 @@ def enrich_user_with_details(user: Dict[str, Any], idx: int, total: int, previou
     time.sleep(0.15)
 
 
-def enrich_all_users(users: List[Dict[str, Any]], previous_users: Dict[str, Dict[str, Any]]) -> None:
+def enrich_all_users(
+    users: List[Dict[str, Any]], previous_users: Dict[str, Dict[str, Any]]
+) -> None:
     """Enrich all users with detailed information from GitHub API."""
     total = len(users)
     for idx, user in enumerate(users, 1):
@@ -566,7 +577,7 @@ def run() -> None:
     logger.info("Target users: %d", TARGET_USERS)
     logger.info("")
 
-    previous_users = load_previous_users() # for trending feature
+    previous_users = load_previous_users()  # for trending feature
 
     users = fetch_users_from_search(TARGET_USERS)
 

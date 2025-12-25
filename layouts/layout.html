@@ -1,335 +1,434 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en-US">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Top GitHub Faces</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Top GitHub Faces</title>
 
-<meta name="description" content="Explore the top GitHub users and their avatars. See the 400 most popular GitHub faces in one place.">
-<meta name="keywords" content="GitHub, avatars, top developers, open source, profiles, faces">
-<meta name="author" content="John Bampton">
-<meta name="theme-color" content="#667eea">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="GitHub Faces">
+    <meta
+      name="description"
+      content="Explore the top GitHub users and their avatars. See the 400 most popular GitHub faces in one place."
+    />
+    <meta
+      name="keywords"
+      content="GitHub, avatars, top developers, open source, profiles, faces"
+    />
+    <meta name="author" content="John Bampton" />
+    <meta name="theme-color" content="#667eea" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="GitHub Faces" />
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Top GitHub Faces">
-<meta property="og:description" content="Explore the top GitHub users and their avatars. See the 400 most popular GitHub faces in one place.">
-<meta property="og:url" content="https://github.com/john-bampton/john-bampton.github.io">
-<meta property="og:image" content="https://github.com/john-bampton/john-bampton.github.io/raw/main/docs/images/other/screenshot-1280.png">
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Top GitHub Faces" />
+    <meta
+      property="og:description"
+      content="Explore the top GitHub users and their avatars. See the 400 most popular GitHub faces in one place."
+    />
+    <meta
+      property="og:url"
+      content="https://github.com/john-bampton/john-bampton.github.io"
+    />
+    <meta
+      property="og:image"
+      content="https://github.com/john-bampton/john-bampton.github.io/raw/main/docs/images/other/screenshot-1280.png"
+    />
 
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Top GitHub Faces">
-<meta name="twitter:description" content="Explore the top GitHub users and their avatars. See the 400 most popular GitHub faces in one place.">
-<meta name="twitter:image" content="https://github.com/john-bampton/john-bampton.github.io/raw/main/docs/images/other/screenshot-1280.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Top GitHub Faces" />
+    <meta
+      name="twitter:description"
+      content="Explore the top GitHub users and their avatars. See the 400 most popular GitHub faces in one place."
+    />
+    <meta
+      name="twitter:image"
+      content="https://github.com/john-bampton/john-bampton.github.io/raw/main/docs/images/other/screenshot-1280.png"
+    />
 
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" sizes="180x180" href="images/other/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="images/other/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="images/other/favicon-16x16.png">
-<link rel="icon" href="images/other/favicon.ico">
-<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <link rel="manifest" href="manifest.json" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/other/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/other/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/other/favicon-16x16.png"
+    />
+    <link rel="icon" href="images/other/favicon.ico" />
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
     <a href="https://github.com/john-bampton/john-bampton.github.io">
-        <img class="github-ribbon" src="images/other/fork.png" alt="Fork me on GitHub">
+      <img
+        class="github-ribbon"
+        src="images/other/fork.png"
+        alt="Fork me on GitHub"
+      />
     </a>
 
-<button id="filterToggleBtn" class="filter-toggle-btn" onclick="toggleFiltersPanel()" aria-label="Toggle filters">
-    🔍 Filters
-</button>
+    <button
+      id="filterToggleBtn"
+      class="filter-toggle-btn"
+      onclick="toggleFiltersPanel()"
+      aria-label="Toggle filters"
+    >
+      🔍 Filters
+    </button>
 
-<div class="main-layout">
-    <header class="header-section">
+    <div class="main-layout">
+      <header class="header-section">
         <div id="head"><h1>Top GitHub Faces</h1></div>
-    </header>
+      </header>
 
-    <aside id="filtersAside" class="filters-aside">
-        <button id="filterCloseBtn" class="filter-close-btn" onclick="toggleFiltersPanel()" aria-label="Close filters">
-            ✕
+      <aside id="filtersAside" class="filters-aside">
+        <button
+          id="filterCloseBtn"
+          class="filter-close-btn"
+          onclick="toggleFiltersPanel()"
+          aria-label="Close filters"
+        >
+          ✕
         </button>
 
         <div class="filters-content">
-            <h2>🔍 Find Your Favorite Developer</h2>
-            <button id="randomUserBtn" class="btn-random">🎲 I'm Feeling Lucky</button>
+          <h2>🔍 Find Your Favorite Developer</h2>
+          <button id="randomUserBtn" class="btn-random">
+            🎲 I'm Feeling Lucky
+          </button>
 
-            <div class="filters-section">
-                <div class="search-input-wrapper">
-                    <input type="text" id="searchInput" placeholder="Search by name, username, or location...">
-                    <span class="search-icon">🔎</span>
-                </div>
-
-                <div class="filter-group">
-                    <label for="sortBy">Sort by:</label>
-                    <select id="sortBy">
-                        <option value="followers-desc">Most Followers</option>
-                        <option value="followers-asc">Least Followers</option>
-                        <option value="followers-growth-desc">Trending (Followers ↑)</option>
-                        <option value="followers-growth-asc">Trending (Followers ↓)</option>
-                        <option value="following-desc">Most Following</option>
-                        <option value="following-asc">Least Following</option>
-                        <option value="repos-desc">Most Repos</option>
-                        <option value="repos-asc">Least Repos</option>
-                        <option value="gists-desc">Most Gists</option>
-                        <option value="gists-asc">Least Gists</option>
-                        <option value="forks-desc">Most Forks</option>
-                        <option value="forks-asc">Least Forks</option>
-                        <option value="sponsors-desc">Most Public Sponsors</option>
-                        <option value="sponsors-asc">Least Public Sponsors</option>
-                        <option value="sponsoring-desc">Most Sponsoring</option>
-                        <option value="sponsoring-asc">Least Sponsoring</option>
-                        <option value="stars-desc">Most Stars</option>
-                        <option value="stars-asc">Least Stars</option>
-                        <option value="last-repo-desc">Recent Repo Activity</option>
-                        <option value="last-repo-asc">Oldest Repo Activity</option>
-                        <option value="last-commit-desc">Recent Public Commit</option>
-                        <option value="last-commit-asc">Oldest Public Commit</option>
-                        <option value="ratio-followers-following">Followers/Following Ratio</option>
-                        <option value="name-asc">Name (A-Z)</option>
-                        <option value="name-desc">Name (Z-A)</option>
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <label for="followersFilter">Min Followers:</label>
-                    <select id="followersFilter">
-                        <option value="0">Any</option>
-                        <option value="1000">1K+</option>
-                        <option value="2000">2K+</option>
-                        <option value="5000">5K+</option>
-                        <option value="10000">10K+</option>
-                        <option value="25000">25K+</option>
-                        <option value="50000">50K+</option>
-                        <option value="100000">100K+</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="maxFollowersFilter">Max Followers:</label>
-                    <select id="maxFollowersFilter">
-                        <option value="999999999">Any</option>
-                        <option value="999">Less than 1K</option>
-                        <option value="1000">1K</option>
-                        <option value="2000">2K</option>
-                        <option value="5000">5K</option>
-                        <option value="10000">10K</option>
-                        <option value="25000">25K</option>
-                        <option value="50000">50K</option>
-                        <option value="100000">100K</option>
-                        <option value="500000">500K</option>
-                        <option value="1000000">1M</option>
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <label for="minReposFilter">Min Repos:</label>
-                    <select id="minReposFilter">
-                        <option value="0">Any</option>
-                        <option value="10">10+</option>
-                        <option value="25">25+</option>
-                        <option value="50">50+</option>
-                        <option value="100">100+</option>
-                        <option value="250">250+</option>
-                        <option value="500">500+</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="maxReposFilter">Max Repos:</label>
-                    <select id="maxReposFilter">
-                        <option value="999999">Any</option>
-                        <option value="10">Less than 10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                        <option value="250">250</option>
-                        <option value="500">500</option>
-                        <option value="1000">1000</option>
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <label for="minForksFilter">Min Forks:</label>
-                    <select id="minForksFilter">
-                        <option value="0">Any</option>
-                        <option value="10">10+</option>
-                        <option value="50">50+</option>
-                        <option value="100">100+</option>
-                        <option value="500">500+</option>
-                        <option value="1000">1000+</option>
-                        <option value="5000">5000+</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="maxForksFilter">Max Forks:</label>
-                    <select id="maxForksFilter">
-                        <option value="999999">Any</option>
-                        <option value="10">Less than 10</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                        <option value="500">500</option>
-                        <option value="1000">1000</option>
-                        <option value="5000">5000</option>
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <label for="sponsorsFilter">Public Sponsors:</label>
-                    <select id="sponsorsFilter">
-                        <option value="any">Any</option>
-                        <option value="has-sponsors">Has Public Sponsors</option>
-                        <option value="min-1">1+</option>
-                        <option value="min-5">5+</option>
-                        <option value="min-10">10+</option>
-                        <option value="min-50">50+</option>
-                        <option value="min-100">100+</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="sponsoringFilter">Sponsoring:</label>
-                    <select id="sponsoringFilter">
-                        <option value="any">Any</option>
-                        <option value="is-sponsoring">Is Sponsoring</option>
-                        <option value="min-1">1+</option>
-                        <option value="min-5">5+</option>
-                        <option value="min-10">10+</option>
-                        <option value="min-50">50+</option>
-                        <option value="min-100">100+</option>
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <label for="avatarAgeFilter">Avatar Updated:</label>
-                    <select id="avatarAgeFilter">
-                        <option value="any">Any</option>
-                        <option value="week">This Week</option>
-                        <option value="month">This Month</option>
-                        <option value="6months">Last 6 Months</option>
-                        <option value="year">This Year</option>
-                        <option value="2years">Last 2 Years</option>
-                        <option value="5years">Less than 5 Years</option>
-                        <option value="old">Over 5 Years</option>
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <label for="minStarsFilter">Min Stars (total):</label>
-                    <select id="minStarsFilter">
-                        <option value="0">Any</option>
-                        <option value="100">100+</option>
-                        <option value="1000">1K+</option>
-                        <option value="5000">5K+</option>
-                        <option value="10000">10K+</option>
-                        <option value="50000">50K+</option>
-                        <option value="100000">100K+</option>
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <label for="languageFilter">Language:</label>
-                    <div class="search-input-wrapper">
-                        <input type="text" id="languageFilter" placeholder="e.g. TypeScript">
-                    </div>
-                </div>
-
-                <div class="filter-group">
-                    <label for="lastRepoActivityFilter">Last Repo Activity:</label>
-                    <select id="lastRepoActivityFilter">
-                        <option value="any">Any</option>
-                        <option value="week">This Week</option>
-                        <option value="month">This Month</option>
-                        <option value="6months">Last 6 Months</option>
-                        <option value="year">This Year</option>
-                        <option value="2years">Last 2 Years</option>
-                        <option value="5years">Less than 5 Years</option>
-                        <option value="old">Over 5 Years</option>
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <label for="lastCommitFilter">Last Public Commit:</label>
-                    <select id="lastCommitFilter">
-                        <option value="any">Any</option>
-                        <option value="week">This Week</option>
-                        <option value="month">This Month</option>
-                        <option value="6months">Last 6 Months</option>
-                        <option value="year">This Year</option>
-                        <option value="2years">Last 2 Years</option>
-                        <option value="5years">Less than 5 Years</option>
-                        <option value="old">Over 5 Years</option>
-                    </select>
-                </div>
+          <div class="filters-section">
+            <div class="search-input-wrapper">
+              <input
+                type="text"
+                id="searchInput"
+                placeholder="Search by name, username, or location..."
+              />
+              <span class="search-icon">🔎</span>
             </div>
 
-            <div class="filters-buttons">
-                <button class="btn-apply" onclick="toggleFiltersPanel()">Apply Filters</button>
-                <button class="btn-reset" onclick="resetFilters()">Reset</button>
+            <div class="filter-group">
+              <label for="sortBy">Sort by:</label>
+              <select id="sortBy">
+                <option value="followers-desc">Most Followers</option>
+                <option value="followers-asc">Least Followers</option>
+                <option value="followers-growth-desc">
+                  Trending (Followers ↑)
+                </option>
+                <option value="followers-growth-asc">
+                  Trending (Followers ↓)
+                </option>
+                <option value="following-desc">Most Following</option>
+                <option value="following-asc">Least Following</option>
+                <option value="repos-desc">Most Repos</option>
+                <option value="repos-asc">Least Repos</option>
+                <option value="gists-desc">Most Gists</option>
+                <option value="gists-asc">Least Gists</option>
+                <option value="forks-desc">Most Forks</option>
+                <option value="forks-asc">Least Forks</option>
+                <option value="sponsors-desc">Most Public Sponsors</option>
+                <option value="sponsors-asc">Least Public Sponsors</option>
+                <option value="sponsoring-desc">Most Sponsoring</option>
+                <option value="sponsoring-asc">Least Sponsoring</option>
+                <option value="stars-desc">Most Stars</option>
+                <option value="stars-asc">Least Stars</option>
+                <option value="last-repo-desc">Recent Repo Activity</option>
+                <option value="last-repo-asc">Oldest Repo Activity</option>
+                <option value="last-commit-desc">Recent Public Commit</option>
+                <option value="last-commit-asc">Oldest Public Commit</option>
+                <option value="ratio-followers-following">
+                  Followers/Following Ratio
+                </option>
+                <option value="name-asc">Name (A-Z)</option>
+                <option value="name-desc">Name (Z-A)</option>
+              </select>
             </div>
 
-            <div class="filters-buttons export-buttons">
-                <button class="btn-apply" onclick="exportFilteredJSON()">Export JSON</button>
-                <button class="btn-apply" onclick="exportFilteredCSV()">Export CSV</button>
+            <div class="filter-group">
+              <label for="followersFilter">Min Followers:</label>
+              <select id="followersFilter">
+                <option value="0">Any</option>
+                <option value="1000">1K+</option>
+                <option value="2000">2K+</option>
+                <option value="5000">5K+</option>
+                <option value="10000">10K+</option>
+                <option value="25000">25K+</option>
+                <option value="50000">50K+</option>
+                <option value="100000">100K+</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="maxFollowersFilter">Max Followers:</label>
+              <select id="maxFollowersFilter">
+                <option value="999999999">Any</option>
+                <option value="999">Less than 1K</option>
+                <option value="1000">1K</option>
+                <option value="2000">2K</option>
+                <option value="5000">5K</option>
+                <option value="10000">10K</option>
+                <option value="25000">25K</option>
+                <option value="50000">50K</option>
+                <option value="100000">100K</option>
+                <option value="500000">500K</option>
+                <option value="1000000">1M</option>
+              </select>
             </div>
 
-            <div class="results-info loading-state" id="loadingState" style="display: none;">
-                <div class="loading-spinner"></div>
-                <p>Loading developers...</p>
-                <p class="error-message" style="display: none;"></p>
+            <div class="filter-group">
+              <label for="minReposFilter">Min Repos:</label>
+              <select id="minReposFilter">
+                <option value="0">Any</option>
+                <option value="10">10+</option>
+                <option value="25">25+</option>
+                <option value="50">50+</option>
+                <option value="100">100+</option>
+                <option value="250">250+</option>
+                <option value="500">500+</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="maxReposFilter">Max Repos:</label>
+              <select id="maxReposFilter">
+                <option value="999999">Any</option>
+                <option value="10">Less than 10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="250">250</option>
+                <option value="500">500</option>
+                <option value="1000">1000</option>
+              </select>
             </div>
 
-            <div class="results-info" id="resultsInfo">
-                <div id="resultsFound">
-                    Showing <strong id="visibleCount">0</strong> of <strong id="totalCount">0</strong> developers
-                </div>
-                <div id="noResults" style="display: none;">
-                    <strong>No developers found</strong> matching your filters.
-                </div>
+            <div class="filter-group">
+              <label for="minForksFilter">Min Forks:</label>
+              <select id="minForksFilter">
+                <option value="0">Any</option>
+                <option value="10">10+</option>
+                <option value="50">50+</option>
+                <option value="100">100+</option>
+                <option value="500">500+</option>
+                <option value="1000">1000+</option>
+                <option value="5000">5000+</option>
+              </select>
             </div>
-        </div>
-    </aside>
+            <div class="filter-group">
+              <label for="maxForksFilter">Max Forks:</label>
+              <select id="maxForksFilter">
+                <option value="999999">Any</option>
+                <option value="10">Less than 10</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="500">500</option>
+                <option value="1000">1000</option>
+                <option value="5000">5000</option>
+              </select>
+            </div>
 
-    <main class="main-content">
-        <div class="results-info-desktop loading-state" id="loadingStateDesktop" style="display: none;">
+            <div class="filter-group">
+              <label for="sponsorsFilter">Public Sponsors:</label>
+              <select id="sponsorsFilter">
+                <option value="any">Any</option>
+                <option value="has-sponsors">Has Public Sponsors</option>
+                <option value="min-1">1+</option>
+                <option value="min-5">5+</option>
+                <option value="min-10">10+</option>
+                <option value="min-50">50+</option>
+                <option value="min-100">100+</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="sponsoringFilter">Sponsoring:</label>
+              <select id="sponsoringFilter">
+                <option value="any">Any</option>
+                <option value="is-sponsoring">Is Sponsoring</option>
+                <option value="min-1">1+</option>
+                <option value="min-5">5+</option>
+                <option value="min-10">10+</option>
+                <option value="min-50">50+</option>
+                <option value="min-100">100+</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="avatarAgeFilter">Avatar Updated:</label>
+              <select id="avatarAgeFilter">
+                <option value="any">Any</option>
+                <option value="week">This Week</option>
+                <option value="month">This Month</option>
+                <option value="6months">Last 6 Months</option>
+                <option value="year">This Year</option>
+                <option value="2years">Last 2 Years</option>
+                <option value="5years">Less than 5 Years</option>
+                <option value="old">Over 5 Years</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="minStarsFilter">Min Stars (total):</label>
+              <select id="minStarsFilter">
+                <option value="0">Any</option>
+                <option value="100">100+</option>
+                <option value="1000">1K+</option>
+                <option value="5000">5K+</option>
+                <option value="10000">10K+</option>
+                <option value="50000">50K+</option>
+                <option value="100000">100K+</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="languageFilter">Language:</label>
+              <div class="search-input-wrapper">
+                <input
+                  type="text"
+                  id="languageFilter"
+                  placeholder="e.g. TypeScript"
+                />
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <label for="lastRepoActivityFilter">Last Repo Activity:</label>
+              <select id="lastRepoActivityFilter">
+                <option value="any">Any</option>
+                <option value="week">This Week</option>
+                <option value="month">This Month</option>
+                <option value="6months">Last 6 Months</option>
+                <option value="year">This Year</option>
+                <option value="2years">Last 2 Years</option>
+                <option value="5years">Less than 5 Years</option>
+                <option value="old">Over 5 Years</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="lastCommitFilter">Last Public Commit:</label>
+              <select id="lastCommitFilter">
+                <option value="any">Any</option>
+                <option value="week">This Week</option>
+                <option value="month">This Month</option>
+                <option value="6months">Last 6 Months</option>
+                <option value="year">This Year</option>
+                <option value="2years">Last 2 Years</option>
+                <option value="5years">Less than 5 Years</option>
+                <option value="old">Over 5 Years</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="filters-buttons">
+            <button class="btn-apply" onclick="toggleFiltersPanel()">
+              Apply Filters
+            </button>
+            <button class="btn-reset" onclick="resetFilters()">Reset</button>
+          </div>
+
+          <div class="filters-buttons export-buttons">
+            <button class="btn-apply" onclick="exportFilteredJSON()">
+              Export JSON
+            </button>
+            <button class="btn-apply" onclick="exportFilteredCSV()">
+              Export CSV
+            </button>
+          </div>
+
+          <div
+            class="results-info loading-state"
+            id="loadingState"
+            style="display: none"
+          >
             <div class="loading-spinner"></div>
             <p>Loading developers...</p>
-            <p class="error-message" style="display: none;"></p>
+            <p class="error-message" style="display: none"></p>
+          </div>
+
+          <div class="results-info" id="resultsInfo">
+            <div id="resultsFound">
+              Showing <strong id="visibleCount">0</strong> of
+              <strong id="totalCount">0</strong> developers
+            </div>
+            <div id="noResults" style="display: none">
+              <strong>No developers found</strong> matching your filters.
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <div
+          class="results-info-desktop loading-state"
+          id="loadingStateDesktop"
+          style="display: none"
+        >
+          <div class="loading-spinner"></div>
+          <p>Loading developers...</p>
+          <p class="error-message" style="display: none"></p>
         </div>
 
         <div class="results-info-desktop" id="resultsInfoDesktop">
-            <div id="resultsFoundDesktop">
-                Showing <strong id="visibleCountDesktop">0</strong> of <strong id="totalCountDesktop">0</strong> developers
-            </div>
-            <div id="noResultsDesktop" style="display: none;">
-                <strong>No developers found</strong> matching your filters.
-            </div>
+          <div id="resultsFoundDesktop">
+            Showing <strong id="visibleCountDesktop">0</strong> of
+            <strong id="totalCountDesktop">0</strong> developers
+          </div>
+          <div id="noResultsDesktop" style="display: none">
+            <strong>No developers found</strong> matching your filters.
+          </div>
         </div>
 
         <div class="grid" id="grid"></div>
-</main>
-</div>
+      </main>
+    </div>
 
-<footer>
-  <p>© 2025 <a href="https://github.com/john-bampton/john-bampton.github.io" target="_blank" rel="noopener noreferrer">John Bampton and Seyyed Ali Mohammadiyeh (Max Base)</a>. Licensed under the <a href="https://github.com/john-bampton/john-bampton.github.io/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT License</a>.</p>
-</footer>
+    <footer>
+      <p>
+        © 2025
+        <a
+          href="https://github.com/john-bampton/john-bampton.github.io"
+          target="_blank"
+          rel="noopener noreferrer"
+          >John Bampton and Seyyed Ali Mohammadiyeh (Max Base)</a
+        >. Licensed under the
+        <a
+          href="https://github.com/john-bampton/john-bampton.github.io/blob/main/LICENSE"
+          target="_blank"
+          rel="noopener noreferrer"
+          >MIT License</a
+        >.
+      </p>
+    </footer>
 
-<script src="bootstrap/js/jquery.min.js"></script>
-<script src="bootstrap/js/popper.min.js"></script>
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<script src="script.js"></script>
+    <script src="bootstrap/js/jquery.min.js"></script>
+    <script src="bootstrap/js/popper.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
 
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('service-worker.js')
-      .then(registration => {
-        console.log('✓ Service Worker registered:', registration);
-      })
-      .catch(error => {
-        console.warn('✗ Service Worker registration failed:', error);
-      });
-  });
-}
-</script>
-</body>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register('service-worker.js')
+            .then((registration) => {
+              console.log('✓ Service Worker registered:', registration);
+            })
+            .catch((error) => {
+              console.warn('✗ Service Worker registration failed:', error);
+            });
+        });
+      }
+    </script>
+  </body>
 </html>
