@@ -85,18 +85,17 @@ Explore and showcase the top GitHub user avatars in a modern, interactive grid. 
 
 ---
 
-
 ## 📦 RSS Feed & Sitemap
 
 - RSS feed generated at [docs/feed.xml](https://john-bampton.github.io/feed.xml)
 - Sitemap generated at [docs/sitemap.xml](https://john-bampton.github.io/sitemap.xml)
 - Both are auto-generated when you run `render.py`
 - RSS feed follows RSS 2.0 format and is loaded in your HTML via:
-	`<link rel="alternate" type="application/rss+xml" title="John Bampton RSS Feed" href="/feed.xml">`
+  `<link rel="alternate" type="application/rss+xml" title="John Bampton RSS Feed" href="/feed.xml">`
 - Sitemap follows the standard XML sitemap protocol for search engines and is referenced in `robots.txt`:
-	```
-	Sitemap: https://john-bampton.github.io/sitemap.xml
-	```
+  ```
+  Sitemap: https://john-bampton.github.io/sitemap.xml
+  ```
 - Subscribe for new updates and enjoy better SEO!
 
 ---
