@@ -237,7 +237,7 @@ def enrich_user_with_details(user: Dict[str, Any], idx: int, total: int) -> None
     user["last_public_commit_at"] = fetch_last_public_commit_at(user["login"])
 
     logger.info(
-        f"[{idx}/{total} - {progress:.1f}%] Fetched details for {user['login']}"
+        "[%s/%s - %.1f%%] Fetched details for %s", idx, total, progress, user['login']
     )
     time.sleep(0.15)
 
@@ -264,7 +264,7 @@ def fetch_user_repo_summary(
             return fetch_user_repo_summary_graphql(login, max_repos)
         except Exception as e:
             logger.warning(
-                f"GraphQL summary failed for {login}, falling back to REST: {e}"
+                "GraphQL summary failed for %s, falling back to REST: %s", login, e
             )
     return fetch_user_repo_summary_rest(login, max_repos)
 
