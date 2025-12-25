@@ -192,7 +192,7 @@ async function loadFeaturedUser() {
 
 function prepareUserFromJson(user) {
   const getNum = (v, def = 0) =>
-    v === "N/A" || v == null ? def : parseInt(v, 10);
+    v === "N/A" || v === null ? def : parseInt(v, 10);
   const safeLower = (v) => (v ? String(v).toLowerCase() : "");
   const normalizeDate = (v) => (v ? new Date(v).toISOString() : "");
   const topLangs = Array.isArray(user.top_languages) ? user.top_languages : [];
@@ -232,7 +232,7 @@ function prepareUserFromJson(user) {
 }
 
 function formatDisplay(val) {
-  if (val === "N/A" || val == null) return "N/A";
+  if (val === "N/A" || val === null) return "N/A";
   const num = parseInt(val, 10);
   return Number.isNaN(num) ? String(val) : num.toLocaleString();
 }
