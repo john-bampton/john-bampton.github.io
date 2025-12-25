@@ -1,0 +1,17 @@
+css:
+  - '**/*.css'
+html:
+  - '**/*.html'
+layouts:
+  - 'layouts/**'
+javascript:
+  - '**/*.js'
+json:
+  - '**/*.json'
+documentation:
+  - '**/*.md'
+python:
+  - '**/*.py'
+yaml:
+  - '**/*.yml'
+  - '**/*.yaml'

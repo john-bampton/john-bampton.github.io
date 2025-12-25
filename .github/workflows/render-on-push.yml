@@ -26,7 +26,8 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: "3.12"
+          python-version: '3.14.2'
+          architecture: 'x64'
 
       - name: Install dependencies
         run: |
@@ -43,6 +44,6 @@ jobs:
           publish_dir: ./docs
           publish_branch: gh-pages
           force_orphan: true
-          user_name: "github-actions[bot]"
-          user_email: "github-actions[bot]@users.noreply.github.com"
-          commit_message: "chore: deploy from new update"
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'chore: deploy from new update'
