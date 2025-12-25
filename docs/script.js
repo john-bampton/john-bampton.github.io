@@ -171,7 +171,6 @@ async function loadFeaturedUser() {
   try {
     const res = await fetch('featured.json', { cache: 'no-store' });
     if (!res.ok) {
-      console.log('No featured user available yet');
       return;
     }
     const data = await res.json();
@@ -233,7 +232,7 @@ async function loadFeaturedUser() {
     // Show the section
     section.style.display = 'block';
   } catch (err) {
-    console.error('Failed to load featured user:', err);
+    // Silently fail - featured user is optional
   }
 }
 
