@@ -39,3 +39,7 @@ Thumbs.db
 # Environment
 .env
 .env.local
+
+# XML files
+docs/feed.xml
+docs/sitemap.xml
