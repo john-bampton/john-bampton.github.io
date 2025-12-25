@@ -709,7 +709,7 @@ def select_featured_user(users: List[Dict[str, Any]]) -> Dict[str, Any]:
     featured_user, score = scored_users[0]
 
     logger.info(
-        f"Selected featured user: {featured_user.get('login')} (score: {score:.2f})"
+        "Selected featured user: %s (score: %.2f)", featured_user.get('login'), score
     )
 
     return featured_user
