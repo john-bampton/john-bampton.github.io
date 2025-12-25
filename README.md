@@ -27,6 +27,7 @@ Explore and showcase the top GitHub user avatars in a modern, interactive grid. 
 
 - [View the site](https://john-bampton.github.io/)
 - [View the docs](https://john-bampton.readthedocs.io/)
+
 ---
 
 ## ⚡ Quickstart
