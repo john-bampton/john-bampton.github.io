@@ -59,7 +59,7 @@ def ensure_dir(path: str) -> None:
     """Create directory if it doesn't exist."""
     if not os.path.exists(path):
         os.makedirs(path)
-        logger.info(f"Created directory: {path}")
+        logger.info("Created directory: %s", path)
 
 
 def get_remote_timestamp(url: str) -> float:
@@ -70,7 +70,7 @@ def get_remote_timestamp(url: str) -> float:
         if last_modified:
             return timegm(time.strptime(last_modified, "%a, %d %b %Y %H:%M:%S GMT"))
     except Exception as e:
-        logger.warning(f"Failed to get timestamp for {url}: {e}")
+        logger.warning("Failed to get timestamp for {url}: %s", e)
     return float("inf")
 
 
@@ -91,11 +91,11 @@ def download_single_avatar(user: Dict[str, Any], faces_dir: str) -> None:
     if should_download(file_path, user["avatar_url"]):
         try:
             urlretrieve(user["avatar_url"], file_path)
-            logger.info(f"Downloaded/Updated avatar: {user['login']}")
+            logger.info("Downloaded/Updated avatar: %s", user['login'])
         except Exception as e:
-            logger.error(f"Failed to download avatar for {user['login']}: {e}")
+            logger.error("Failed to download avatar for {user['login']}: %s", e)
     else:
-        logger.info(f"Local avatar up-to-date: {user['login']}")
+        logger.info("Local avatar up-to-date: %s", user['login'])
 
 
 def download_avatars(users: List[Dict[str, Any]], faces_dir: str) -> None:
@@ -104,7 +104,7 @@ def download_avatars(users: List[Dict[str, Any]], faces_dir: str) -> None:
     total = len(users)
     for idx, user in enumerate(users, 1):
         progress = (idx / total) * 100
-        logger.info(f"[{idx}/{total} - {progress:.1f}%] Processing avatar...")
+        logger.info("[{idx}/{total} - %s%] Processing avatar...", progress:.1f)
         download_single_avatar(user, faces_dir)
 
 
@@ -118,14 +118,14 @@ def clean_old_avatars(current_logins: List[str], faces_dir: str) -> None:
             login = filename.rsplit(".", 1)[0].lower()
             if login not in current_logins:
                 os.remove(os.path.join(faces_dir, filename))
-                logger.info(f"Removed old avatar: {filename}")
+                logger.info("Removed old avatar: %s", filename)
 
 
 def handle_rate_limit(resp: requests.Response) -> int:
     """Handle GitHub API rate limit and return sleep duration."""
     reset_ts = int(resp.headers.get("X-RateLimit-Reset", time.time() + 60))
     sleep_for = max(reset_ts - int(time.time()), 10)
-    logger.warning(f"Rate limit exceeded, waiting {sleep_for}s")
+    logger.warning("Rate limit exceeded, waiting %ss", sleep_for)
     return sleep_for
 
 
@@ -173,7 +173,7 @@ def fetch_sponsorship_info(login: str) -> Dict[str, Any]:
                     ),
                 }
     except Exception as e:
-        logger.warning(f"Failed to fetch sponsorship for {login}: {e}")
+        logger.warning("Failed to fetch sponsorship for {login}: %s", e)
     return {"sponsors_count": "N/A", "sponsoring_count": "N/A"}
 
 
@@ -187,7 +187,7 @@ def fetch_user_detail_with_retry(login: str, max_retries: int = 5) -> Dict[str, 
             resp = requests.get(detail_url, headers=headers, timeout=10)
 
             if resp.status_code == 404:
-                logger.warning(f"User not found: {login}")
+                logger.warning("User not found: %s", login)
                 return {}
 
             if resp.status_code == 403 and "rate limit" in resp.text.lower():
@@ -204,10 +204,10 @@ def fetch_user_detail_with_retry(login: str, max_retries: int = 5) -> Dict[str, 
             resp.raise_for_status()
             return resp.json()
         except Exception as e:
-            logger.warning(f"Error fetching {login} (attempt {attempt + 1}): {e}")
+            logger.warning("Error fetching {login} (attempt {attempt + 1}): %s", e)
             time.sleep(2**attempt)
 
-    logger.warning(f"Failed to fetch {login} after {max_retries} attempts")
+    logger.warning("Failed to fetch {login} after %s attempts", max_retries)
     return {}
 
 
@@ -419,7 +419,7 @@ def fetch_last_public_commit_at(login: str) -> str:
                 return ev.get("created_at", "")
         return events[0].get("created_at", "") if events else ""
     except Exception as e:
-        logger.warning(f"Failed to fetch last public commit for {login}: {e}")
+        logger.warning("Failed to fetch last public commit for {login}: %s", e)
         return ""
 
 
@@ -433,7 +433,7 @@ def fetch_search_page(page_num: int, headers: Dict[str, str]) -> List[Dict[str, 
         page_users = resp.json().get("items", [])
         return [u for u in page_users if u.get("type") == "User"]
     except Exception as e:
-        logger.error(f"Failed to fetch page {page_num}: {e}")
+        logger.error("Failed to fetch page {page_num}: %s", e)
         return []
 
 
@@ -539,9 +539,9 @@ def save_cache(users: List[Dict[str, Any]]) -> None:
                 indent=(2 if os.environ.get("APP_ENV") == "development" else None),
                 ensure_ascii=False,
             )
-        logger.info(f"Cache saved ({len(users)} users)")
+        logger.info("Cache saved (%s users)", len(users))
     except Exception as e:
-        logger.error(f"Failed to save cache: {e}")
+        logger.error("Failed to save cache: %s", e)
 
 
 def save_featured_user(featured_user: Dict[str, Any]) -> None:
@@ -556,9 +556,9 @@ def save_featured_user(featured_user: Dict[str, Any]) -> None:
         }
         with open(featured_file, "w", encoding="utf-8") as f:
             json.dump(featured_data, f, ensure_ascii=False)
-        logger.info(f"Featured user saved: {featured_user.get('login')}")
+        logger.info("Featured user saved: %s", featured_user.get('login'))
     except Exception as e:
-        logger.error(f"Failed to save featured user: {e}")
+        logger.error("Failed to save featured user: %s", e)
 
 
 def print_section(title: str) -> None:
@@ -571,7 +571,7 @@ def print_section(title: str) -> None:
 def run() -> None:
     """Main entry point: fetch, enrich, download avatars, and cache users."""
     print_section("Starting GitHub Users Fetch Process")
-    logger.info(f"Target users: {TARGET_USERS}")
+    logger.info("Target users: %s", TARGET_USERS)
     logger.info("")
 
     users = fetch_users_from_search(TARGET_USERS)
