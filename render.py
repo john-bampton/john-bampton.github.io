@@ -272,7 +272,9 @@ def run() -> None:
         )
 
         sitemap_filename = "sitemap.xml"
-        sitemap_urls = list({item.get("guid", item.get("link", main_url)) for item in rss_items})
+        sitemap_urls = list(
+            {item.get("guid", item.get("link", main_url)) for item in rss_items}
+        )
         sitemap_urls.append(DEPLOY_BASEURL + "/feed.xml")
         generate_sitemap_xml(sitemap_urls, sitemap_filename)
     except Exception as e:
