@@ -70,7 +70,7 @@ def get_remote_timestamp(url: str) -> float:
         if last_modified:
             return timegm(time.strptime(last_modified, "%a, %d %b %Y %H:%M:%S GMT"))
     except Exception as e:
-        logger.warning("Failed to get timestamp for {url}: %s", e)
+        logger.warning("Failed to get timestamp for %s: %s", url, e)
     return float("inf")
 
 
@@ -93,7 +93,7 @@ def download_single_avatar(user: Dict[str, Any], faces_dir: str) -> None:
             urlretrieve(user["avatar_url"], file_path)
             logger.info("Downloaded/Updated avatar: %s", user['login'])
         except Exception as e:
-            logger.error("Failed to download avatar for {user['login']}: %s", e)
+            logger.error("Failed to download avatar for %s: %s", user['login'], e)
     else:
         logger.info("Local avatar up-to-date: %s", user['login'])
 
@@ -104,7 +104,7 @@ def download_avatars(users: List[Dict[str, Any]], faces_dir: str) -> None:
     total = len(users)
     for idx, user in enumerate(users, 1):
         progress = (idx / total) * 100
-        logger.info("[{idx}/{total} - %s%] Processing avatar...", progress:.1f)
+        logger.info("[%s/%s - %.1f%%] Processing avatar...", idx, total, progress)
         download_single_avatar(user, faces_dir)
 
 
@@ -173,7 +173,7 @@ def fetch_sponsorship_info(login: str) -> Dict[str, Any]:
                     ),
                 }
     except Exception as e:
-        logger.warning("Failed to fetch sponsorship for {login}: %s", e)
+        logger.warning("Failed to fetch sponsorship for %s: %s", login, e)
     return {"sponsors_count": "N/A", "sponsoring_count": "N/A"}
 
 
@@ -204,10 +204,10 @@ def fetch_user_detail_with_retry(login: str, max_retries: int = 5) -> Dict[str, 
             resp.raise_for_status()
             return resp.json()
         except Exception as e:
-            logger.warning("Error fetching {login} (attempt {attempt + 1}): %s", e)
+            logger.warning("Error fetching %s (attempt %s): %s", login, attempt + 1, e)
             time.sleep(2**attempt)
 
-    logger.warning("Failed to fetch {login} after %s attempts", max_retries)
+    logger.warning("Failed to fetch %s after %s attempts", login, max_retries)
     return {}
 
 
@@ -419,7 +419,7 @@ def fetch_last_public_commit_at(login: str) -> str:
                 return ev.get("created_at", "")
         return events[0].get("created_at", "") if events else ""
     except Exception as e:
-        logger.warning("Failed to fetch last public commit for {login}: %s", e)
+        logger.warning("Failed to fetch last public commit for %s: %s", login, e)
         return ""
 
 
@@ -433,7 +433,7 @@ def fetch_search_page(page_num: int, headers: Dict[str, str]) -> List[Dict[str, 
         page_users = resp.json().get("items", [])
         return [u for u in page_users if u.get("type") == "User"]
     except Exception as e:
-        logger.error("Failed to fetch page {page_num}: %s", e)
+        logger.error("Failed to fetch page %s: %s", page_num, e)
         return []
 
 
