@@ -743,6 +743,7 @@ function updateVisibilityAndSort() {
   renderCards(sortedUsers);
   updateCounts(sortedUsers);
   updateResultsMessage(sortedUsers);
+  updateActiveFiltersIndicator();
 }
 
 /**
@@ -1028,6 +1029,176 @@ function updateResultsMessage(sortedUsers) {
     if (resultsFoundDesktop) resultsFoundDesktop.style.display = 'block';
     if (noResultsDesktop) noResultsDesktop.style.display = 'none';
   }
+}
+
+// ============================================================================
+// ACTIVE FILTERS INDICATOR
+// ============================================================================
+/**
+ * Update the active filters indicator display
+ */
+function updateActiveFiltersIndicator() {
+  const indicator = document.getElementById('activeFiltersIndicator');
+  const tagsContainer = document.getElementById('activeFiltersTags');
+  if (!indicator || !tagsContainer) return;
+
+  const filters = getActiveFilters();
+  const sortBy = document.getElementById('sortBy').value;
+  const activeTags = [];
+  
+  const sortOption = document.querySelector(`#sortBy option[value="${sortBy}"]`);
+  if (sortOption && sortBy !== 'followers-desc') {
+    activeTags.push({
+      label: `Sort: ${sortOption.textContent.trim()}`,
+      type: 'sort',
+      value: sortBy,
+    });
+  }
+
+  if (filters.searchTerm) {
+    activeTags.push({
+      label: `Search: "${filters.searchTerm}"`,
+      type: 'search',
+      value: filters.searchTerm,
+    });
+  }
+
+  if (filters.minFollowers > 0 || filters.maxFollowers < 999999999) {
+    let followersLabel = 'Followers: ';
+    if (filters.minFollowers > 0 && filters.maxFollowers < 999999999) {
+      followersLabel += `${formatNumber(filters.minFollowers)} - ${formatNumber(filters.maxFollowers)}`;
+    } else if (filters.minFollowers > 0) {
+      followersLabel += `${formatNumber(filters.minFollowers)}+`;
+    } else {
+      followersLabel += `≤ ${formatNumber(filters.maxFollowers)}`;
+    }
+    activeTags.push({
+      label: followersLabel,
+      type: 'followers',
+    });
+  }
+  if (filters.minRepos > 0 || filters.maxRepos < 999999) {
+    let reposLabel = 'Repos: ';
+    if (filters.minRepos > 0 && filters.maxRepos < 999999) {
+      reposLabel += `${filters.minRepos} - ${filters.maxRepos}`;
+    } else if (filters.minRepos > 0) {
+      reposLabel += `${filters.minRepos}+`;
+    } else {
+      reposLabel += `≤ ${filters.maxRepos}`;
+    }
+    activeTags.push({
+      label: reposLabel,
+      type: 'repos',
+    });
+  }
+
+  if (filters.minForks > 0 || filters.maxForks < 999999) {
+    let forksLabel = 'Forks: ';
+    if (filters.minForks > 0 && filters.maxForks < 999999) {
+      forksLabel += `${filters.minForks} - ${filters.maxForks}`;
+    } else if (filters.minForks > 0) {
+      forksLabel += `${filters.minForks}+`;
+    } else {
+      forksLabel += `≤ ${filters.maxForks}`;
+    }
+    activeTags.push({
+      label: forksLabel,
+      type: 'forks',
+    });
+  }
+  if (filters.minStars > 0) {
+    activeTags.push({
+      label: `Stars: ${formatNumber(filters.minStars)}+`,
+      type: 'stars',
+    });
+  }
+  if (filters.sponsorsFilter !== 'any') {
+    const sponsorsSelect = document.getElementById('sponsorsFilter');
+    const selectedOption = sponsorsSelect?.options[sponsorsSelect.selectedIndex];
+    if (selectedOption) {
+      activeTags.push({
+        label: `Sponsors: ${selectedOption.textContent.trim()}`,
+        type: 'sponsors',
+      });
+    }
+  }
+  if (filters.sponsoringFilter !== 'any') {
+    const sponsoringSelect = document.getElementById('sponsoringFilter');
+    const selectedOption = sponsoringSelect?.options[sponsoringSelect.selectedIndex];
+    if (selectedOption) {
+      activeTags.push({
+        label: `Sponsoring: ${selectedOption.textContent.trim()}`,
+        type: 'sponsoring',
+      });
+    }
+  }
+  if (filters.avatarAgeFilter !== 'any') {
+    const avatarSelect = document.getElementById('avatarAgeFilter');
+    const selectedOption = avatarSelect?.options[avatarSelect.selectedIndex];
+    if (selectedOption) {
+      activeTags.push({
+        label: `Avatar: ${selectedOption.textContent.trim()}`,
+        type: 'avatar',
+      });
+    }
+  }
+  if (filters.languageFilter) {
+    activeTags.push({
+      label: `Language: ${filters.languageFilter}`,
+      type: 'language',
+    });
+  }
+
+  if (filters.lastRepoActivityFilter !== 'any') {
+    const repoActivitySelect = document.getElementById('lastRepoActivityFilter');
+    const selectedOption = repoActivitySelect?.options[repoActivitySelect.selectedIndex];
+    if (selectedOption) {
+      activeTags.push({
+        label: `Repo Activity: ${selectedOption.textContent.trim()}`,
+        type: 'repo-activity',
+      });
+    }
+  }
+
+  if (filters.lastCommitFilter !== 'any') {
+    const commitSelect = document.getElementById('lastCommitFilter');
+    const selectedOption = commitSelect?.options[commitSelect.selectedIndex];
+    if (selectedOption) {
+      activeTags.push({
+        label: `Last Commit: ${selectedOption.textContent.trim()}`,
+        type: 'commit',
+      });
+    }
+  }
+  // Clear existing tags
+  tagsContainer.innerHTML = '';
+  // Show/hide indicator based on active filters
+  if (activeTags.length > 0) {
+    indicator.style.display = 'block';
+    activeTags.forEach((tag) => {
+      const tagElement = document.createElement('span');
+      tagElement.className = 'filter-tag';
+      tagElement.setAttribute('data-filter-type', tag.type);
+      tagElement.textContent = tag.label;
+      tagsContainer.appendChild(tagElement);
+    });
+  } else {
+    indicator.style.display = 'none';
+  }
+}
+/**
+ * Format number with K, M suffixes for display
+ * @param {number} num - Number to format
+ * @returns {string} Formatted number string
+ */
+function formatNumber(num) {
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(1) + 'M';
+  }
+  if (num >= 1000) {
+    return (num / 1000).toFixed(1) + 'K';
+  }
+  return num.toString();
 }
 
 // ============================================================================
