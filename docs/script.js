@@ -174,65 +174,97 @@ async function loadFeaturedUser() {
       return;
     }
     const data = await res.json();
-    const user = data.user;
-
-    if (!user || !user.login) {
-      return;
+    if (data?.user?.login) {
+      renderFeaturedUser(data.user);
     }
-
-    // Update featured user section
-    const section = document.getElementById('featuredUserSection');
-    const avatar = document.getElementById('featuredUserAvatar');
-    const link = document.getElementById('featuredUserLink');
-    const name = document.getElementById('featuredUserName');
-    const loginLink = document.getElementById('featuredUserLoginLink');
-    const location = document.getElementById('featuredUserLocation');
-    const followers = document.getElementById('featuredUserFollowers');
-    const stars = document.getElementById('featuredUserStars');
-    const repos = document.getElementById('featuredUserRepos');
-    const sponsors = document.getElementById('featuredUserSponsors');
-    const languages = document.getElementById('featuredUserLanguages');
-
-    // Set avatar and links
-    const avatarUrl = `images/faces/${user.login.toLowerCase()}.png`;
-    avatar.src = avatarUrl;
-    avatar.alt = `${user.login}'s avatar`;
-    link.href = user.html_url;
-    loginLink.href = user.html_url;
-    loginLink.textContent = `@${user.login}`;
-
-    // Set name
-    name.textContent = user.name || user.login;
-
-    // Set location
-    if (user.location) {
-      location.querySelector('.location-text').textContent = user.location;
-      location.style.display = 'flex';
-    } else {
-      location.style.display = 'none';
-    }
-
-    // Set stats
-    followers.textContent = formatDisplay(user.followers);
-    stars.textContent = formatDisplay(user.total_stars);
-    repos.textContent = formatDisplay(user.public_repos);
-    sponsors.textContent = formatDisplay(user.sponsors_count);
-
-    // Set languages
-    languages.innerHTML = '';
-    if (Array.isArray(user.top_languages) && user.top_languages.length > 0) {
-      user.top_languages.slice(0, 5).forEach((lang) => {
-        const badge = document.createElement('div');
-        badge.className = 'featured-language-badge';
-        badge.textContent = lang.name;
-        languages.appendChild(badge);
-      });
-    }
-
-    // Show the section
-    section.style.display = 'block';
   } catch (err) {
     // Silently fail - featured user is optional
+  }
+}
+
+/**
+ * Render featured user to DOM
+ */
+function renderFeaturedUser(user) {
+  const elements = getFeaturedUserElements();
+  if (!elements.section) return;
+
+  updateFeaturedAvatar(elements, user);
+  updateFeaturedInfo(elements, user);
+  updateFeaturedStats(elements, user);
+  updateFeaturedLanguages(elements, user);
+
+  elements.section.style.display = 'block';
+}
+
+/**
+ * Get all featured user DOM elements
+ */
+function getFeaturedUserElements() {
+  return {
+    section: document.getElementById('featuredUserSection'),
+    avatar: document.getElementById('featuredUserAvatar'),
+    link: document.getElementById('featuredUserLink'),
+    name: document.getElementById('featuredUserName'),
+    loginLink: document.getElementById('featuredUserLoginLink'),
+    location: document.getElementById('featuredUserLocation'),
+    followers: document.getElementById('featuredUserFollowers'),
+    stars: document.getElementById('featuredUserStars'),
+    repos: document.getElementById('featuredUserRepos'),
+    sponsors: document.getElementById('featuredUserSponsors'),
+    languages: document.getElementById('featuredUserLanguages'),
+  };
+}
+
+/**
+ * Update featured user avatar and links
+ */
+function updateFeaturedAvatar(elements, user) {
+  const avatarUrl = `images/faces/${user.login.toLowerCase()}.png`;
+  elements.avatar.src = avatarUrl;
+  elements.avatar.alt = `${user.login}'s avatar`;
+  elements.link.href = user.html_url;
+  elements.loginLink.href = user.html_url;
+  elements.loginLink.textContent = `@${user.login}`;
+}
+
+/**
+ * Update featured user info (name and location)
+ */
+function updateFeaturedInfo(elements, user) {
+  elements.name.textContent = user.name || user.login;
+
+  if (user.location) {
+    elements.location.querySelector('.location-text').textContent =
+      user.location;
+    elements.location.style.display = 'flex';
+  } else {
+    elements.location.style.display = 'none';
+  }
+}
+
+/**
+ * Update featured user stats
+ */
+function updateFeaturedStats(elements, user) {
+  elements.followers.textContent = formatDisplay(user.followers);
+  elements.stars.textContent = formatDisplay(user.total_stars);
+  elements.repos.textContent = formatDisplay(user.public_repos);
+  elements.sponsors.textContent = formatDisplay(user.sponsors_count);
+}
+
+/**
+ * Update featured user languages
+ */
+function updateFeaturedLanguages(elements, user) {
+  elements.languages.innerHTML = '';
+  if (Array.isArray(user.top_languages) && user.top_languages.length > 0) {
+    user.top_languages.slice(0, 5).forEach((lang) => {
+      const badge = document.createElement('div');
+      badge.className = 'featured-language-badge';
+      badge.textContent = lang.name;
+      elements.languages.appendChild(badge);
+    });
   }
 }
 

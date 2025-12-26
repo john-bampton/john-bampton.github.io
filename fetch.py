@@ -5,6 +5,7 @@ import logging
 import os
 import time
 from calendar import timegm
+from datetime import datetime, timezone
 from typing import Any, Dict, List, Tuple
 from urllib.parse import urlparse
 
@@ -28,6 +29,14 @@ MAX_EXTRA_PAGES = 2
 HOUR_SECONDS = 60 * 60 * 1000
 DAY_SECONDS = 24 * HOUR_SECONDS
 WEEK_SECONDS = 7 * DAY_SECONDS
+
+# Featured user engagement score weights
+FOLLOWER_WEIGHT = 0.4
+STARS_WEIGHT = 0.3
+REPOS_WEIGHT = 0.15
+SPONSORS_WEIGHT = 0.10
+RECENT_ACTIVITY_BONUS = 5
+RECENT_ACTIVITY_DAYS = 90
 
 
 def safe_path(path: str, base_dir: str = SITE_DIR) -> str:
@@ -667,32 +676,30 @@ def calculate_engagement_score(user: Dict[str, Any]) -> float:
     has_recent_activity = False
     if user.get("last_repo_pushed_at"):
         try:
-            from datetime import datetime, timezone
-
             last_push = datetime.fromisoformat(
                 user["last_repo_pushed_at"].replace("Z", "+00:00")
             )
             days_since = (datetime.now(timezone.utc) - last_push).days
-            has_recent_activity = days_since < 90
+            has_recent_activity = days_since < RECENT_ACTIVITY_DAYS
         except (ValueError, AttributeError):
             pass
 
     # Weighted scoring
     score = (
-        (followers * 0.4)
-        + (stars * 0.3)
-        + (repos * 0.15)
-        + (sponsors * 0.10)
-        + (5 if has_recent_activity else 0)
+        (followers * FOLLOWER_WEIGHT)
+        + (stars * STARS_WEIGHT)
+        + (repos * REPOS_WEIGHT)
+        + (sponsors * SPONSORS_WEIGHT)
+        + (RECENT_ACTIVITY_BONUS if has_recent_activity else 0)
     )
+
+    return score
 
     return score
 
 
 def select_featured_user(users: List[Dict[str, Any]]) -> Dict[str, Any]:
     """Select featured user based on engagement score."""
-    from datetime import datetime
-
     if not users:
         return None
 
@@ -717,8 +724,6 @@ def select_featured_user(users: List[Dict[str, Any]]) -> Dict[str, Any]:
 
 def save_featured_user(featured_user: Dict[str, Any]) -> None:
     """Save featured user to featured.json."""
-    from datetime import datetime
-
     featured_data = {
         "user": featured_user,
         "selected_at": datetime.now().isoformat(),
@@ -729,8 +734,9 @@ def save_featured_user(featured_user: Dict[str, Any]) -> None:
     try:
         with open(featured_path, "w", encoding="utf-8") as f:
             json.dump(featured_data, f, separators=(",", ":"))
+            f.write("\n")
         logger.info("Featured user saved: %s", featured_user.get('login'))
-    except Exception as e:
+    except (IOError, OSError) as e:
         logger.error("Failed to save featured user: %s", e)
 
 
