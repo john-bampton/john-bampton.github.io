@@ -56,3 +56,12 @@ repos:
       - id: text-unicode-replacement-char
         name: run check for no unicode replacement char
         description: Forbid files which have a UTF-8 Unicode replacement character
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.37.1
+    hooks:
+      - id: yamllint
+        name: run yamllint
+        description: check YAML files with yamllint
+        args: [--strict, -c=.github/linters/.yaml-lint.yml]
+        types: [yaml]
+        files: \.ya?ml$
