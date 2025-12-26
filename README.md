@@ -119,9 +119,9 @@ We welcome PRs, issues, and suggestions! Add a ⭐, fork, or help improve the gr
 
 ---
 
-## 📃 Build Johns Personal Site
+## 📃 Build John's Personal Site
 
-- [View Johns personal site](https://john-bampton.readthedocs.io/)
+- [View John's personal site](https://john-bampton.readthedocs.io/)
 
 ```shell
 pip install -r requirements-docs.txt
