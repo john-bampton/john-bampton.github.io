@@ -26,7 +26,6 @@ Explore and showcase the top GitHub user avatars in a modern, interactive grid. 
 ## 🌐 Live Previews
 
 - [View the site](https://john-bampton.github.io/)
-- [View Johns personal site](https://john-bampton.readthedocs.io/)
 
 ---
 
@@ -61,17 +60,6 @@ Explore and showcase the top GitHub user avatars in a modern, interactive grid. 
    ```bash
    docs/index.html
    ```
-
-## 📃 Build Johns Personal Site
-
-```shell
-cd doc
-make html
-```
-
-Files will be in the `build` folder.
-
----
 
 ## ⚙️ Configuration
 
@@ -128,6 +116,20 @@ We welcome PRs, issues, and suggestions! Add a ⭐, fork, or help improve the gr
   ```
 
   This sets up the hooks for your local repo.
+
+---
+
+## 📃 Build Johns Personal Site
+
+- [View Johns personal site](https://john-bampton.readthedocs.io/)
+
+```shell
+pip install -r requirements-docs.txt
+cd doc
+make html
+```
+
+Files will be in the `build` folder.
 
 ---
 
