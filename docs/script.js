@@ -169,7 +169,7 @@ async function fetchAndPrepareUsers() {
  */
 async function loadFeaturedUser() {
   try {
-    const res = await fetch('featured.json', { cache: 'no-store' });
+    const res = await fetch('featured.json', {cache: 'no-store'});
     if (!res.ok) {
       return;
     }
