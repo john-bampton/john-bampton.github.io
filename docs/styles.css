@@ -316,20 +316,6 @@ h1 {
   display: none;
 }
 
-.results-info-desktop {
-  text-align: center;
-  color: #666;
-  font-size: 13px;
-}
-
-.results-info-desktop strong {
-  font-weight: 600;
-}
-
-#resultsFoundDesktop {
-  display: none;
-}
-
 /* ============================================================================ */
 /* LOADING STATE */
 /* ============================================================================ */
@@ -351,8 +337,7 @@ h1 {
   }
 }
 
-#loadingState,
-#loadingStateDesktop {
+#loadingState{
   position: fixed;
   top: 0;
   left: 0;
@@ -863,10 +848,6 @@ footer {
   h1 {
     font-size: 1.8rem;
     margin: 20px 0;
-  }
-
-  .results-info-desktop {
-    display: none;
   }
 }
 
