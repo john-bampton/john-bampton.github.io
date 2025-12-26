@@ -30,7 +30,7 @@ Explore and showcase the top GitHub user avatars in a modern, interactive grid. 
 
 ---
 
-## ⚡ Quickstart
+## ⚡ Site Quickstart
 
 1. **Clone the repo:**
 
@@ -61,7 +61,7 @@ Explore and showcase the top GitHub user avatars in a modern, interactive grid. 
    docs/index.html
    ```
 
-## 📃 Build the Docs
+## 📃 Build Johns Personal Site
 
 ```
 cd doc
