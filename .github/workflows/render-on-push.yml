@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - main
-    # paths:
-    #   - '**.py'
-    #   - 'layouts/**'
-    #   - 'docs/styles.css'
-    #   - 'docs/script.js'
+      # paths:
+      #   - '**.py'
+      #   - 'layouts/**'
+      #   - 'docs/styles.css'
+      #   - 'docs/script.js'
   pull_request:
     types: [closed]
   workflow_dispatch:

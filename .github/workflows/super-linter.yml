@@ -30,3 +30,4 @@ jobs:
           DISABLE_ERRORS: false
           VALIDATE_GITHUB_ACTIONS: true
           VALIDATE_JSON: true
+          VALIDATE_YAML: true
