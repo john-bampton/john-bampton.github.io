@@ -5,6 +5,7 @@ import logging
 import os
 import time
 from calendar import timegm
+from datetime import datetime, timezone
 from typing import Any, Dict, List, Tuple
 from urllib.parse import urlparse
 
@@ -28,6 +29,14 @@ MAX_EXTRA_PAGES = 2
 HOUR_SECONDS = 60 * 60 * 1000
 DAY_SECONDS = 24 * HOUR_SECONDS
 WEEK_SECONDS = 7 * DAY_SECONDS
+
+# Featured user engagement score weights
+FOLLOWER_WEIGHT = 0.4
+STARS_WEIGHT = 0.3
+REPOS_WEIGHT = 0.15
+SPONSORS_WEIGHT = 0.10
+RECENT_ACTIVITY_BONUS = 5
+RECENT_ACTIVITY_DAYS = 90
 
 
 def safe_path(path: str, base_dir: str = SITE_DIR) -> str:
@@ -85,11 +94,13 @@ def load_previous_users(path: str = "./docs/users.json") -> Dict[str, Dict[str, 
         with open(safe_file, "r", encoding="utf-8") as f:
             users = json.load(f)
         if not isinstance(users, list):
-            logger.warning(f"Data in {safe_file} is not a list, returning empty dict.")
+            logger.warning("Data in %s is not a list, returning empty dict.", safe_file)
             return {}
         return {u["login"]: u for u in users if isinstance(u, dict) and "login" in u}
     except (IOError, json.JSONDecodeError) as e:
-        logger.warning(f"Failed to load or parse previous users from {safe_file}: {e}")
+        logger.warning(
+            "Failed to load or parse previous users from %s: %s", safe_file, e
+        )
         return {}
 
 
@@ -646,7 +657,87 @@ def run() -> None:
     print_section("Saving user data to cache...")
     save_cache(users)
 
+    print_section("Selecting featured user of the month...")
+    featured_user = select_featured_user(users)
+    if featured_user:
+        save_featured_user(featured_user)
+
     print_section(f"✅ FETCH COMPLETE! {len(users)} users cached.")
+
+
+def calculate_engagement_score(user: Dict[str, Any]) -> float:
+    """Calculate engagement score for user selection."""
+    followers = user.get("followers", 0) if user.get("followers") != "N/A" else 0
+    stars = user.get("total_stars", 0) if user.get("total_stars") != "N/A" else 0
+    repos = user.get("public_repos", 0) if user.get("public_repos") != "N/A" else 0
+    sponsors = (
+        user.get("sponsors_count", 0) if user.get("sponsors_count") != "N/A" else 0
+    )
+
+    # Check for recent activity
+    has_recent_activity = False
+    if user.get("last_repo_pushed_at"):
+        try:
+            last_push = datetime.fromisoformat(
+                user["last_repo_pushed_at"].replace("Z", "+00:00")
+            )
+            days_since = (datetime.now(timezone.utc) - last_push).days
+            has_recent_activity = days_since < RECENT_ACTIVITY_DAYS
+        except (ValueError, AttributeError):
+            pass
+
+    # Weighted scoring
+    score = (
+        (followers * FOLLOWER_WEIGHT)
+        + (stars * STARS_WEIGHT)
+        + (repos * REPOS_WEIGHT)
+        + (sponsors * SPONSORS_WEIGHT)
+        + (RECENT_ACTIVITY_BONUS if has_recent_activity else 0)
+    )
+
+    return score
+
+
+def select_featured_user(users: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """Select featured user based on engagement score."""
+    if not users:
+        return None
+
+    # Calculate scores for all users
+    scored_users = []
+    for user in users:
+        score = calculate_engagement_score(user)
+        scored_users.append((user, score))
+
+    # Sort by score descending
+    scored_users.sort(key=lambda x: x[1], reverse=True)
+
+    # Get top user
+    featured_user, score = scored_users[0]
+
+    logger.info(
+        "Selected featured user: %s (score: %.2f)", featured_user.get("login"), score
+    )
+
+    return featured_user
+
+
+def save_featured_user(featured_user: Dict[str, Any]) -> None:
+    """Save featured user to featured.json."""
+    featured_data = {
+        "user": featured_user,
+        "selected_at": datetime.now().isoformat(),
+        "month": datetime.now().strftime("%B %Y"),
+    }
+
+    featured_path = safe_path(os.path.join(SITE_DIR, "featured.json"))
+    try:
+        with open(featured_path, "w", encoding="utf-8") as f:
+            json.dump(featured_data, f, separators=(",", ":"))
+            f.write("\n")
+        logger.info("Featured user saved: %s", featured_user.get("login"))
+    except OSError as e:
+        logger.error("Failed to save featured user: %s", e)
 
 
 if __name__ == "__main__":

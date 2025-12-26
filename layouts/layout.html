@@ -53,11 +53,7 @@
 
 <body>
     <a href="https://github.com/john-bampton/john-bampton.github.io">
-      <img
-        class="github-ribbon"
-        src="images/other/fork.png"
-        alt="Fork me on GitHub"
-      />
+        <img class="github-ribbon" src="images/other/fork.png" alt="Fork me on GitHub" />
     </a>
 
     <!-- Dark Mode Toggle Button -->
@@ -334,6 +330,43 @@
                     <strong>No developers found</strong> matching your filters.
                 </div>
             </div>
+
+            <!-- Featured User Section -->
+            <section id="featuredUserSection" class="featured-user-section" style="display: none">
+                <div class="featured-badge">⭐ Featured Developer of the Month</div>
+                <div class="featured-content">
+                    <a href="" id="featuredUserLink" target="_blank" rel="noopener" class="featured-avatar-link">
+                        <img id="featuredUserAvatar" src="" alt="Featured developer avatar" class="featured-avatar" />
+                    </a>
+                    <div class="featured-info">
+                        <h2 id="featuredUserName" class="featured-name"></h2>
+                        <a href="" id="featuredUserLoginLink" target="_blank" rel="noopener" class="featured-login"></a>
+                        <p id="featuredUserLocation" class="featured-location" style="display: none">
+                            <span class="location-icon">📍</span>
+                            <span class="location-text"></span>
+                        </p>
+                        <div class="featured-stats">
+                            <div class="featured-stat">
+                                <div class="stat-value" id="featuredUserFollowers">-</div>
+                                <div class="stat-label">Followers</div>
+                            </div>
+                            <div class="featured-stat">
+                                <div class="stat-value" id="featuredUserStars">-</div>
+                                <div class="stat-label">Total Stars</div>
+                            </div>
+                            <div class="featured-stat">
+                                <div class="stat-value" id="featuredUserRepos">-</div>
+                                <div class="stat-label">Repositories</div>
+                            </div>
+                            <div class="featured-stat">
+                                <div class="stat-value" id="featuredUserSponsors">-</div>
+                                <div class="stat-label">Sponsors</div>
+                            </div>
+                        </div>
+                        <div id="featuredUserLanguages" class="featured-languages"></div>
+                    </div>
+                </div>
+            </section>
 
             <div class="grid" id="grid"></div>
         </main>

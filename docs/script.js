@@ -52,7 +52,7 @@ async function initializeApp() {
 
   showLoadingState();
   setupEventListeners();
-  await fetchAndPrepareUsers();
+  await Promise.all([fetchAndPrepareUsers(), loadFeaturedUser()]);
 
   // Do these if data is loaded
   if (isDataLoaded) {
@@ -169,6 +169,110 @@ async function fetchAndPrepareUsers() {
           'Unable to load users. Please try again later.';
         errorMessage.style.display = 'block';
       }
+    });
+  }
+}
+
+/**
+ * Load and display the featured user of the month
+ */
+async function loadFeaturedUser() {
+  try {
+    const res = await fetch('featured.json', {cache: 'no-store'});
+    if (!res.ok) {
+      return;
+    }
+    const data = await res.json();
+    if (data?.user?.login) {
+      renderFeaturedUser(data.user);
+    }
+  } catch (err) {
+    // Silently fail - featured user is optional
+  }
+}
+
+/**
+ * Render featured user to DOM
+ */
+function renderFeaturedUser(user) {
+  const elements = getFeaturedUserElements();
+  if (!elements.section) return;
+
+  updateFeaturedAvatar(elements, user);
+  updateFeaturedInfo(elements, user);
+  updateFeaturedStats(elements, user);
+  updateFeaturedLanguages(elements, user);
+
+  elements.section.style.display = 'block';
+}
+
+/**
+ * Get all featured user DOM elements
+ */
+function getFeaturedUserElements() {
+  return {
+    section: document.getElementById('featuredUserSection'),
+    avatar: document.getElementById('featuredUserAvatar'),
+    link: document.getElementById('featuredUserLink'),
+    name: document.getElementById('featuredUserName'),
+    loginLink: document.getElementById('featuredUserLoginLink'),
+    location: document.getElementById('featuredUserLocation'),
+    followers: document.getElementById('featuredUserFollowers'),
+    stars: document.getElementById('featuredUserStars'),
+    repos: document.getElementById('featuredUserRepos'),
+    sponsors: document.getElementById('featuredUserSponsors'),
+    languages: document.getElementById('featuredUserLanguages'),
+  };
+}
+
+/**
+ * Update featured user avatar and links
+ */
+function updateFeaturedAvatar(elements, user) {
+  const avatarUrl = `images/faces/${user.login.toLowerCase()}.png`;
+  elements.avatar.src = avatarUrl;
+  elements.avatar.alt = `${user.login}'s avatar`;
+  elements.link.href = user.html_url;
+  elements.loginLink.href = user.html_url;
+  elements.loginLink.textContent = `@${user.login}`;
+}
+
+/**
+ * Update featured user info (name and location)
+ */
+function updateFeaturedInfo(elements, user) {
+  elements.name.textContent = user.name || user.login;
+
+  if (user.location) {
+    elements.location.querySelector('.location-text').textContent =
+      user.location;
+    elements.location.style.display = 'flex';
+  } else {
+    elements.location.style.display = 'none';
+  }
+}
+
+/**
+ * Update featured user stats
+ */
+function updateFeaturedStats(elements, user) {
+  elements.followers.textContent = formatDisplay(user.followers);
+  elements.stars.textContent = formatDisplay(user.total_stars);
+  elements.repos.textContent = formatDisplay(user.public_repos);
+  elements.sponsors.textContent = formatDisplay(user.sponsors_count);
+}
+
+/**
+ * Update featured user languages
+ */
+function updateFeaturedLanguages(elements, user) {
+  elements.languages.innerHTML = '';
+  if (Array.isArray(user.top_languages) && user.top_languages.length > 0) {
+    user.top_languages.slice(0, 5).forEach((lang) => {
+      const badge = document.createElement('div');
+      badge.className = 'featured-language-badge';
+      badge.textContent = lang.name;
+      elements.languages.appendChild(badge);
     });
   }
 }
