@@ -392,7 +392,7 @@ function setupEventListeners() {
     clearFiltersBtn.addEventListener('click', resetFilters);
   }
 }
-
+  
 /**
  * Get currently visible sorted users matching the displayed order
  * Uses the same filtering and sorting logic as the display
@@ -1159,10 +1159,10 @@ function updateActiveFiltersIndicator() {
  */
 function formatNumber(num) {
   if (num >= 1000000) {
-    return (num / 1000000).toFixed(1) + 'M';
+    return `${(num / 1000000).toFixed(1)}M`;
   }
   if (num >= 1000) {
-    return (num / 1000).toFixed(1) + 'K';
+    return `${(num / 1000).toFixed(1)}K`;
   }
   return num.toString();
 }
