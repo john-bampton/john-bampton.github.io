@@ -33,6 +33,13 @@ let filteredUsers = [];
 let isDataLoaded = false;
 
 // ============================================================================
+// CONSTANTS
+// ============================================================================
+const MAX_FOLLOWERS = 999999999;
+const MAX_REPOS = 999999;
+const MAX_FORKS = 999999;
+
+// ============================================================================
 // INITIALIZATION
 // ============================================================================
 document.addEventListener('DOMContentLoaded', initializeApp);
@@ -379,6 +386,11 @@ function setupEventListeners() {
     randomBtn.type = 'button';
     randomBtn.addEventListener('click', pickRandomUser);
   }
+
+  const clearFiltersBtn = document.querySelector('.clear-filters-btn');
+  if (clearFiltersBtn) {
+    clearFiltersBtn.addEventListener('click', resetFilters);
+  }
 }
 
 /**
@@ -525,16 +537,16 @@ function getActiveFilters() {
  */
 function validateRangeFilters(filters) {
   if (filters.minFollowers > filters.maxFollowers) {
-    document.getElementById('maxFollowersFilter').value = '999999999';
-    filters.maxFollowers = 999999999;
+    document.getElementById('maxFollowersFilter').value = String(MAX_FOLLOWERS);
+    filters.maxFollowers = MAX_FOLLOWERS;
   }
   if (filters.minRepos > filters.maxRepos) {
-    document.getElementById('maxReposFilter').value = '999999';
-    filters.maxRepos = 999999;
+    document.getElementById('maxReposFilter').value = String(MAX_REPOS);
+    filters.maxRepos = MAX_REPOS;
   }
   if (filters.minForks > filters.maxForks) {
-    document.getElementById('maxForksFilter').value = '999999';
-    filters.maxForks = 999999;
+    document.getElementById('maxForksFilter').value = String(MAX_FORKS);
+    filters.maxForks = MAX_FORKS;
   }
 }
 
@@ -1063,9 +1075,9 @@ function updateActiveFiltersIndicator() {
     });
   }
 
-  if (filters.minFollowers > 0 || filters.maxFollowers < 999999999) {
+  if (filters.minFollowers > 0 || filters.maxFollowers < MAX_FOLLOWERS) {
     let followersLabel = 'Followers: ';
-    if (filters.minFollowers > 0 && filters.maxFollowers < 999999999) {
+    if (filters.minFollowers > 0 && filters.maxFollowers < MAX_FOLLOWERS) {
       followersLabel += `${formatNumber(filters.minFollowers)} - ${formatNumber(filters.maxFollowers)}`;
     } else if (filters.minFollowers > 0) {
       followersLabel += `${formatNumber(filters.minFollowers)}+`;
@@ -1077,9 +1089,9 @@ function updateActiveFiltersIndicator() {
       type: 'followers',
     });
   }
-  if (filters.minRepos > 0 || filters.maxRepos < 999999) {
+  if (filters.minRepos > 0 || filters.maxRepos < MAX_REPOS) {
     let reposLabel = 'Repos: ';
-    if (filters.minRepos > 0 && filters.maxRepos < 999999) {
+    if (filters.minRepos > 0 && filters.maxRepos < MAX_REPOS) {
       reposLabel += `${filters.minRepos} - ${filters.maxRepos}`;
     } else if (filters.minRepos > 0) {
       reposLabel += `${filters.minRepos}+`;
@@ -1092,9 +1104,9 @@ function updateActiveFiltersIndicator() {
     });
   }
 
-  if (filters.minForks > 0 || filters.maxForks < 999999) {
+  if (filters.minForks > 0 || filters.maxForks < MAX_FORKS) {
     let forksLabel = 'Forks: ';
-    if (filters.minForks > 0 && filters.maxForks < 999999) {
+    if (filters.minForks > 0 && filters.maxForks < MAX_FORKS) {
       forksLabel += `${filters.minForks} - ${filters.maxForks}`;
     } else if (filters.minForks > 0) {
       forksLabel += `${filters.minForks}+`;
@@ -1112,63 +1124,17 @@ function updateActiveFiltersIndicator() {
       type: 'stars',
     });
   }
-  if (filters.sponsorsFilter !== 'any') {
-    const sponsorsSelect = document.getElementById('sponsorsFilter');
-    const selectedOption = sponsorsSelect?.options[sponsorsSelect.selectedIndex];
-    if (selectedOption) {
-      activeTags.push({
-        label: `Sponsors: ${selectedOption.textContent.trim()}`,
-        type: 'sponsors',
-      });
-    }
-  }
-  if (filters.sponsoringFilter !== 'any') {
-    const sponsoringSelect = document.getElementById('sponsoringFilter');
-    const selectedOption = sponsoringSelect?.options[sponsoringSelect.selectedIndex];
-    if (selectedOption) {
-      activeTags.push({
-        label: `Sponsoring: ${selectedOption.textContent.trim()}`,
-        type: 'sponsoring',
-      });
-    }
-  }
-  if (filters.avatarAgeFilter !== 'any') {
-    const avatarSelect = document.getElementById('avatarAgeFilter');
-    const selectedOption = avatarSelect?.options[avatarSelect.selectedIndex];
-    if (selectedOption) {
-      activeTags.push({
-        label: `Avatar: ${selectedOption.textContent.trim()}`,
-        type: 'avatar',
-      });
-    }
-  }
+  addSelectFilterTag(activeTags, filters, 'sponsorsFilter', 'sponsorsFilter', 'Sponsors', 'sponsors');
+  addSelectFilterTag(activeTags, filters, 'sponsoringFilter', 'sponsoringFilter', 'Sponsoring', 'sponsoring');
+  addSelectFilterTag(activeTags, filters, 'avatarAgeFilter', 'avatarAgeFilter', 'Avatar', 'avatar');
+  addSelectFilterTag(activeTags, filters, 'lastRepoActivityFilter', 'lastRepoActivityFilter', 'Repo Activity', 'repo-activity');
+  addSelectFilterTag(activeTags, filters, 'lastCommitFilter', 'lastCommitFilter', 'Last Commit', 'commit');
+
   if (filters.languageFilter) {
     activeTags.push({
       label: `Language: ${filters.languageFilter}`,
       type: 'language',
     });
-  }
-
-  if (filters.lastRepoActivityFilter !== 'any') {
-    const repoActivitySelect = document.getElementById('lastRepoActivityFilter');
-    const selectedOption = repoActivitySelect?.options[repoActivitySelect.selectedIndex];
-    if (selectedOption) {
-      activeTags.push({
-        label: `Repo Activity: ${selectedOption.textContent.trim()}`,
-        type: 'repo-activity',
-      });
-    }
-  }
-
-  if (filters.lastCommitFilter !== 'any') {
-    const commitSelect = document.getElementById('lastCommitFilter');
-    const selectedOption = commitSelect?.options[commitSelect.selectedIndex];
-    if (selectedOption) {
-      activeTags.push({
-        label: `Last Commit: ${selectedOption.textContent.trim()}`,
-        type: 'commit',
-      });
-    }
   }
   // Clear existing tags
   tagsContainer.innerHTML = '';
@@ -1201,6 +1167,28 @@ function formatNumber(num) {
   return num.toString();
 }
 
+/**
+ * Add a select-based filter tag to activeTags if the filter is active
+ * @param {Array} activeTags - Array to add the tag to
+ * @param {Object} filters - Filters object
+ * @param {string} filterKey - Key in filters object
+ * @param {string} elementId - ID of the select element
+ * @param {string} labelPrefix - Prefix for the tag label (e.g., "Sponsors")
+ * @param {string} tagType - Type identifier for the tag
+ */
+function addSelectFilterTag(activeTags, filters, filterKey, elementId, labelPrefix, tagType) {
+  if (filters[filterKey] !== 'any') {
+    const select = document.getElementById(elementId);
+    const option = select?.options[select.selectedIndex];
+    if (option) {
+      activeTags.push({
+        label: `${labelPrefix}: ${option.textContent.trim()}`,
+        type: tagType,
+      });
+    }
+  }
+}
+
 // ============================================================================
 // RESET FILTERS
 // ============================================================================
@@ -1212,11 +1200,11 @@ function resetFilters() {
     searchInput: '',
     sortBy: 'followers-desc',
     followersFilter: '0',
-    maxFollowersFilter: '999999999',
+    maxFollowersFilter: String(MAX_FOLLOWERS),
     minReposFilter: '0',
-    maxReposFilter: '999999',
+    maxReposFilter: String(MAX_REPOS),
     minForksFilter: '0',
-    maxForksFilter: '999999',
+    maxForksFilter: String(MAX_FORKS),
     sponsorsFilter: 'any',
     sponsoringFilter: 'any',
     avatarAgeFilter: 'any',
