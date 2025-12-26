@@ -56,6 +56,15 @@ repos:
       - id: text-unicode-replacement-char
         name: run check for no unicode replacement char
         description: Forbid files which have a UTF-8 Unicode replacement character
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.47.0
+    hooks:
+      - id: markdownlint
+        name: run markdownlint
+        description: check Markdown files with markdownlint
+        args: [--config=.github/linters/.markdown-lint.yml]
+        types: [markdown]
+        files: \.md$
   - repo: https://github.com/adrienverge/yamllint
     rev: v1.37.1
     hooks:

@@ -57,13 +57,14 @@ Explore and showcase the top GitHub user avatars in a modern, interactive grid. 
    </sup>
 
 4. **Open the grid:**
+
    ```bash
    docs/index.html
    ```
 
 ## 📃 Build Johns Personal Site
 
-```
+```shell
 cd doc
 make html
 ```
@@ -103,9 +104,11 @@ Files will be in the `build` folder.
 - RSS feed follows RSS 2.0 format and is loaded in your HTML via:
   `<link rel="alternate" type="application/rss+xml" title="John Bampton RSS Feed" href="/feed.xml">`
 - Sitemap follows the standard XML sitemap protocol for search engines and is referenced in `robots.txt`:
-  ```
+
+  ```text
   Sitemap: https://john-bampton.github.io/sitemap.xml
   ```
+
 - Subscribe for new updates and enjoy better SEO!
 
 ---
@@ -118,10 +121,12 @@ We welcome PRs, issues, and suggestions! Add a ⭐, fork, or help improve the gr
 
 - Always run `pre-commit run --all-files` before pushing or opening a pull request. This ensures your code is auto-formatted and passes all checks.
 - If you don't have pre-commit installed, run:
+
   ```bash
   pip install pre-commit
   pre-commit install
   ```
+
   This sets up the hooks for your local repo.
 
 ---
