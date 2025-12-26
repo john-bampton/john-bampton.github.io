@@ -1,83 +1,103 @@
-/*
- Copyright 2016 Google Inc. All Rights Reserved.
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-     http://www.apache.org/licenses/LICENSE-2.0
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
-*/
-
-// Names of the two caches used in this version of the service worker.
-// Change to v2, etc. when you update any of the local resources, which will
-// in turn trigger the install event again.
-const PRECACHE = 'precache-v44';
-const RUNTIME = 'runtime-v44';
-
-// A list of local resources we always want to be cached.
+const SERVICE_WORKER_VERSION = 1;
+const PRECACHE = `john-bampton-v${SERVICE_WORKER_VERSION}`;
+const HOUR_SECONDS = 60 * 60 * 1000;
+const DAY_SECONDS = 24 * HOUR_SECONDS;
+// const WEEK_SECONDS = 7 * DAY_SECONDS;
 const PRECACHE_URLS = [
   'index.html',
-  './', // Alias for index.html
+  './',
   'styles.css',
-  'script.js',
-  'manifest.json',
   'bootstrap/css/bootstrap.css',
   'bootstrap/css/bootstrap.min.css',
   'bootstrap/css/bootstrap-grid.css',
   'bootstrap/css/bootstrap-grid.min.css',
   'bootstrap/css/bootstrap-reboot.css',
   'bootstrap/css/bootstrap-reboot.min.css',
+  'script.js',
   'bootstrap/js/bootstrap.min.js',
   'bootstrap/js/jquery.min.js',
   'bootstrap/js/popper.min.js',
+  'manifest.json',
 ];
+const CACHE_EXPIRATION = {'users.json': 3 * DAY_SECONDS};
 
-// The install handler takes care of precaching the resources we always need.
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(PRECACHE)
-      .then(cache => cache.addAll(PRECACHE_URLS))
-      .then(self.skipWaiting())
-  );
-});
+function getCache() {
+  return caches.open(PRECACHE);
+}
+function cacheUrls(cache) {
+  return cache.addAll(PRECACHE_URLS);
+}
+function skipWait() {
+  return self.skipWaiting();
+}
+function claimClients() {
+  return self.clients.claim();
+}
+function filterOldCaches(cacheNames) {
+  return cacheNames.filter((name) => name !== PRECACHE);
+}
+function deleteCaches(names) {
+  return Promise.all(names.map((name) => caches.delete(name)));
+}
 
-// The activate handler takes care of cleaning up old caches.
-self.addEventListener('activate', event => {
-  const currentCaches = [PRECACHE, RUNTIME];
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return cacheNames.filter(cacheName => !currentCaches.includes(cacheName));
-    }).then(cachesToDelete => {
-      return Promise.all(cachesToDelete.map(cacheToDelete => {
-        return caches.delete(cacheToDelete);
-      }));
-    }).then(() => self.clients.claim())
-  );
-});
+function isExpired(response, maxAgeMs) {
+  if (!response) return true;
+  const dateHeader = response.headers.get('date');
+  if (!dateHeader) return true;
+  return Date.now() - new Date(dateHeader).getTime() > maxAgeMs;
+}
 
-// The fetch handler serves responses for same-origin resources from a cache.
-// If no response is found, it populates the runtime cache with the response
-// from the network before returning it to the page.
-self.addEventListener('fetch', event => {
-  // Skip cross-origin requests, like those for Google Analytics.
-  if (event.request.url.startsWith(self.location.origin)) {
-    event.respondWith(
-      caches.match(event.request).then(cachedResponse => {
-        if (cachedResponse) {
-          return cachedResponse;
+function updateCache(cache, request, response) {
+  const headers = new Headers(response.headers);
+  headers.set('date', new Date().toUTCString());
+  const respWithDate = new Response(response.clone().body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+  cache.put(request, respWithDate.clone());
+  return respWithDate;
+}
+
+function handleExpiringFile(event, filename, maxAgeMs) {
+  event.respondWith(
+    getCache().then((cache) =>
+      cache.match(event.request).then((cached) => {
+        if (!cached || isExpired(cached, maxAgeMs)) {
+          return fetch(event.request).then((resp) =>
+            updateCache(cache, event.request, resp),
+          );
         }
+        return cached;
+      }),
+    ),
+  );
+}
 
-        return caches.open(RUNTIME).then(cache => {
-          return fetch(event.request).then(response => {
-            return cache.put(event.request, response.clone()).then(() => {
-              return response;
-            });
-          });
-        });
-      })
-    );
+function handleDefaultFetch(event) {
+  event.respondWith(
+    caches
+      .match(event.request)
+      .then((cached) => cached || fetch(event.request)),
+  );
+}
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(getCache().then(cacheUrls).then(skipWait));
+});
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then(filterOldCaches).then(deleteCaches).then(claimClients),
+  );
+});
+
+self.addEventListener('fetch', (event) => {
+  const url = event.request.url;
+  if (!url.startsWith(self.location.origin)) return null;
+  for (const [filename, maxAgeMs] of Object.entries(CACHE_EXPIRATION)) {
+    if (url.endsWith(filename))
+      return handleExpiringFile(event, filename, maxAgeMs);
   }
+  return handleDefaultFetch(event);
 });

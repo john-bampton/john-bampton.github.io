@@ -4,6 +4,8 @@
 docs/index.html
 
 # Python
+venv/
+.venv
 __pycache__/
 *.py[cod]
 *$py.class
@@ -38,3 +40,7 @@ Thumbs.db
 # Environment
 .env
 .env.local
+
+# XML files
+docs/feed.xml
+docs/sitemap.xml
