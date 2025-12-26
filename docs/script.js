@@ -392,7 +392,7 @@ function setupEventListeners() {
     clearFiltersBtn.addEventListener('click', resetFilters);
   }
 }
-  
+
 /**
  * Get currently visible sorted users matching the displayed order
  * Uses the same filtering and sorting logic as the display
@@ -1057,7 +1057,7 @@ function updateActiveFiltersIndicator() {
   const filters = getActiveFilters();
   const sortBy = document.getElementById('sortBy').value;
   const activeTags = [];
-  
+
   const sortOption = document.querySelector(`#sortBy option[value="${sortBy}"]`);
   if (sortOption && sortBy !== 'followers-desc') {
     activeTags.push({
@@ -1107,11 +1107,17 @@ function updateActiveFiltersIndicator() {
       type: 'stars',
     });
   }
-  addSelectFilterTag(activeTags, filters, 'sponsorsFilter', 'sponsorsFilter', 'Sponsors', 'sponsors');
-  addSelectFilterTag(activeTags, filters, 'sponsoringFilter', 'sponsoringFilter', 'Sponsoring', 'sponsoring');
-  addSelectFilterTag(activeTags, filters, 'avatarAgeFilter', 'avatarAgeFilter', 'Avatar', 'avatar');
-  addSelectFilterTag(activeTags, filters, 'lastRepoActivityFilter', 'lastRepoActivityFilter', 'Repo Activity', 'repo-activity');
-  addSelectFilterTag(activeTags, filters, 'lastCommitFilter', 'lastCommitFilter', 'Last Commit', 'commit');
+  const selectFilters = [
+    { key: 'sponsorsFilter', label: 'Sponsors', type: 'sponsors' },
+    { key: 'sponsoringFilter', label: 'Sponsoring', type: 'sponsoring' },
+    { key: 'avatarAgeFilter', label: 'Avatar', type: 'avatar' },
+    { key: 'lastRepoActivityFilter', label: 'Repo Activity', type: 'repo-activity' },
+    { key: 'lastCommitFilter', label: 'Last Commit', type: 'commit' },
+  ];
+
+  selectFilters.forEach((filter) => {
+    addSelectFilterTag(activeTags, filters, filter.key, filter.key, filter.label, filter.type);
+  });
 
   if (filters.languageFilter) {
     activeTags.push({
@@ -1120,7 +1126,7 @@ function updateActiveFiltersIndicator() {
     });
   }
   // Clear existing tags
-  tagsContainer.innerHTML = '';
+  tagsContainer.replaceChildren();
   // Show/hide indicator based on active filters
   if (activeTags.length > 0) {
     indicator.style.display = 'block';
