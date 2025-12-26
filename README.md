@@ -23,9 +23,10 @@ Explore and showcase the top GitHub user avatars in a modern, interactive grid. 
 
 ---
 
-## 🌐 Live Preview
+## 🌐 Live Previews
 
-[View the site](https://john-bampton.github.io/)
+- [View the site](https://john-bampton.github.io/)
+- [View the docs](https://john-bampton.readthedocs.io/)
 
 ---
 
@@ -59,6 +60,15 @@ Explore and showcase the top GitHub user avatars in a modern, interactive grid. 
    ```bash
    docs/index.html
    ```
+
+## 📃 Build the Docs
+
+```
+cd doc
+make html
+```
+
+Files will be in the `build` folder.
 
 ---
 
