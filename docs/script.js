@@ -48,18 +48,18 @@ document.addEventListener('DOMContentLoaded', initializeApp);
  * Initialize the application on page load
  */
 async function initializeApp() {
-    initializeDarkMode();
+  initializeDarkMode();
 
-    showLoadingState();
-    setupEventListeners();
-    await fetchAndPrepareUsers();
+  showLoadingState();
+  setupEventListeners();
+  await fetchAndPrepareUsers();
 
-    // Do these if data is loaded
-    if (isDataLoaded) {
-        applyFilters();
-        updateVisibilityAndSort();
-        hideLoadingState();
-    }
+  // Do these if data is loaded
+  if (isDataLoaded) {
+    applyFilters();
+    updateVisibilityAndSort();
+    hideLoadingState();
+  }
 }
 
 /**
@@ -125,7 +125,7 @@ function pickRandomUser(event) {
   // Scroll near the card (with a small offset to avoid landing exactly on it)
   const cardRect = randomUser.card.getBoundingClientRect();
   const scrollOffset = cardRect.top + window.scrollY - 100; // 100px offset from top
-  window.scrollTo({top: Math.max(0, scrollOffset), behavior: 'smooth'});
+  window.scrollTo({ top: Math.max(0, scrollOffset), behavior: 'smooth' });
 
   // Highlight the card
   randomUser.card.classList.remove('highlight');
@@ -143,7 +143,7 @@ function pickRandomUser(event) {
 
 async function fetchAndPrepareUsers() {
   try {
-    const res = await fetch('users.json', {cache: 'no-store'});
+    const res = await fetch('users.json', { cache: 'no-store' });
     if (!res.ok) throw new Error(`Failed to fetch users.json: ${res.status}`);
     const users = await res.json();
     const prepared = users.map(prepareUserFromJson);
@@ -242,7 +242,7 @@ function extractLocation() {
  * @returns {Object} Object with sponsors and sponsoring counts
  */
 function extractStats() {
-  return {sponsors: 0, sponsoring: 0};
+  return { sponsors: 0, sponsoring: 0 };
 }
 
 // ============================================================================
@@ -341,7 +341,7 @@ function exportFilteredJSON() {
   const userData = filteredUsers.map((user) => user.raw);
 
   const jsonString = JSON.stringify(userData, null, 2);
-  const blob = new Blob([jsonString], {type: 'application/json'});
+  const blob = new Blob([jsonString], { type: 'application/json' });
 
   const url = URL.createObjectURL(blob);
 
@@ -382,7 +382,7 @@ function exportFilteredCSV() {
     ...rows.map((row) => headers.map((h) => escapeCSV(row[h])).join(',')),
   ].join('\n');
 
-  const blob = new Blob([csv], {type: 'text/csv;charset=utf-8'});
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
 
   const url = URL.createObjectURL(blob);
 
@@ -997,10 +997,10 @@ function hideLoadingState() {
   const resultsInfo = document.getElementById('resultsInfo');
   const resultsInfoDesktop = document.getElementById('resultsInfoDesktop');
 
-    if (loadingState) loadingState.style.display = 'none';
-    if (loadingStateDesktop) loadingStateDesktop.style.display = 'none';
-    if (resultsInfo) resultsInfo.style.display = 'block';
-    if (resultsInfoDesktop) resultsInfoDesktop.style.display = 'block';
+  if (loadingState) loadingState.style.display = 'none';
+  if (loadingStateDesktop) loadingStateDesktop.style.display = 'none';
+  if (resultsInfo) resultsInfo.style.display = 'block';
+  if (resultsInfoDesktop) resultsInfoDesktop.style.display = 'block';
 }
 
 // ============================================================================
@@ -1014,14 +1014,14 @@ function hideLoadingState() {
  * - Cache DOM element for performance
  */
 function initializeDarkMode() {
-    darkModeToggleElement = document.getElementById('darkModeToggle');
-    const isDarkMode = document.documentElement.classList.contains('dark-mode');
+  darkModeToggleElement = document.getElementById('darkModeToggle');
+  const isDarkMode = document.documentElement.classList.contains('dark-mode');
 
-    updateDarkModeIcon(isDarkMode);
+  updateDarkModeIcon(isDarkMode);
 
-    if (darkModeToggleElement) {
-        darkModeToggleElement.addEventListener('click', toggleDarkMode);
-    }
+  if (darkModeToggleElement) {
+    darkModeToggleElement.addEventListener('click', toggleDarkMode);
+  }
 }
 
 /**
@@ -1030,9 +1030,9 @@ function initializeDarkMode() {
  * - Applies/removes dark-mode class from html element
  */
 function toggleDarkMode() {
-    const isDarkMode = document.documentElement.classList.toggle('dark-mode');
-    localStorage.setItem(DARK_MODE_KEY, isDarkMode ? THEME_ENABLED : THEME_DISABLED);
-    updateDarkModeIcon(isDarkMode);
+  const isDarkMode = document.documentElement.classList.toggle('dark-mode');
+  localStorage.setItem(DARK_MODE_KEY, isDarkMode ? THEME_ENABLED : THEME_DISABLED);
+  updateDarkModeIcon(isDarkMode);
 }
 
 /**
@@ -1040,10 +1040,10 @@ function toggleDarkMode() {
  * @param {boolean} isDarkMode - Whether dark mode is currently enabled
  */
 function updateDarkModeIcon(isDarkMode) {
-    if (darkModeToggleElement) {
-        const newLabel = isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode';
-        darkModeToggleElement.textContent = isDarkMode ? '☀️' : '🌙';
-        darkModeToggleElement.title = newLabel;
-        darkModeToggleElement.setAttribute('aria-label', newLabel);
-    }
+  if (darkModeToggleElement) {
+    const newLabel = isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+    darkModeToggleElement.textContent = isDarkMode ? '☀️' : '🌙';
+    darkModeToggleElement.title = newLabel;
+    darkModeToggleElement.setAttribute('aria-label', newLabel);
+  }
 }
