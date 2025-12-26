@@ -98,7 +98,9 @@ def load_previous_users(path: str = "./docs/users.json") -> Dict[str, Dict[str, 
             return {}
         return {u["login"]: u for u in users if isinstance(u, dict) and "login" in u}
     except (IOError, json.JSONDecodeError) as e:
-        logger.warning("Failed to load or parse previous users from %s: %s", safe_file, e)
+        logger.warning(
+            "Failed to load or parse previous users from %s: %s", safe_file, e
+        )
         return {}
 
 
@@ -714,7 +716,7 @@ def select_featured_user(users: List[Dict[str, Any]]) -> Dict[str, Any]:
     featured_user, score = scored_users[0]
 
     logger.info(
-        "Selected featured user: %s (score: %.2f)", featured_user.get('login'), score
+        "Selected featured user: %s (score: %.2f)", featured_user.get("login"), score
     )
 
     return featured_user
@@ -733,7 +735,7 @@ def save_featured_user(featured_user: Dict[str, Any]) -> None:
         with open(featured_path, "w", encoding="utf-8") as f:
             json.dump(featured_data, f, separators=(",", ":"))
             f.write("\n")
-        logger.info("Featured user saved: %s", featured_user.get('login'))
+        logger.info("Featured user saved: %s", featured_user.get("login"))
     except OSError as e:
         logger.error("Failed to save featured user: %s", e)
 

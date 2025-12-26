@@ -10,8 +10,8 @@ sys.path.insert(0, os.path.dirname(__file__))
 from fetch import (
     calculate_engagement_score,
     safe_path,
-    select_featured_user,
     save_featured_user,
+    select_featured_user,
 )
 
 SITE_DIR = "./docs"
