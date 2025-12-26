@@ -1075,49 +1075,32 @@ function updateActiveFiltersIndicator() {
     });
   }
 
-  if (filters.minFollowers > 0 || filters.maxFollowers < MAX_FOLLOWERS) {
-    let followersLabel = 'Followers: ';
-    if (filters.minFollowers > 0 && filters.maxFollowers < MAX_FOLLOWERS) {
-      followersLabel += `${formatNumber(filters.minFollowers)} - ${formatNumber(filters.maxFollowers)}`;
-    } else if (filters.minFollowers > 0) {
-      followersLabel += `${formatNumber(filters.minFollowers)}+`;
-    } else {
-      followersLabel += `≤ ${formatNumber(filters.maxFollowers)}`;
-    }
-    activeTags.push({
-      label: followersLabel,
-      type: 'followers',
-    });
-  }
-  if (filters.minRepos > 0 || filters.maxRepos < MAX_REPOS) {
-    let reposLabel = 'Repos: ';
-    if (filters.minRepos > 0 && filters.maxRepos < MAX_REPOS) {
-      reposLabel += `${filters.minRepos} - ${filters.maxRepos}`;
-    } else if (filters.minRepos > 0) {
-      reposLabel += `${filters.minRepos}+`;
-    } else {
-      reposLabel += `≤ ${filters.maxRepos}`;
-    }
-    activeTags.push({
-      label: reposLabel,
-      type: 'repos',
-    });
-  }
+  addRangeFilterTag(activeTags, filters, {
+    minKey: 'minFollowers',
+    maxKey: 'maxFollowers',
+    maxValue: MAX_FOLLOWERS,
+    labelPrefix: 'Followers',
+    tagType: 'followers',
+    useFormat: true,
+  });
 
-  if (filters.minForks > 0 || filters.maxForks < MAX_FORKS) {
-    let forksLabel = 'Forks: ';
-    if (filters.minForks > 0 && filters.maxForks < MAX_FORKS) {
-      forksLabel += `${filters.minForks} - ${filters.maxForks}`;
-    } else if (filters.minForks > 0) {
-      forksLabel += `${filters.minForks}+`;
-    } else {
-      forksLabel += `≤ ${filters.maxForks}`;
-    }
-    activeTags.push({
-      label: forksLabel,
-      type: 'forks',
-    });
-  }
+  addRangeFilterTag(activeTags, filters, {
+    minKey: 'minRepos',
+    maxKey: 'maxRepos',
+    maxValue: MAX_REPOS,
+    labelPrefix: 'Repos',
+    tagType: 'repos',
+    useFormat: true,
+  });
+
+  addRangeFilterTag(activeTags, filters, {
+    minKey: 'minForks',
+    maxKey: 'maxForks',
+    maxValue: MAX_FORKS,
+    labelPrefix: 'Forks',
+    tagType: 'forks',
+    useFormat: true,
+  });
   if (filters.minStars > 0) {
     activeTags.push({
       label: `Stars: ${formatNumber(filters.minStars)}+`,
@@ -1141,13 +1124,15 @@ function updateActiveFiltersIndicator() {
   // Show/hide indicator based on active filters
   if (activeTags.length > 0) {
     indicator.style.display = 'block';
+    const fragment = document.createDocumentFragment();
     activeTags.forEach((tag) => {
       const tagElement = document.createElement('span');
       tagElement.className = 'filter-tag';
       tagElement.setAttribute('data-filter-type', tag.type);
       tagElement.textContent = tag.label;
-      tagsContainer.appendChild(tagElement);
+      fragment.appendChild(tagElement);
     });
+    tagsContainer.appendChild(fragment);
   } else {
     indicator.style.display = 'none';
   }
@@ -1165,6 +1150,37 @@ function formatNumber(num) {
     return `${(num / 1000).toFixed(1)}K`;
   }
   return num.toString();
+}
+
+/**
+ * Add a range filter tag to activeTags if the filter is active
+ * @param {Array} activeTags - Array to add the tag to
+ * @param {Object} filters - Filters object
+ * @param {Object} options - Configuration object
+ * @param {string} options.minKey - Key for minimum value in filters object
+ * @param {string} options.maxKey - Key for maximum value in filters object
+ * @param {number} options.maxValue - Maximum value constant (e.g., MAX_FOLLOWERS)
+ * @param {string} options.labelPrefix - Prefix for the tag label (e.g., "Followers")
+ * @param {string} options.tagType - Type identifier for the tag
+ * @param {boolean} options.useFormat - Whether to use formatNumber for display (default: false)
+ */
+function addRangeFilterTag(activeTags, filters, { minKey, maxKey, maxValue, labelPrefix, tagType, useFormat = false }) {
+  const min = filters[minKey];
+  const max = filters[maxKey];
+
+  if (min > 0 || max < maxValue) {
+    let label = `${labelPrefix}: `;
+    const format = (num) => useFormat ? formatNumber(num) : num;
+
+    if (min > 0 && max < maxValue) {
+      label += `${format(min)} - ${format(max)}`;
+    } else if (min > 0) {
+      label += `${format(min)}+`;
+    } else {
+      label += `≤ ${format(max)}`;
+    }
+    activeTags.push({ label, type: tagType });
+  }
 }
 
 /**

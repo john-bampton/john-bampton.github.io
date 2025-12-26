@@ -384,6 +384,7 @@ h1 {
 /* ACTIVE FILTERS INDICATOR */
 /* ============================================================================ */
 .active-filters-indicator {
+  display: none;
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   border: 2px solid #667eea;
   border-radius: 12px;
