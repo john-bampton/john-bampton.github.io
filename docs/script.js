@@ -1062,7 +1062,9 @@ function showLoadingState() {
   const loadingState = document.getElementById('loadingState');
   const resultsInfo = document.getElementById('resultsInfo');
 
-
+  [loadingState].forEach(
+    (el) => el && (el.style.display = 'flex'),
+  );
   if (resultsInfo) resultsInfo.style.display = 'none';
 }
 
