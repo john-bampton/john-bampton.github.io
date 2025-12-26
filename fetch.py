@@ -695,8 +695,6 @@ def calculate_engagement_score(user: Dict[str, Any]) -> float:
 
     return score
 
-    return score
-
 
 def select_featured_user(users: List[Dict[str, Any]]) -> Dict[str, Any]:
     """Select featured user based on engagement score."""
@@ -736,7 +734,7 @@ def save_featured_user(featured_user: Dict[str, Any]) -> None:
             json.dump(featured_data, f, separators=(",", ":"))
             f.write("\n")
         logger.info("Featured user saved: %s", featured_user.get('login'))
-    except (IOError, OSError) as e:
+    except OSError as e:
         logger.error("Failed to save featured user: %s", e)
 
 
