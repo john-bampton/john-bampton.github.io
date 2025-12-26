@@ -129,7 +129,7 @@ cd doc
 make html
 ```
 
-Files will be in the `build` folder.
+Files will be in the `doc/build` folder.
 
 ---
 
