@@ -1,23 +1,8 @@
-Achievments and History 🏢
-==========================
+Achievements and History 🏢
+============================
 
-Volunteer Administrator and Scrum Master at not-for-profit Corporation
-----------------------------------------------------------------------
-
-Brisbane Social Chess Inc
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Sep, 2025 - Present
-
-I am the team leader on both `GitHub <https://github.com/>`__ and `Discord <https://discord.com/>`__ and I provide comprehensive training in best practice project management and software development including training in `Git <https://git-scm.com/>`__ version control.
-My unofficial title is "Scrum Master".
-
-A `Scrum Master <https://www.atlassian.com/agile/scrum/scrum-master>`__ is a servant-leader and coach for an agile team, facilitating the `Scrum framework <https://en.wikipedia.org/wiki/Scrum_(software_development)>`__ to help the team become self-sufficient, improve its processes, and remove impediments to progress.
-
-🇦🇺 Brisbane, Australia
-
-Official Apache Committer Volunteer
------------------------------------
+Volunteer Apache Committer
+--------------------------
 
 The Apache Software Foundation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -35,42 +20,41 @@ The `Apache® Software Foundation (ASF) <https://apache.org/>`__ provides softwa
 
 🇦🇺 Brisbane, Australia
 
-Volunteer Contributor at The Apache Software Foundation
--------------------------------------------------------
+Founder and Events Host
+-----------------------
 
-GitHub Contributor
-^^^^^^^^^^^^^^^^^^
+64 Shades World Chess Team and Games Club
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-May, 2020 - Jul, 2023
+June 2021 - Present
 
-Volunteer Work on GitHub for The Apache Software Foundation
+Started the club online in 2021 and then in October 2025 we started live events at the Breakfast Creek Hotel.
+
+Completed 9 live over the board events as of 22th December 2005.
 
 🇦🇺 Brisbane, Australia
 
-Founder, CTO and Lead Programmer
---------------------------------
+Open-Source Contributor
+-----------------------
 
-Mind if I have some of your tasty beverage to wash this down?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Volunteer on GitHub
+^^^^^^^^^^^^^^^^^^^
 
-Aug, 2018 – Present
+April, 2017 - Present
 
-Hi, I’m **John Bampton**
-~~~~~~~~~~~~~~~~~~~~~~~~
+I joined GitHub in 2010 and did not use it until 2015. 2017 was the year I started contributing to other organizations open source projects.
 
-- 🌟 I’m interested in *Management Consulting* and *Team Building*
-- 📚 I’m currently learning **RubyFu** with Street Smarts
-- 🤝 I’m looking to collaborate on:
+Over 8 years of contributions into some of the worlds top GitHub  organizations some of those including:
 
-  - `64 Shades <https://github.com/64-shades/>`__
-  - `DonyaOS <https://github.com/DonyaOS>`__
-  - `Mind if I have some of your tasty beverage to wash this down? <https://github.com/slurpcode/>`__
-  - `One Programming Language <https://github.com/One-Language/>`__
+- https://github.com/cloudflare
+- https://github.com/lucee
+- https://github.com/mruby
+- https://github.com/plotly
+- https://github.com/rails
 
-- 💬 I hang out all the time on Discord
-- 👥 We have over **350+ GitHub Organization members**
-- 📍 Brisbane, Australia 🇦🇺
+My first contribution to The Apache Software Foundation was in May 2020 and since then I have contributed to over 60 ASF repositories on GitHub.
 
+🇦🇺 Brisbane, Australia
 
 Volunteer Manager at not-for-profit Corporation
 -----------------------------------------------
@@ -80,9 +64,32 @@ Brisbane Social Chess Inc
 
 Sep, 2024 - Sep, 2025
 
-I was elected to the very first management team at Brisbane Social Chess Inc at the corporations first annual general meeting. During my period as manager I took the lead and created and greatly expanded the clubs online presence on platforms like Discord, GitHub and Chess.com.
+I was elected to the very first seven man management team at Brisbane Social Chess Inc at the corporations first annual general meeting.
+During my period as manager I took the lead and created and greatly expanded the clubs online presence on platforms like Discord, GitHub and Chess.com.
 
-I also hosted chess events at three different locations including the Pig N Whistle King George Square British Pub, Sitar Indian Restaurant Albion and The Royal Hotel at Nundah.
+I also hosted chess events at three different locations:
+
+- For about 3 months at the Pig N Whistle King George Square British Pub on Mondays from 4pm to 7pm
+- 6 months at Sitar Indian Restaurant Albion on Monday nights from 5pm to 7pm
+- About 11 months at the Royal Hotel at Nundah on Thursday nights from 6pm to 8pm
+
+Whilst some chess players would bring their own sets, I still used a lot of my own chess gear that was needed to run these three events and it varied but I would take between 3 to 8 chess sets and 3 to 8 chess clocks to each event I hosted.
+
+Marketed the club at various events, handing out business cards and speaking with hotel and restaurant patrons. Also ran mini tournaments and got to know a huge number of people. Bought and marketed new chess variants and board games which we used including:
+
+- 4 Player Chess
+- Chinese Checkers
+- Quaternity 4 Player Chess
+- Harmegedo 6 Player Chess - The Board of Lords
+
+I also donated chess equipment to two venues:
+
+- 4 chess sets and 3 clocks to Sitar Indian Restaurant Albion
+- 2 chess sets to the Royal Hotel at Nundah
+
+Overall I went for about 2 years to meetups at Brisbane Social Chess and I did go to about 12 different locations for chess.
+
+During my time as manager I did learn how to set and work four different types of chess clocks and at the events I was hosting a common task would be to help teach newcomers how to both set  and play with the clocks. We had a range of chess clocks all digital  including small cheap generic no name clocks, two different models of the official Digital Game Technology (DGT) chess clocks and a lot of standard LEAP brand clocks.
 
 🇦🇺 Brisbane, Australia
 
@@ -94,7 +101,13 @@ Brisbane Social Chess
 
 Apr, 2024 - Aug, 2024
 
-Responsible for running local chess meetups on Thursday nights from 6pm to 8pm every week at the Royal Hotel at Nundah in Brisbane.  Increased social participation by organizing games, getting to know all players and running mini tournaments. Bought new games including 4-player chess which we first used at the Royal Hotel.
+Responsible for running local chess meetups on Thursday nights from 6pm to 8pm every week at the Royal Hotel at Nundah in Brisbane. Increased social participation by organizing games, getting to know all players and running mini tournaments.
+
+Provided a lot of the chess sets and clocks used and bought a new game called 4-player chess which we first used at the Royal Hotel.
+
+I did also let other players borrow chess books from my own personal library and over 15 books are still out on loan and have not yet been returned.
+
+On quiet nights I did provide some one on one chess tutorials and instructions for rookie players.
 
 🇦🇺 Brisbane, Australia
 
