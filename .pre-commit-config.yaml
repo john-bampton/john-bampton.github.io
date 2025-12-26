@@ -4,6 +4,14 @@ repos:
       - id: check-hooks-apply
         name: check that hooks apply
         description: check that all the hooks apply to the repository
+  - repo: https://github.com/pycqa/isort
+    rev: 7.0.0
+    hooks:
+      - id: isort
+        name: isort (python imports)
+        language: python
+        types: [python]
+        files: \.py$
   - repo: https://github.com/psf/black-pre-commit-mirror
     rev: 25.12.0
     hooks:
@@ -21,11 +29,30 @@ repos:
       - id: forbid-submodules
       - id: mixed-line-ending
       - id: trailing-whitespace
-  - repo: https://github.com/pycqa/isort
-    rev: 7.0.0
+  - repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.10.0
     hooks:
-      - id: isort
-        name: isort (python imports)
-        language: python
-        types: [python]
-        files: \.(py)$
+      - id: python-check-mock-methods
+        name: run check for not-real mock methods
+        description: Prevent common mistakes of assert mck.not_called(), assert mck.called_once_with(...) and mck.assert_called
+      - id: python-no-eval
+        name: run check for eval()
+        description: A quick check for the eval() built-in function
+      - id: python-no-log-warn
+        name: run check for use logger.warning(
+        description: A quick check for the deprecated .warn() method of python loggers
+      - id: python-use-type-annotations
+        name: run check for type annotations not comments
+        description: Enforce that python3.6+ type annotations are used instead of type comments
+      - id: rst-backticks
+        name: run rst-backticks
+        description: detect common mistake of using single backticks when writing rst
+      - id: rst-directive-colons
+        name: run rst-directive-colons
+        description: detect mistake of rst directive not ending with double colon or space before the double colon
+      - id: rst-inline-touching-normal
+        name: run rst-inline-touching-normal
+        description: detect mistake of inline code touching normal text in rst
+      - id: text-unicode-replacement-char
+        name: run check for no unicode replacement char
+        description: Forbid files which have a UTF-8 Unicode replacement character
