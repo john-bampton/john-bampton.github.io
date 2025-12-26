@@ -997,9 +997,10 @@ function hideLoadingState() {
   const resultsInfo = document.getElementById('resultsInfo');
   const resultsInfoDesktop = document.getElementById('resultsInfoDesktop');
 
-<<<<<<< HEAD
     if (loadingState) loadingState.style.display = 'none';
     if (loadingStateDesktop) loadingStateDesktop.style.display = 'none';
+    if (resultsInfo) resultsInfo.style.display = 'block';
+    if (resultsInfoDesktop) resultsInfoDesktop.style.display = 'block';
 }
 
 // ============================================================================
@@ -1046,10 +1047,3 @@ function updateDarkModeIcon(isDarkMode) {
         darkModeToggleElement.setAttribute('aria-label', newLabel);
     }
 }
-=======
-  if (loadingState) loadingState.style.display = 'none';
-  if (loadingStateDesktop) loadingStateDesktop.style.display = 'none';
-  if (resultsInfo) resultsInfo.style.display = 'block';
-  if (resultsInfoDesktop) resultsInfoDesktop.style.display = 'block';
-}
->>>>>>> upstream/main
