@@ -20,10 +20,17 @@ repos:
     rev: v6.0.0
     hooks:
       - id: check-ast
+      - id: check-builtin-literals
       - id: check-case-conflict
       - id: check-illegal-windows-names
+      - id: check-json
       - id: check-merge-conflict
+      - id: check-toml
       - id: check-vcs-permalinks
+      - id: check-yaml
+      - id: debug-statements
+      - id: detect-aws-credentials
+        args: [--allow-missing-credentials]
       - id: detect-private-key
       - id: fix-byte-order-marker
       - id: forbid-submodules
