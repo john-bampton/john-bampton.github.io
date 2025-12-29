@@ -16,14 +16,25 @@ repos:
     rev: 25.12.0
     hooks:
       - id: black
+  - repo: https://github.com/pypa/pip-audit
+    rev: v2.10.0
+    hooks:
+      - id: pip-audit
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
       - id: check-ast
+      - id: check-builtin-literals
       - id: check-case-conflict
       - id: check-illegal-windows-names
+      - id: check-json
       - id: check-merge-conflict
+      - id: check-toml
       - id: check-vcs-permalinks
+      - id: check-yaml
+      - id: debug-statements
+      - id: detect-aws-credentials
+        args: [--allow-missing-credentials]
       - id: detect-private-key
       - id: fix-byte-order-marker
       - id: forbid-submodules
@@ -56,6 +67,15 @@ repos:
       - id: text-unicode-replacement-char
         name: run check for no unicode replacement char
         description: Forbid files which have a UTF-8 Unicode replacement character
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.47.0
+    hooks:
+      - id: markdownlint
+        name: run markdownlint
+        description: check Markdown files with markdownlint
+        args: [--config=.github/linters/.markdown-lint.yml]
+        types: [markdown]
+        files: \.md$
   - repo: https://github.com/adrienverge/yamllint
     rev: v1.37.1
     hooks:
