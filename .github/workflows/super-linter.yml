@@ -24,21 +24,6 @@ jobs:
         uses: super-linter/super-linter@v8
         env:
           DEFAULT_BRANCH: main
-          DISABLE_ERRORS: false
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PYTHON_PYLINT_CONFIG_FILE: .pylintrc
-          VALIDATE_ALL_CODEBASE: false
-          # VALIDATE_GITHUB_ACTIONS: true
-          VALIDATE_GIT_MERGE_CONFLICT_MARKERS: true
-          VALIDATE_GITLEAKS: true
-          VALIDATE_HTML_PRETTIER: true
-          VALIDATE_JSON: true
-          VALIDATE_MARKDOWN: true
-          VALIDATE_MARKDOWN_PRETTIER: true
-          VALIDATE_PRE_COMMIT: true
-          VALIDATE_PYTHON_BLACK: true
-          VALIDATE_PYTHON_ISORT: true
-          VALIDATE_PYTHON_PYLINT: true
-          VALIDATE_PYTHON_RUFF: true
-          VALIDATE_TRIVY: true
-          VALIDATE_YAML: true
+          VALIDATE_ALL_CODEBASE: true
