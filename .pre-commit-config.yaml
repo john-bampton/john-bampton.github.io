@@ -20,7 +20,6 @@ repos:
     rev: v2.10.0
     hooks:
       - id: pip-audit
-        args: ['r', '--pyproject-toml']
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
