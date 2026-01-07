@@ -1,9 +1,22 @@
+default_stages: [pre-commit, pre-push]
+default_language_version:
+  python: python3
+  node: 24.12.0
 repos:
   - repo: meta
     hooks:
       - id: check-hooks-apply
         name: check that hooks apply
         description: check that all the hooks apply to the repository
+  - repo: local
+    hooks:
+      - id: prettier
+        name: run prettier
+        description: format files with prettier
+        entry: prettier --write '**/*.yaml' '**/*.yml'
+        files: \.ya?ml$
+        language: node
+        additional_dependencies: ['prettier@3.7.4']
   - repo: https://github.com/pycqa/isort
     rev: 7.0.0
     hooks:
