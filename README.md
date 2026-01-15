@@ -119,20 +119,6 @@ We welcome PRs, issues, and suggestions! Add a ⭐, fork, or help improve the gr
 
 ---
 
-## 📃 Build John's Personal Site
-
-- [View John's personal site](https://john-bampton.readthedocs.io/)
-
-```shell
-pip install -r requirements-docs.txt
-cd doc
-make html
-```
-
-Files will be in the `doc/build` folder.
-
----
-
 ## Powered by
 
 [<img src="docs/images/other/python-logo.png" alt="Python Powered" style="height:80px;">](https://www.python.org/)
