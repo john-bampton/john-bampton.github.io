@@ -33,7 +33,6 @@ repos:
     rev: v2.10.0
     hooks:
       - id: pip-audit
-        args: ['-r', 'requirements.txt']
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
@@ -72,15 +71,12 @@ repos:
       - id: rst-backticks
         name: run rst-backticks
         description: detect common mistake of using single backticks when writing rst
-        files: \.rst$
       - id: rst-directive-colons
         name: run rst-directive-colons
         description: detect mistake of rst directive not ending with double colon or space before the double colon
-        files: \.rst$
       - id: rst-inline-touching-normal
         name: run rst-inline-touching-normal
         description: detect mistake of inline code touching normal text in rst
-        files: \.rst$
       - id: text-unicode-replacement-char
         name: run check for no unicode replacement char
         description: Forbid files which have a UTF-8 Unicode replacement character
