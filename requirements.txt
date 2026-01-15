@@ -1,0 +1,4 @@
+requests>=2.31.0
+Jinja2>=3.0.0
+filelock>=3.20.3
+urllib3>=2.6.3
