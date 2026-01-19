@@ -701,7 +701,7 @@ def calculate_engagement_score(user: Dict[str, Any]) -> float:
 def select_featured_user(users: List[Dict[str, Any]]) -> Dict[str, Any]:
     """Select featured user based on engagement score."""
     if not users:
-        return None
+        return {}
 
     # Calculate scores for all users
     scored_users = []

@@ -33,6 +33,13 @@ let filteredUsers = [];
 let isDataLoaded = false;
 
 // ============================================================================
+// CONSTANTS
+// ============================================================================
+const MAX_FOLLOWERS = 999999999;
+const MAX_REPOS = 999999;
+const MAX_FORKS = 999999;
+
+// ============================================================================
 // INITIALIZATION
 // ============================================================================
 document.addEventListener('DOMContentLoaded', initializeApp);
@@ -379,6 +386,11 @@ function setupEventListeners() {
     randomBtn.type = 'button';
     randomBtn.addEventListener('click', pickRandomUser);
   }
+
+  const clearFiltersBtn = document.querySelector('.clear-filters-btn');
+  if (clearFiltersBtn) {
+    clearFiltersBtn.addEventListener('click', resetFilters);
+  }
 }
 
 /**
@@ -525,16 +537,16 @@ function getActiveFilters() {
  */
 function validateRangeFilters(filters) {
   if (filters.minFollowers > filters.maxFollowers) {
-    document.getElementById('maxFollowersFilter').value = '999999999';
-    filters.maxFollowers = 999999999;
+    document.getElementById('maxFollowersFilter').value = String(MAX_FOLLOWERS);
+    filters.maxFollowers = MAX_FOLLOWERS;
   }
   if (filters.minRepos > filters.maxRepos) {
-    document.getElementById('maxReposFilter').value = '999999';
-    filters.maxRepos = 999999;
+    document.getElementById('maxReposFilter').value = String(MAX_REPOS);
+    filters.maxRepos = MAX_REPOS;
   }
   if (filters.minForks > filters.maxForks) {
-    document.getElementById('maxForksFilter').value = '999999';
-    filters.maxForks = 999999;
+    document.getElementById('maxForksFilter').value = String(MAX_FORKS);
+    filters.maxForks = MAX_FORKS;
   }
 }
 
@@ -743,6 +755,7 @@ function updateVisibilityAndSort() {
   renderCards(sortedUsers);
   updateCounts(sortedUsers);
   updateResultsMessage(sortedUsers);
+  updateActiveFiltersIndicator();
 }
 
 /**
@@ -1031,6 +1044,174 @@ function updateResultsMessage(sortedUsers) {
 }
 
 // ============================================================================
+// ACTIVE FILTERS INDICATOR
+// ============================================================================
+/**
+ * Update the active filters indicator display
+ */
+function updateActiveFiltersIndicator() {
+  const indicator = document.getElementById('activeFiltersIndicator');
+  const tagsContainer = document.getElementById('activeFiltersTags');
+  if (!indicator || !tagsContainer) return;
+
+  const filters = getActiveFilters();
+  const sortBy = document.getElementById('sortBy').value;
+  const activeTags = [];
+
+  const sortOption = document.querySelector(`#sortBy option[value="${sortBy}"]`);
+  if (sortOption && sortBy !== 'followers-desc') {
+    activeTags.push({
+      label: `Sort: ${sortOption.textContent.trim()}`,
+      type: 'sort',
+      value: sortBy,
+    });
+  }
+
+  if (filters.searchTerm) {
+    activeTags.push({
+      label: `Search: "${filters.searchTerm}"`,
+      type: 'search',
+      value: filters.searchTerm,
+    });
+  }
+
+  addRangeFilterTag(activeTags, filters, {
+    minKey: 'minFollowers',
+    maxKey: 'maxFollowers',
+    maxValue: MAX_FOLLOWERS,
+    labelPrefix: 'Followers',
+    tagType: 'followers',
+    useFormat: true,
+  });
+
+  addRangeFilterTag(activeTags, filters, {
+    minKey: 'minRepos',
+    maxKey: 'maxRepos',
+    maxValue: MAX_REPOS,
+    labelPrefix: 'Repos',
+    tagType: 'repos',
+    useFormat: true,
+  });
+
+  addRangeFilterTag(activeTags, filters, {
+    minKey: 'minForks',
+    maxKey: 'maxForks',
+    maxValue: MAX_FORKS,
+    labelPrefix: 'Forks',
+    tagType: 'forks',
+    useFormat: true,
+  });
+  if (filters.minStars > 0) {
+    activeTags.push({
+      label: `Stars: ${formatNumber(filters.minStars)}+`,
+      type: 'stars',
+    });
+  }
+  const selectFilters = [
+    { key: 'sponsorsFilter', label: 'Sponsors', type: 'sponsors' },
+    { key: 'sponsoringFilter', label: 'Sponsoring', type: 'sponsoring' },
+    { key: 'avatarAgeFilter', label: 'Avatar', type: 'avatar' },
+    { key: 'lastRepoActivityFilter', label: 'Repo Activity', type: 'repo-activity' },
+    { key: 'lastCommitFilter', label: 'Last Commit', type: 'commit' },
+  ];
+
+  selectFilters.forEach((filter) => {
+    addSelectFilterTag(activeTags, filters, filter.key, filter.key, filter.label, filter.type);
+  });
+
+  if (filters.languageFilter) {
+    activeTags.push({
+      label: `Language: ${filters.languageFilter}`,
+      type: 'language',
+    });
+  }
+  // Clear existing tags
+  tagsContainer.replaceChildren();
+  // Show/hide indicator based on active filters
+  if (activeTags.length > 0) {
+    indicator.style.display = 'block';
+    const fragment = document.createDocumentFragment();
+    activeTags.forEach((tag) => {
+      const tagElement = document.createElement('span');
+      tagElement.className = 'filter-tag';
+      tagElement.setAttribute('data-filter-type', tag.type);
+      tagElement.textContent = tag.label;
+      fragment.appendChild(tagElement);
+    });
+    tagsContainer.appendChild(fragment);
+  } else {
+    indicator.style.display = 'none';
+  }
+}
+/**
+ * Format number with K, M suffixes for display
+ * @param {number} num - Number to format
+ * @returns {string} Formatted number string
+ */
+function formatNumber(num) {
+  if (num >= 1000000) {
+    return `${(num / 1000000).toFixed(1)}M`;
+  }
+  if (num >= 1000) {
+    return `${(num / 1000).toFixed(1)}K`;
+  }
+  return num.toString();
+}
+
+/**
+ * Add a range filter tag to activeTags if the filter is active
+ * @param {Array} activeTags - Array to add the tag to
+ * @param {Object} filters - Filters object
+ * @param {Object} options - Configuration object
+ * @param {string} options.minKey - Key for minimum value in filters object
+ * @param {string} options.maxKey - Key for maximum value in filters object
+ * @param {number} options.maxValue - Maximum value constant (e.g., MAX_FOLLOWERS)
+ * @param {string} options.labelPrefix - Prefix for the tag label (e.g., "Followers")
+ * @param {string} options.tagType - Type identifier for the tag
+ * @param {boolean} options.useFormat - Whether to use formatNumber for display (default: false)
+ */
+function addRangeFilterTag(activeTags, filters, { minKey, maxKey, maxValue, labelPrefix, tagType, useFormat = false }) {
+  const min = filters[minKey];
+  const max = filters[maxKey];
+
+  if (min > 0 || max < maxValue) {
+    let label = `${labelPrefix}: `;
+    const format = (num) => useFormat ? formatNumber(num) : num;
+
+    if (min > 0 && max < maxValue) {
+      label += `${format(min)} - ${format(max)}`;
+    } else if (min > 0) {
+      label += `${format(min)}+`;
+    } else {
+      label += `≤ ${format(max)}`;
+    }
+    activeTags.push({ label, type: tagType });
+  }
+}
+
+/**
+ * Add a select-based filter tag to activeTags if the filter is active
+ * @param {Array} activeTags - Array to add the tag to
+ * @param {Object} filters - Filters object
+ * @param {string} filterKey - Key in filters object
+ * @param {string} elementId - ID of the select element
+ * @param {string} labelPrefix - Prefix for the tag label (e.g., "Sponsors")
+ * @param {string} tagType - Type identifier for the tag
+ */
+function addSelectFilterTag(activeTags, filters, filterKey, elementId, labelPrefix, tagType) {
+  if (filters[filterKey] !== 'any') {
+    const select = document.getElementById(elementId);
+    const option = select?.options[select.selectedIndex];
+    if (option) {
+      activeTags.push({
+        label: `${labelPrefix}: ${option.textContent.trim()}`,
+        type: tagType,
+      });
+    }
+  }
+}
+
+// ============================================================================
 // RESET FILTERS
 // ============================================================================
 /**
@@ -1041,11 +1222,11 @@ function resetFilters() {
     searchInput: '',
     sortBy: 'followers-desc',
     followersFilter: '0',
-    maxFollowersFilter: '999999999',
+    maxFollowersFilter: String(MAX_FOLLOWERS),
     minReposFilter: '0',
-    maxReposFilter: '999999',
+    maxReposFilter: String(MAX_REPOS),
     minForksFilter: '0',
-    maxForksFilter: '999999',
+    maxForksFilter: String(MAX_FORKS),
     sponsorsFilter: 'any',
     sponsoringFilter: 'any',
     avatarAgeFilter: 'any',
