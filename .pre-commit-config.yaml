@@ -3,12 +3,14 @@ default_stages: [pre-commit, pre-push]
 default_language_version:
   python: python3
   node: 24.15.0
+
 repos:
   - repo: meta
     hooks:
       - id: check-hooks-apply
         name: check that hooks apply
         description: check that all the hooks apply to the repository
+
   - repo: local
     hooks:
       - id: prettier
@@ -18,6 +20,7 @@ repos:
         files: \.ya?ml$
         language: node
         additional_dependencies: ['prettier@3.8.3']
+
   - repo: https://github.com/pycqa/isort
     rev: 8.0.1
     hooks:
@@ -26,14 +29,26 @@ repos:
         language: python
         types: [python]
         files: \.py$
+
   - repo: https://github.com/psf/black-pre-commit-mirror
     rev: 26.3.1
     hooks:
       - id: black
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.11
+    hooks:
+      # Run the linter.
+      - id: ruff-check
+        args: [--fix]
+      # Run the formatter.
+      - id: ruff-format
+
   - repo: https://github.com/pypa/pip-audit
     rev: v2.10.0
     hooks:
       - id: pip-audit
+
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
@@ -54,6 +69,7 @@ repos:
       - id: forbid-submodules
       - id: mixed-line-ending
       - id: trailing-whitespace
+
   - repo: https://github.com/pre-commit/pygrep-hooks
     rev: v1.10.0
     hooks:
@@ -72,6 +88,7 @@ repos:
       - id: text-unicode-replacement-char
         name: run check for no unicode replacement char
         description: Forbid files which have a UTF-8 Unicode replacement character
+
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.48.0
     hooks:
@@ -81,6 +98,7 @@ repos:
         args: [--config=.github/linters/.markdown-lint.yml]
         types: [markdown]
         files: \.md$
+
   - repo: https://github.com/adrienverge/yamllint
     rev: v1.38.0
     hooks:
