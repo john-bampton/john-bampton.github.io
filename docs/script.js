@@ -143,8 +143,6 @@ async function fetchAndPrepareUsers() {
     isDataLoaded = true;
     const total = allUsers.length;
     document.getElementById('totalCount').textContent = total.toLocaleString();
-    document.getElementById('totalCountDesktop').textContent =
-      total.toLocaleString();
   } catch (err) {
     console.error(err);
     const loadingStates = document.querySelectorAll('.loading-state');
@@ -995,10 +993,6 @@ function updateCounts(sortedUsers) {
   document.getElementById('totalCount').textContent =
     totalCount.toLocaleString();
 
-  document.getElementById('visibleCountDesktop').textContent =
-    visibleCount.toLocaleString();
-  document.getElementById('totalCountDesktop').textContent =
-    totalCount.toLocaleString();
 }
 
 /**
@@ -1012,21 +1006,15 @@ function updateResultsMessage(sortedUsers) {
   const resultsFound = document.getElementById('resultsFound');
   const noResults = document.getElementById('noResults');
 
-  const resultsFoundDesktop = document.getElementById('resultsFoundDesktop');
-  const noResultsDesktop = document.getElementById('noResultsDesktop');
 
   // TODO
   // if (totalCount === 0) {}
   if (visibleCount === 0) {
     if (resultsFound) resultsFound.style.display = 'none';
     if (noResults) noResults.style.display = 'block';
-    if (resultsFoundDesktop) resultsFoundDesktop.style.display = 'none';
-    if (noResultsDesktop) noResultsDesktop.style.display = 'block';
   } else {
     if (resultsFound) resultsFound.style.display = 'block';
     if (noResults) noResults.style.display = 'none';
-    if (resultsFoundDesktop) resultsFoundDesktop.style.display = 'block';
-    if (noResultsDesktop) noResultsDesktop.style.display = 'none';
   }
 }
 
@@ -1072,15 +1060,12 @@ function resetFilters() {
  */
 function showLoadingState() {
   const loadingState = document.getElementById('loadingState');
-  const loadingStateDesktop = document.getElementById('loadingStateDesktop');
   const resultsInfo = document.getElementById('resultsInfo');
-  const resultsInfoDesktop = document.getElementById('resultsInfoDesktop');
 
-  [loadingState, loadingStateDesktop].forEach(
+  [loadingState].forEach(
     (el) => el && (el.style.display = 'flex'),
   );
   if (resultsInfo) resultsInfo.style.display = 'none';
-  if (resultsInfoDesktop) resultsInfoDesktop.style.display = 'none';
 }
 
 /**
@@ -1088,12 +1073,8 @@ function showLoadingState() {
  */
 function hideLoadingState() {
   const loadingState = document.getElementById('loadingState');
-  const loadingStateDesktop = document.getElementById('loadingStateDesktop');
   const resultsInfo = document.getElementById('resultsInfo');
-  const resultsInfoDesktop = document.getElementById('resultsInfoDesktop');
 
   if (loadingState) loadingState.style.display = 'none';
-  if (loadingStateDesktop) loadingStateDesktop.style.display = 'none';
   if (resultsInfo) resultsInfo.style.display = 'block';
-  if (resultsInfoDesktop) resultsInfoDesktop.style.display = 'block';
 }
