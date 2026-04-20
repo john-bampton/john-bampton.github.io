@@ -31,7 +31,7 @@ Explore and showcase the top GitHub user avatars in a modern, interactive grid. 
 
 ## ⚡ Site Quickstart
 
-1. **Clone the repo:**
+1. **Clone the repository:**
 
    ```bash
    git clone https://github.com/john-bampton/john-bampton.github.io.git
@@ -107,7 +107,7 @@ We welcome PRs, issues, and suggestions! Add a ⭐, fork, or help improve the gr
 
 **Code Quality Reminder:**
 
-- Always run `pre-commit run --all-files` before pushing or opening a pull request. This ensures your code is auto-formatted and passes all checks.
+- Always run `pre-commit run --all-files` before pushing or opening a pull request. This ensures your code is autoformatted and passes all checks.
 - If you don't have pre-commit installed, run:
 
   ```bash
@@ -115,7 +115,7 @@ We welcome PRs, issues, and suggestions! Add a ⭐, fork, or help improve the gr
   pre-commit install
   ```
 
-  This sets up the hooks for your local repo.
+  This sets up the hooks for your local repository.
 
 ---
 
