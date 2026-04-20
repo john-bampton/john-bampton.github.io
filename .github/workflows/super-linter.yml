@@ -1,3 +1,4 @@
+---
 name: Lint Code
 on:
   push:

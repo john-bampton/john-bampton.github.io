@@ -1,7 +1,8 @@
+---
 default_stages: [pre-commit, pre-push]
 default_language_version:
   python: python3
-  node: 24.12.0
+  node: 24.15.0
 repos:
   - repo: meta
     hooks:
@@ -16,7 +17,7 @@ repos:
         entry: prettier --write '**/*.yaml' '**/*.yml'
         files: \.ya?ml$
         language: node
-        additional_dependencies: ['prettier@3.7.4']
+        additional_dependencies: ['prettier@3.8.3']
   - repo: https://github.com/pycqa/isort
     rev: 8.0.1
     hooks:
