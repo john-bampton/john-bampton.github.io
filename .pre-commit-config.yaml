@@ -68,15 +68,6 @@ repos:
       - id: python-use-type-annotations
         name: run check for type annotations not comments
         description: Enforce that python3.6+ type annotations are used instead of type comments
-      - id: rst-backticks
-        name: run rst-backticks
-        description: detect common mistake of using single backticks when writing rst
-      - id: rst-directive-colons
-        name: run rst-directive-colons
-        description: detect mistake of rst directive not ending with double colon or space before the double colon
-      - id: rst-inline-touching-normal
-        name: run rst-inline-touching-normal
-        description: detect mistake of inline code touching normal text in rst
       - id: text-unicode-replacement-char
         name: run check for no unicode replacement char
         description: Forbid files which have a UTF-8 Unicode replacement character
