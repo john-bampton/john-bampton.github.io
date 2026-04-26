@@ -1096,12 +1096,12 @@ function renderActiveFilterIndicator(container) {
   const activeFilters = getActiveFilterSummaries();
   if (!activeFilters.length) {
     container.style.display = 'none';
-    container.innerHTML = '';
+    container.replaceChildren();
     return;
   }
 
   container.style.display = 'flex';
-  container.innerHTML = '';
+  container.replaceChildren();
 
   const label = document.createElement('span');
   label.className = 'active-filters-label';
