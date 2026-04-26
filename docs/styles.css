@@ -330,6 +330,52 @@ h1 {
   display: none;
 }
 
+.active-filters-summary {
+  display: none;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.active-filters-label {
+  font-weight: 600;
+}
+
+.active-filter-badge {
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+}
+
+.active-filters-summary-desktop .active-filter-badge {
+  background: #eef2ff;
+  border-color: #c7d2fe;
+  color: #4f46e5;
+}
+
+.active-filters-clear {
+  padding: 3px 8px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 100, 100, 0.28);
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+}
+
+.active-filters-clear:hover {
+  background: rgba(255, 100, 100, 0.45);
+}
+
+.active-filters-summary-desktop .active-filters-clear {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
 /* ============================================================================ */
 /* LOADING STATE */
 /* ============================================================================ */
