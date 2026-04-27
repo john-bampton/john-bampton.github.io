@@ -1,29 +1,29 @@
 ---
 version: 2
 updates:
-  - package-ecosystem: 'github-actions'
-    directory: '/'
+  - package-ecosystem: "github-actions"
+    directory: "/"
     schedule:
-      interval: 'weekly'
+      interval: "weekly"
     commit-message:
-      prefix: 'ci'
-      include: 'scope'
+      prefix: "ci"
+      include: "scope"
     groups:
       github-actions:
         patterns:
-          - '*'
+          - "*"
     cooldown:
       default-days: 7
-  - package-ecosystem: 'pip'
-    directory: '/'
+  - package-ecosystem: "pip"
+    directory: "/"
     schedule:
-      interval: 'weekly'
+      interval: "weekly"
     commit-message:
-      prefix: 'deps'
-      include: 'scope'
+      prefix: "deps"
+      include: "scope"
     groups:
       python-dependencies:
         patterns:
-          - '*'
+          - "*"
     cooldown:
       default-days: 7
