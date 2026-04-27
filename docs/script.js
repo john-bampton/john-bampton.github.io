@@ -1085,15 +1085,15 @@ function getActiveFilterSummaries() {
     .map(([id, defaultValue]) => {
       const element = document.getElementById(id);
       if (!element || element.value === defaultValue) return null;
-      return `${FILTER_LABELS[id]}: ${getControlDisplayValue(element)}`;
+      const displayValue = getControlDisplayValue(element);
+      return displayValue ? `${FILTER_LABELS[id]}: ${displayValue}` : null;
     })
     .filter(Boolean);
 }
 
-function renderActiveFilterIndicator(container) {
+function renderActiveFilterIndicator(container, activeFilters) {
   if (!container) return;
 
-  const activeFilters = getActiveFilterSummaries();
   if (!activeFilters.length) {
     container.style.display = 'none';
     container.replaceChildren();
@@ -1124,9 +1124,14 @@ function renderActiveFilterIndicator(container) {
 }
 
 function updateActiveFilterIndicators() {
-  renderActiveFilterIndicator(document.getElementById('activeFiltersSummary'));
+  const activeFilters = getActiveFilterSummaries();
+  renderActiveFilterIndicator(
+    document.getElementById('activeFiltersSummary'),
+    activeFilters,
+  );
   renderActiveFilterIndicator(
     document.getElementById('activeFiltersSummaryDesktop'),
+    activeFilters,
   );
 }
 
