@@ -743,6 +743,7 @@ function updateVisibilityAndSort() {
   renderCards(sortedUsers);
   updateCounts(sortedUsers);
   updateResultsMessage(sortedUsers);
+  updateActiveFilterIndicators();
 }
 
 /**
@@ -1031,31 +1032,117 @@ function updateResultsMessage(sortedUsers) {
 }
 
 // ============================================================================
+// ACTIVE FILTER INDICATORS
+// ============================================================================
+const DEFAULT_FILTER_VALUES = {
+  searchInput: '',
+  sortBy: 'followers-desc',
+  followersFilter: '0',
+  maxFollowersFilter: '999999999',
+  minReposFilter: '0',
+  maxReposFilter: '999999',
+  minForksFilter: '0',
+  maxForksFilter: '999999',
+  sponsorsFilter: 'any',
+  sponsoringFilter: 'any',
+  avatarAgeFilter: 'any',
+  minStarsFilter: '0',
+  languageFilter: '',
+  lastRepoActivityFilter: 'any',
+  lastCommitFilter: 'any',
+};
+
+const FILTER_LABELS = {
+  searchInput: 'Search',
+  sortBy: 'Sort',
+  followersFilter: 'Min followers',
+  maxFollowersFilter: 'Max followers',
+  minReposFilter: 'Min repos',
+  maxReposFilter: 'Max repos',
+  minForksFilter: 'Min forks',
+  maxForksFilter: 'Max forks',
+  sponsorsFilter: 'Sponsors',
+  sponsoringFilter: 'Sponsoring',
+  avatarAgeFilter: 'Avatar updated',
+  minStarsFilter: 'Min stars',
+  languageFilter: 'Language',
+  lastRepoActivityFilter: 'Repo activity',
+  lastCommitFilter: 'Public commit',
+};
+
+function getControlDisplayValue(element) {
+  if (!element) return '';
+  if (element.tagName === 'SELECT') {
+    return (
+      element.options[element.selectedIndex]?.textContent.trim() || element.value
+    );
+  }
+  return element.value.trim();
+}
+
+function getActiveFilterSummaries() {
+  return Object.entries(DEFAULT_FILTER_VALUES)
+    .map(([id, defaultValue]) => {
+      const element = document.getElementById(id);
+      if (!element || element.value === defaultValue) return null;
+      const displayValue = getControlDisplayValue(element);
+      return displayValue ? `${FILTER_LABELS[id]}: ${displayValue}` : null;
+    })
+    .filter(Boolean);
+}
+
+function renderActiveFilterIndicator(container, activeFilters) {
+  if (!container) return;
+
+  if (!activeFilters.length) {
+    container.style.display = 'none';
+    container.replaceChildren();
+    return;
+  }
+
+  container.style.display = 'flex';
+  container.replaceChildren();
+
+  const label = document.createElement('span');
+  label.className = 'active-filters-label';
+  label.textContent = 'Active:';
+  container.appendChild(label);
+
+  activeFilters.forEach((filterText) => {
+    const badge = document.createElement('span');
+    badge.className = 'active-filter-badge';
+    badge.textContent = filterText;
+    container.appendChild(badge);
+  });
+
+  const clearButton = document.createElement('button');
+  clearButton.type = 'button';
+  clearButton.className = 'active-filters-clear';
+  clearButton.textContent = 'Clear all';
+  clearButton.addEventListener('click', resetFilters);
+  container.appendChild(clearButton);
+}
+
+function updateActiveFilterIndicators() {
+  const activeFilters = getActiveFilterSummaries();
+  renderActiveFilterIndicator(
+    document.getElementById('activeFiltersSummary'),
+    activeFilters,
+  );
+  renderActiveFilterIndicator(
+    document.getElementById('activeFiltersSummaryDesktop'),
+    activeFilters,
+  );
+}
+
+// ============================================================================
 // RESET FILTERS
 // ============================================================================
 /**
  * Reset all filters to default values
  */
 function resetFilters() {
-  const defaults = {
-    searchInput: '',
-    sortBy: 'followers-desc',
-    followersFilter: '0',
-    maxFollowersFilter: '999999999',
-    minReposFilter: '0',
-    maxReposFilter: '999999',
-    minForksFilter: '0',
-    maxForksFilter: '999999',
-    sponsorsFilter: 'any',
-    sponsoringFilter: 'any',
-    avatarAgeFilter: 'any',
-    minStarsFilter: '0',
-    languageFilter: '',
-    lastRepoActivityFilter: 'any',
-    lastCommitFilter: 'any',
-  };
-
-  Object.entries(defaults).forEach(([id, value]) => {
+  Object.entries(DEFAULT_FILTER_VALUES).forEach(([id, value]) => {
     const element = document.getElementById(id);
     if (element) element.value = value;
   });

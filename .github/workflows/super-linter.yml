@@ -1,3 +1,4 @@
+---
 name: Lint Code
 on:
   push:
@@ -16,28 +17,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Run Super-Linter
-        uses: super-linter/super-linter@v8
+        uses: super-linter/super-linter@9e863354e3ff62e0727d37183162c4a88873df41 # v8.6.0
         env:
           DEFAULT_BRANCH: main
-          DISABLE_ERRORS: false
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PYTHON_PYLINT_CONFIG_FILE: .pylintrc
-          VALIDATE_ALL_CODEBASE: false
-          # VALIDATE_GITHUB_ACTIONS: true
-          VALIDATE_GIT_MERGE_CONFLICT_MARKERS: true
-          VALIDATE_GITLEAKS: true
-          VALIDATE_HTML_PRETTIER: true
-          VALIDATE_JSON: true
-          VALIDATE_MARKDOWN: true
-          VALIDATE_MARKDOWN_PRETTIER: true
-          VALIDATE_PRE_COMMIT: true
-          VALIDATE_PYTHON_BLACK: true
-          VALIDATE_PYTHON_ISORT: true
-          VALIDATE_PYTHON_RUFF: true
-          VALIDATE_TRIVY: true
-          VALIDATE_YAML: true
+          VALIDATE_ALL_CODEBASE: true

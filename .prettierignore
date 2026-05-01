@@ -1,1 +1,4 @@
 doc/source/_templates/layout.html
+docs/featured.json
+docs/manifest.json
+docs/users.json
