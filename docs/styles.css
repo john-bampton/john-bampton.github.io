@@ -916,6 +916,20 @@ footer {
   }
 }
 
+/* Force 4 columns at 1280px width */
+@media (min-width: 1280px) {
+  .grid {
+    justify-content: flex-start;
+  }
+
+  .card {
+    width: calc(25% - 20px);
+    max-width: 240px;
+  }
+}
+
+
+
 /* Fine-tune mobile card widths for small breakpoints */
 @media (min-width: 401px) and (max-width: 540px) {
   .card {
