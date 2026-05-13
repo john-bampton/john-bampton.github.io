@@ -93,9 +93,7 @@ function pickRandomUser(event) {
   // Find the card element for the random user
   if (!randomUser.card || !randomUser.card.isConnected) {
     // Attempt to find the card in the DOM by data-login as a fallback
-    const fallbackCard = document.querySelector(
-      `[data-login="${randomUser.login}"]`,
-    );
+    const fallbackCard = document.querySelector(`[data-login="${randomUser.login}"]`);
     if (fallbackCard) {
       randomUser.card = fallbackCard;
     } else {
@@ -116,7 +114,7 @@ function pickRandomUser(event) {
   // Scroll near the card (with a small offset to avoid landing exactly on it)
   const cardRect = randomUser.card.getBoundingClientRect();
   const scrollOffset = cardRect.top + window.scrollY - 100; // 100px offset from top
-  window.scrollTo({top: Math.max(0, scrollOffset), behavior: 'smooth'});
+  window.scrollTo({ top: Math.max(0, scrollOffset), behavior: 'smooth' });
 
   // Highlight the card
   randomUser.card.classList.remove('highlight');
@@ -134,7 +132,7 @@ function pickRandomUser(event) {
 
 async function fetchAndPrepareUsers() {
   try {
-    const res = await fetch('users.json', {cache: 'no-store'});
+    const res = await fetch('users.json', { cache: 'no-store' });
     if (!res.ok) throw new Error(`Failed to fetch users.json: ${res.status}`);
     const users = await res.json();
     const prepared = users.map(prepareUserFromJson);
@@ -143,8 +141,7 @@ async function fetchAndPrepareUsers() {
     isDataLoaded = true;
     const total = allUsers.length;
     document.getElementById('totalCount').textContent = total.toLocaleString();
-    document.getElementById('totalCountDesktop').textContent =
-      total.toLocaleString();
+    document.getElementById('totalCountDesktop').textContent = total.toLocaleString();
   } catch (err) {
     console.error(err);
     const loadingStates = document.querySelectorAll('.loading-state');
@@ -156,8 +153,7 @@ async function fetchAndPrepareUsers() {
       if (spinner) spinner.style.display = 'none';
       if (loadingMessage) loadingMessage.style.display = 'none';
       if (errorMessage) {
-        errorMessage.textContent =
-          'Unable to load users. Please try again later.';
+        errorMessage.textContent = 'Unable to load users. Please try again later.';
         errorMessage.style.display = 'block';
       }
     });
@@ -169,7 +165,7 @@ async function fetchAndPrepareUsers() {
  */
 async function loadFeaturedUser() {
   try {
-    const res = await fetch('featured.json', {cache: 'no-store'});
+    const res = await fetch('featured.json', { cache: 'no-store' });
     if (!res.ok) {
       return;
     }
@@ -235,8 +231,7 @@ function updateFeaturedInfo(elements, user) {
   elements.name.textContent = user.name || user.login;
 
   if (user.location) {
-    elements.location.querySelector('.location-text').textContent =
-      user.location;
+    elements.location.querySelector('.location-text').textContent = user.location;
     elements.location.style.display = 'flex';
   } else {
     elements.location.style.display = 'none';
@@ -269,8 +264,7 @@ function updateFeaturedLanguages(elements, user) {
 }
 
 function prepareUserFromJson(user) {
-  const getNum = (v, def = 0) =>
-    v === 'N/A' || v == null ? def : parseInt(v, 10);
+  const getNum = (v, def = 0) => (v === 'N/A' || v == null ? def : parseInt(v, 10));
   const safeLower = (v) => (v ? String(v).toLowerCase() : '');
   const normalizeDate = (v) => (v ? new Date(v).toISOString() : '');
   const topLangs = Array.isArray(user.top_languages) ? user.top_languages : [];
@@ -301,10 +295,8 @@ function prepareUserFromJson(user) {
     following_display: user.following_display || formatDisplay(user.following),
     repos_display: user.repos_display || formatDisplay(user.public_repos),
     gists_display: user.gists_display || formatDisplay(user.public_gists),
-    sponsors_display:
-      user.sponsors_display || formatDisplay(user.sponsors_count),
-    sponsoring_display:
-      user.sponsoring_display || formatDisplay(user.sponsoring_count),
+    sponsors_display: user.sponsors_display || formatDisplay(user.sponsors_count),
+    sponsoring_display: user.sponsoring_display || formatDisplay(user.sponsoring_count),
     stars_display: formatDisplay(user.total_stars),
     raw: user,
   };
@@ -337,7 +329,7 @@ function extractLocation() {
  * @returns {Object} Object with sponsors and sponsoring counts
  */
 function extractStats() {
-  return {sponsors: 0, sponsoring: 0};
+  return { sponsors: 0, sponsoring: 0 };
 }
 
 // ============================================================================
@@ -436,7 +428,7 @@ function exportFilteredJSON() {
   const userData = filteredUsers.map((user) => user.raw);
 
   const jsonString = JSON.stringify(userData, null, 2);
-  const blob = new Blob([jsonString], {type: 'application/json'});
+  const blob = new Blob([jsonString], { type: 'application/json' });
 
   const url = URL.createObjectURL(blob);
 
@@ -477,7 +469,7 @@ function exportFilteredCSV() {
     ...rows.map((row) => headers.map((h) => escapeCSV(row[h])).join(',')),
   ].join('\n');
 
-  const blob = new Blob([csv], {type: 'text/csv;charset=utf-8'});
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
 
   const url = URL.createObjectURL(blob);
 
@@ -513,8 +505,7 @@ function getActiveFilters() {
       .getElementById('languageFilter')
       .value.toLowerCase()
       .trim(),
-    lastRepoActivityFilter: document.getElementById('lastRepoActivityFilter')
-      .value,
+    lastRepoActivityFilter: document.getElementById('lastRepoActivityFilter').value,
     lastCommitFilter: document.getElementById('lastCommitFilter').value,
   };
 }
@@ -547,18 +538,10 @@ function getDateRanges() {
   return {
     oneWeekAgo: new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000),
     oneMonthAgo: new Date(now.getFullYear(), now.getMonth() - 1, now.getDate()),
-    sixMonthsAgo: new Date(
-      now.getFullYear(),
-      now.getMonth() - 6,
-      now.getDate(),
-    ),
+    sixMonthsAgo: new Date(now.getFullYear(), now.getMonth() - 6, now.getDate()),
     oneYearAgo: new Date(now.getFullYear() - 1, now.getMonth(), now.getDate()),
     twoYearsAgo: new Date(now.getFullYear() - 2, now.getMonth(), now.getDate()),
-    fiveYearsAgo: new Date(
-      now.getFullYear() - 5,
-      now.getMonth(),
-      now.getDate(),
-    ),
+    fiveYearsAgo: new Date(now.getFullYear() - 5, now.getMonth(), now.getDate()),
   };
 }
 
@@ -608,8 +591,7 @@ function matchesSearch(user, searchTerm) {
  */
 function matchesFollowerRange(user, filters) {
   return (
-    user.followers >= filters.minFollowers &&
-    user.followers <= filters.maxFollowers
+    user.followers >= filters.minFollowers && user.followers <= filters.maxFollowers
   );
 }
 
@@ -700,20 +682,12 @@ function matchesLanguage(user, languageFilter) {
 
 function matchesRepoActivity(user, activityFilter, dateRanges) {
   if (activityFilter === 'any' || !user.last_repo_pushed_at) return true;
-  return matchesDateByRange(
-    user.last_repo_pushed_at,
-    activityFilter,
-    dateRanges,
-  );
+  return matchesDateByRange(user.last_repo_pushed_at, activityFilter, dateRanges);
 }
 
 function matchesCommitActivity(user, commitFilter, dateRanges) {
   if (commitFilter === 'any' || !user.last_public_commit_at) return true;
-  return matchesDateByRange(
-    user.last_public_commit_at,
-    commitFilter,
-    dateRanges,
-  );
+  return matchesDateByRange(user.last_public_commit_at, commitFilter, dateRanges);
 }
 
 function matchesDateByRange(dateString, rangeKey, dateRanges) {
@@ -772,17 +746,13 @@ function getSortedUsers(sortBy) {
     'stars-desc': (a, b) => b.total_stars - a.total_stars,
     'stars-asc': (a, b) => a.total_stars - b.total_stars,
     'last-repo-desc': (a, b) =>
-      new Date(b.last_repo_pushed_at || 0) -
-      new Date(a.last_repo_pushed_at || 0),
+      new Date(b.last_repo_pushed_at || 0) - new Date(a.last_repo_pushed_at || 0),
     'last-repo-asc': (a, b) =>
-      new Date(a.last_repo_pushed_at || 0) -
-      new Date(b.last_repo_pushed_at || 0),
+      new Date(a.last_repo_pushed_at || 0) - new Date(b.last_repo_pushed_at || 0),
     'last-commit-desc': (a, b) =>
-      new Date(b.last_public_commit_at || 0) -
-      new Date(a.last_public_commit_at || 0),
+      new Date(b.last_public_commit_at || 0) - new Date(a.last_public_commit_at || 0),
     'last-commit-asc': (a, b) =>
-      new Date(a.last_public_commit_at || 0) -
-      new Date(b.last_public_commit_at || 0),
+      new Date(a.last_public_commit_at || 0) - new Date(b.last_public_commit_at || 0),
     'name-asc': (a, b) => a.name.localeCompare(b.name),
     'name-desc': (a, b) => b.name.localeCompare(a.name),
     'ratio-followers-following': (a, b) => {
@@ -991,10 +961,8 @@ function updateCounts(sortedUsers) {
   const visibleCount = sortedUsers.length;
   const totalCount = allUsers.length;
 
-  document.getElementById('visibleCount').textContent =
-    visibleCount.toLocaleString();
-  document.getElementById('totalCount').textContent =
-    totalCount.toLocaleString();
+  document.getElementById('visibleCount').textContent = visibleCount.toLocaleString();
+  document.getElementById('totalCount').textContent = totalCount.toLocaleString();
 
   document.getElementById('visibleCountDesktop').textContent =
     visibleCount.toLocaleString();
@@ -1073,9 +1041,7 @@ const FILTER_LABELS = {
 function getControlDisplayValue(element) {
   if (!element) return '';
   if (element.tagName === 'SELECT') {
-    return (
-      element.options[element.selectedIndex]?.textContent.trim() || element.value
-    );
+    return element.options[element.selectedIndex]?.textContent.trim() || element.value;
   }
   return element.value.trim();
 }

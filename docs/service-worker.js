@@ -19,7 +19,7 @@ const PRECACHE_URLS = [
   'bootstrap/js/popper.min.js',
   'manifest.json',
 ];
-const CACHE_EXPIRATION = {'users.json': 3 * DAY_SECONDS};
+const CACHE_EXPIRATION = { 'users.json': 3 * DAY_SECONDS };
 
 function getCache() {
   return caches.open(PRECACHE);
@@ -76,9 +76,7 @@ function handleExpiringFile(event, filename, maxAgeMs) {
 
 function handleDefaultFetch(event) {
   event.respondWith(
-    caches
-      .match(event.request)
-      .then((cached) => cached || fetch(event.request)),
+    caches.match(event.request).then((cached) => cached || fetch(event.request)),
   );
 }
 
@@ -96,8 +94,7 @@ self.addEventListener('fetch', (event) => {
   const url = event.request.url;
   if (!url.startsWith(self.location.origin)) return null;
   for (const [filename, maxAgeMs] of Object.entries(CACHE_EXPIRATION)) {
-    if (url.endsWith(filename))
-      return handleExpiringFile(event, filename, maxAgeMs);
+    if (url.endsWith(filename)) return handleExpiringFile(event, filename, maxAgeMs);
   }
   return handleDefaultFetch(event);
 });
