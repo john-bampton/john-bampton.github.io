@@ -16,9 +16,9 @@ repos:
     hooks:
       - id: biome-check
         name: run biome
-        description: format and lint JS, TS, JSON, CSS, and related files with Biome
+        description: format and lint JS, TS, JSON, CSS, HTML, and related files with Biome
         args: [--write]
-        files: \.(cjs|css|cts|js|json|jsonc|jsx|mjs|mts|ts|tsx)$
+        files: \.(cjs|css|cts|html|js|json|jsonc|jsx|mjs|mts|ts|tsx)$
 
   - repo: local
     hooks:
