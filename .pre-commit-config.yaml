@@ -21,6 +21,16 @@ repos:
         language: node
         additional_dependencies: ['prettier@3.8.3']
 
+  - repo: https://github.com/biomejs/pre-commit
+    rev: v2.3.8
+    hooks:
+      - id: biome-check
+        name: run biome
+        description: format and lint JS, TS, JSON, CSS, and related files with Biome
+        files: \.(cjs|css|cts|js|json|jsonc|jsx|mjs|mts|ts|tsx)$
+        exclude: ^docs/users\.json$
+        args: [--write]
+
   - repo: https://github.com/pycqa/isort
     rev: 8.0.1
     hooks:
