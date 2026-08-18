@@ -11,6 +11,15 @@ repos:
         name: check that hooks apply
         description: check that all the hooks apply to the repository
 
+  - repo: https://github.com/biomejs/pre-commit
+    rev: v2.3.8
+    hooks:
+      - id: biome-check
+        name: run biome
+        description: format and lint JS, TS, JSON, CSS, HTML, and related files with Biome
+        args: [--write]
+        files: \.(cjs|css|cts|html|js|json|jsonc|jsx|mjs|mts|ts|tsx)$
+
   - repo: local
     hooks:
       - id: prettier
