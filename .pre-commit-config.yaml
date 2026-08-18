@@ -11,15 +11,13 @@ repos:
         name: check that hooks apply
         description: check that all the hooks apply to the repository
 
-  - repo: local
+  - repo: https://github.com/biomejs/pre-commit
+    rev: "v0.6.1"
     hooks:
-      - id: prettier
-        name: run prettier
-        description: format files with prettier
-        entry: prettier --write '**/*.yaml' '**/*.yml'
-        files: \.ya?ml$
-        language: node
-        additional_dependencies: ['prettier@3.8.3']
+      - id: biome-check
+        name: run biome formatter/checker
+        args: [--write, --unsafe]
+        files: ^(.*\.(json|jsonc|js|jsx|ts|tsx|css)|\.github/.*\.ya?ml)$
 
   - repo: https://github.com/pycqa/isort
     rev: 8.0.1
