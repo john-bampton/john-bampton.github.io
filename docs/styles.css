@@ -3,7 +3,7 @@
 }
 
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   background: #f0f2f5;
   margin: 0;
   padding: 0;
@@ -441,17 +441,13 @@ h1 {
 }
 
 .featured-user-section::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -50%;
   right: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.1) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
   animation: pulse 15s ease-in-out infinite;
 }
 
@@ -927,8 +923,6 @@ footer {
     max-width: 240px;
   }
 }
-
-
 
 /* Fine-tune mobile card widths for small breakpoints */
 @media (min-width: 401px) and (max-width: 540px) {
