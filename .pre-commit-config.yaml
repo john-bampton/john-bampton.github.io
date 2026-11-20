@@ -44,6 +44,15 @@ repos:
       # Run the formatter.
       - id: ruff-format
 
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.9.2
+    hooks:
+      - id: bandit
+        name: run bandit
+        description: check Python code for security issues
+        args: ['-c=pyproject.toml', '-r']
+        additional_dependencies: ['bandit[toml]']
+
   - repo: https://github.com/pypa/pip-audit
     rev: v2.10.0
     hooks:
